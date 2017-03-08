@@ -1,0 +1,18 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, user-scalable=1, minimal-ui')
+
+    meta(property="og:title" content=htmlWebpackPlugin.options.title)
+    meta(property="og:type" content="website")
+    meta(property="og:description" content="")
+    meta(property="og:url" content="")
+    meta(property="og:image" content="")
+
+    title
+        | #{ htmlWebpackPlugin.options.title  }
+        
+  body(style="display: none;")
+
+    #root
