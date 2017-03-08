@@ -55,18 +55,18 @@ const config = {
                 'pug-loader'
             ]
         }, {
-            test: /\.styl$/,
+            test: /\.scss$/,
             loaders: 
                 __DEV__ ? [
                     'style-loader?sourceMap',
                     'css-loader?sourceMap',
                     'postcss-loader?sourceMap',
-                    'stylus-loader?sourceMap'
+                    'sass-loader?sourceMap'
                 ] : [
                     'style-loader',
                     'css-loader',
                     'postcss-loader',
-                    'stylus-loader'
+                    'sass-loader'
                 ]
         },
         {
