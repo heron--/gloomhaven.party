@@ -51,10 +51,10 @@
     "pug-loader": "^2.3.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "sass-loader": "git+https://github.com/webpack-contrib/sass-loader.git#archive/webpack-1",
+    "sass-loader": "^6.0.3",
     "style-loader": "^0.13.1",
-    "webpack": "^1.12.12",
-    "webpack-dev-server": "^1.14.1",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.1",
     "webpack-query-string": "github:lazabogdan/webpack-query-string",
     "whatwg-fetch": "^2.0.2"
   }

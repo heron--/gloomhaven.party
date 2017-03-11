@@ -33,63 +33,83 @@ const config = {
         filename: 'bundle.js'
     },
     module: {
-        loaders: [{
-            test: /\.css$/,
-            loaders: [
-                'style-loader',
-                'css-loader'
-            ]
-        }, {
-            test: /\.jsx?$/,
-            exclude: path.resolve(__dirname, 'node_modules'),
-            loaders: [
-                'babel-loader?' + webpackQueryString({
-                    presets: ['es2015', 'react'],
-                    plugins: ['transform-runtime', 'transform-object-assign']
-                }),
-                'eslint-loader'
-            ]
-        }, {
-            test: /\.(jade|pug)$/,
-            loaders: [
-                'pug-loader'
-            ]
-        }, {
-            test: /\.scss$/,
-            loaders: 
-                __DEV__ ? [
-                    'style-loader?sourceMap',
-                    'css-loader?sourceMap',
-                    'postcss-loader?sourceMap',
-                    'sass-loader?sourceMap'
-                ] : [
+        rules: [
+            {
+                test: /\.css$/,
+                use: [
                     'style-loader',
-                    'css-loader',
-                    'postcss-loader',
-                    'sass-loader'
+                    'css-loader'
                 ]
-        },
-        {
-            test: /\.(jpe?g|png|gif|svg|ttf|eot|woff(2)?)(\?[a-z0-9]+)?$/,
-            loaders: [
-                'file-loader'
-            ]
-        }]
+            },
+            {
+                test: /\.jsx?$/,
+                exclude: path.resolve(__dirname, 'node_modules'),
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['es2015', 'react'],
+                            plugins: ['transform-runtime', 'transform-object-assign']
+                        }
+                    },
+                    'eslint-loader'
+                ]
+            },
+            {
+                test: /\.(jade|pug)$/,
+                use: [
+                    {
+                        'loader': 'pug-loader' 
+                    }
+                ]
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    {
+                        loader: 'style-loader',
+                        options: {
+                            sourceMap: __DEV__
+                        }
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: __DEV__
+                        }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            sourceMap: __DEV__,
+                            plugins: () => {
+                                autoprefixer({
+                                    browsers: ['> 0.1%']
+                                })
+                            }
+                        }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: __DEV__
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(jpe?g|png|gif|svg|ttf|eot|woff(2)?)(\?[a-z0-9]+)?$/,
+                use: [
+                    'file-loader'
+                ]
+            }
+        ]
     },
     resolve: {
         alias: {
             '~': path.resolve(__dirname, 'src')
         }
     },
-    stylus: {
-        define: defines
-    },
-    postcss: () => [
-            autoprefixer({
-                browsers: ['> 0.1%']
-            })
-        ]
-    ,
     plugins: [
         new webpack.DefinePlugin(defines),
         new webpack.ProvidePlugin({
