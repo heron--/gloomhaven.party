@@ -1,0 +1,29 @@
+{
+  "name": "gloomhaven-party-api",
+  "version": "0.1.0",
+  "description": "API for the gloomhaven.party app",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://git@github.com/heron--/gloomhaven.party.git"
+  },
+  "author": "Devin Marsh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heron--/gloomhaven.party/issues"
+  },
+  "homepage": "https://github.com/heron--/gloomhaven.party#readme",
+  "dependencies": {
+    "config": "^1.25.1",
+    "express": "^4.15.2",
+    "mysql": "^2.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
