@@ -10,9 +10,24 @@ html(lang='en')
     meta(property="og:url" content="")
     meta(property="og:image" content="")
 
+    //- Google OAuth
+    script(src="https://apis.google.com/js/platform.js" async defer)
+    meta(name="google-signin-client_id" content="704150624273-pq6qof275opu09jore9qsgio5l0cdn5g.apps.googleusercontent.com")
+
     title
         | #{ htmlWebpackPlugin.options.title  }
         
   body(style="display: none;")
+
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+    script.
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        }
 
     #root
