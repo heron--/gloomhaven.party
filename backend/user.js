@@ -13,8 +13,7 @@ router.get('/', (req, res) => {
 
 	if(typeof req.gloomhavensession.user === 'undefined') {
 
-		res
-		.status(403)
+		res.status(403)
 		.send(getResponseMessage('User not logged in', 403, null));
 	}
 
@@ -33,8 +32,7 @@ router.get('/logout', (req, res) => {
 });
 
 function verifyUser(req, res, next) {
-	console.log('Verifying user...');
-	console.log('User verified!');
+	console.log(req.body.user);
 	next();
 };
 

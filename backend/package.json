@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/heron--/gloomhaven.party#readme",
   "dependencies": {
+    "body-parser": "^1.17.1",
     "client-sessions": "^0.7.0",
     "config": "^1.25.1",
     "express": "^4.15.2",
