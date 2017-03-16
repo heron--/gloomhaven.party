@@ -1,0 +1,11 @@
+{
+	"dbConfig": {
+
+	},
+	"sessionConfig": {
+		"cookieName": "gloomhavensession",
+		"duration": 8640000,
+		"activeDuration": 8640000,
+		"secret": "we're_ready_to_believe_you"
+	}
+}
