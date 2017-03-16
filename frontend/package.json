@@ -42,6 +42,7 @@
     "glob": "^6.0.4",
     "html-webpack-plugin": "^2.8.1",
     "imports-loader": "^0.7.1",
+    "material-ui": "^0.17.1",
     "node-sass": "^4.5.0",
     "open-browser-webpack-plugin": "0.0.2",
     "parse-uri": "^1.0.0",
@@ -51,13 +52,13 @@
     "pug-loader": "^2.3.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-router": "^4.0.0",
+    "react-tap-event-plugin": "^2.0.1",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.13.1",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.1",
     "webpack-query-string": "github:lazabogdan/webpack-query-string",
-    "whatwg-fetch": "^2.0.2",
-    "material-ui": "^0.17.1",
-    "react-tap-event-plugin": "^2.0.1"
+    "whatwg-fetch": "^2.0.2"
   }
 }
