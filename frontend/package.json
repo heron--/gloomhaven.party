@@ -58,7 +58,5 @@
     "webpack-query-string": "github:lazabogdan/webpack-query-string",
     "whatwg-fetch": "^2.0.2"
   },
-  "dependencies": {
-    "react-materialize": "^0.18.1"
-  }
+  "dependencies": {}
 }
