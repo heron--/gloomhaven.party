@@ -58,5 +58,8 @@
     "webpack-query-string": "github:lazabogdan/webpack-query-string",
     "whatwg-fetch": "^2.0.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "material-ui": "^0.17.1",
+    "react-tap-event-plugin": "^2.0.1"
+  }
 }
