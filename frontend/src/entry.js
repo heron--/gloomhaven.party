@@ -1,7 +1,6 @@
 import { render } from 'react-dom';
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import routes from './routes';
+import App from './components/App';
 import './main.scss';
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -9,8 +8,5 @@ window.addEventListener('DOMContentLoaded', () => {
     
     const rootNode = document.querySelector('#root');
     render(
-        <Router>
-            { routes }
-        </Router>
-        , rootNode);
+        <App />, rootNode);
 });

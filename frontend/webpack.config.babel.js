@@ -126,6 +126,7 @@ const config = {
         inline: true,
         hot: false,
         host: '0.0.0.0',
+        historyApiFallback: true,
         stats: {
             colors: true,
             progress: true,
