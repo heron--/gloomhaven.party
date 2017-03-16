@@ -57,6 +57,7 @@
     "webpack-dev-server": "^2.4.1",
     "webpack-query-string": "github:lazabogdan/webpack-query-string",
     "whatwg-fetch": "^2.0.2",
-    "react-materialize": "^0.18.1"
+    "material-ui": "^0.17.1",
+    "react-tap-event-plugin": "^2.0.1"
   }
 }
