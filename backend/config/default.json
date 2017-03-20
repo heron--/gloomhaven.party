@@ -1,6 +1,10 @@
 {
 	"dbConfig": {
-
+		"host": "127.0.0.1",
+		"user": "GloomhavenDev",
+		"password": "password",
+		"database": "Gloomhaven",
+		"port": 8889
 	},
 	"sessionConfig": {
 		"cookieName": "gloomhavensession",
@@ -10,5 +14,8 @@
 	},
 	"googleConfig": {
 		"clientId": "704150624273-pq6qof275opu09jore9qsgio5l0cdn5g.apps.googleusercontent.com"
+	},
+	"encryptionConfig": {
+		"secret": "Coming up with secrets is hard!"
 	}
 }

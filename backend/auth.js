@@ -2,11 +2,15 @@ const express = require('express');
 const fetch = require('node-fetch');
 const GoogleAuth = require('google-auth-library');
 const config = require('config');
+const Cryptr = require('cryptr');
 const utils = require('./utils');
 
 const googleConfig = config.get('googleConfig');
 const googleAuth = new GoogleAuth;
 const googleClient = new googleAuth.OAuth2(googleConfig.clientId, '', '');
+	
+const encryptionConfig = config.get('encryptionConfig');
+const cryptr = new Cryptr(encryptionConfig.secret);
 
 const {
 	getResponseMessage
@@ -16,7 +20,7 @@ const router = express.Router({
 	mergeParams: true
 });
 
-router.post('/login', verifyUser, (req, res) => {
+router.post('/login', verifyUser, checkUserExists, (req, res) => {
 	res.send(getResponseMessage(res, 'Login successful', 200, null));
 });
 
@@ -55,6 +59,38 @@ function verifyGoogle(req, res, next) {
 			next();	
 		}
 	});
+}
+
+function checkUserExists(req, res, next) {
+	// Check if the user exists in the DB. If not, create it
+	req.getConnection((error, connection) => {
+		if(error) return next(error);	
+
+		const encryptedEmail = cryptr.encrypt(req.gloomhavensession.email);
+
+		connection.query('SELECT * FROM Users AS U WHERE U.email', [encryptedEmail], (error, results) => {
+
+			if(error) return next(error);
+
+			if(results.length > 0) {
+
+				// User exists, continue
+				console.log('User exists');
+				next();
+
+			} else {
+
+				// User does not exist, insert into table
+				console.log('User does not exist');
+				connection.query('INSERT INTO Users (email) VALUES (?)', [encryptedEmail], (error, results) => {
+					if(error) return next(error);
+					console.log('User inserted');
+					console.log(results);
+					next();
+				})
+			}
+		});
+	})
 }
 
 module.exports = router;

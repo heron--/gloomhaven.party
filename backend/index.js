@@ -1,31 +1,20 @@
 const config = require('config');
 const session = require('client-sessions');
 const bodyParser = require('body-parser');
+const mysql = require('mysql');
 const express = require('express');
+const myConnection = require('express-myconnection');
 const app = express();
 
 const authRouter = require('./auth');
 
 const sessionConfig = config.get('sessionConfig');
+const dbConfig = config.get('dbConfig');
 app.use(session(sessionConfig));
+app.use(myConnection(mysql, dbConfig, 'single'));
 app.use(bodyParser.json());
 
 app.get('/api', (req, res) => { res.send('gosh dang it'); });
-
-app.use((req, res, next) => {
-
-	res.set({
-		'Access-Control-Allow-Headers': 'Content-Type'
-	});
-
-	if(process.env.NODE_ENV === 'development') {
-		res.set({
-			'Access-Control-Allow-Origin': '*'
-		});
-	}
-
-	next();
-});
 
 app.get('/', (req, res) => {
 	res.send('Welcome to the Gloomhaven.Party API!');
