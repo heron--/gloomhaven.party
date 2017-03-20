@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import { login } from '~/api';
+import './login.scss';
 
 class Login extends Component {
 
@@ -31,8 +32,8 @@ class Login extends Component {
 
     render() {
         return (
-            <div>
-                Login!
+            <div className="login splash-screen">
+                <h1 className="logo">Gloomhaven.Party</h1>
                 <GoogleLogin { ...this.googleLoginConfig } />
             </div>
         );
