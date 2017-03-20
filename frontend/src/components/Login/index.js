@@ -34,7 +34,9 @@ class Login extends Component {
         return (
             <div className="login splash-screen">
                 <h1 className="logo">Gloomhaven.Party</h1>
-                <GoogleLogin { ...this.googleLoginConfig } />
+                <GoogleLogin { ...this.googleLoginConfig } style={ { } }>
+                    <div className="login__google-signin"></div>
+                </GoogleLogin>
             </div>
         );
     }

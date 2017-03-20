@@ -5,3 +5,17 @@
   -o-background-size: cover;
   background-size: cover;
 }
+
+.login__google-signin {
+  width: 191px;
+  height: 46px;
+  background-image: url(../../assets/images/login-google--default.png);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  &:active {
+    background-image: url(../../assets/images/login-google--pressed.png);
+  }
+}
