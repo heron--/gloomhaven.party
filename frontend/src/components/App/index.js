@@ -7,6 +7,10 @@ import Login from '../Login';
 
 class App extends Component {
 
+    componentWillMount() {
+        injectTapEventPlugin();
+    }
+
     render() {
 
         return (
