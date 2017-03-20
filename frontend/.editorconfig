@@ -22,7 +22,7 @@ indent_size = 4
 # SCSS
 [*.scss]
 indent_style = space
-indent_size = 4
+indent_size = 2
 
 # Stylus
 [*.styl]
