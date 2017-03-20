@@ -10,7 +10,7 @@ class Login extends Component {
 
         this.googleLoginConfig = {
             clientId: "704150624273-pq6qof275opu09jore9qsgio5l0cdn5g.apps.googleusercontent.com",
-            buttonText: "Login",
+            buttonText: "Login with Google",
             onSuccess: this.onGoogleSuccess,
             onFailure: this.onGoogleFailure
         };
