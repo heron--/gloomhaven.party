@@ -58,7 +58,9 @@ class App extends Component {
                                 <MenuItem onTouchTap={this.handleClose}>Characters</MenuItem>
                                 <MenuItem onTouchTap={this.handleClose}>Parties</MenuItem>
                                 <Divider />
+                                <MenuItem onTouchTap={this.handleClose}>My Profile</MenuItem>
                                 <MenuItem onTouchTap={this.handleClose}>Settings</MenuItem>
+                                <MenuItem onTouchTap={this.handleClose}>Sign Out</MenuItem>
                             </Drawer>
                         </div>
                         <Route exact path="/" component={ Home } />
