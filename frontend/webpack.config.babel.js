@@ -114,7 +114,7 @@ const config = {
         new webpack.DefinePlugin(defines),
         new webpack.ProvidePlugin({
             'Promise': 'es6-promise',
-            'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+            'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
         }),
         new HtmlWebpackPlugin({
             template: 'template.pug',
@@ -132,6 +132,17 @@ const config = {
             progress: true,
             chunkModules: false,
             assets: false
+        },
+        proxy: {
+            "/api": {
+                target: {
+                    host: "localhost",
+                    port: "3000"
+                },
+                pathRewrite: {
+                    '^/api': ''
+                }
+            }
         }
     }
 };

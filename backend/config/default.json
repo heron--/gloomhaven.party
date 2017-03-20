@@ -7,5 +7,8 @@
 		"duration": 8640000,
 		"activeDuration": 8640000,
 		"secret": "we're_ready_to_believe_you"
+	},
+	"googleConfig": {
+		"clientId": "704150624273-pq6qof275opu09jore9qsgio5l0cdn5g.apps.googleusercontent.com"
 	}
 }

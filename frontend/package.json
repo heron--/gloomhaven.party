@@ -61,5 +61,8 @@
     "webpack-dev-server": "^2.4.1",
     "webpack-query-string": "github:lazabogdan/webpack-query-string",
     "whatwg-fetch": "^2.0.2"
+  },
+  "dependencies": {
+    "react-google-login": "^2.8.2"
   }
 }
