@@ -32,5 +32,8 @@ h1, h2, h3, h4, h5, h6 {
 	&.login {
 		border-bottom: 2vh solid #F6A623;
 		box-shadow: 0 1vh 0 darken(#F6A623, 20%);
+		.logo {
+			padding-top: 18vh;
+		}
 	}
 }

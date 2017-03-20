@@ -10,7 +10,7 @@ class Login extends Component {
 
         this.googleLoginConfig = {
             clientId: "704150624273-pq6qof275opu09jore9qsgio5l0cdn5g.apps.googleusercontent.com",
-            buttonText: "Login",
+            buttonText: "Login with Google",
             onSuccess: this.onGoogleSuccess,
             onFailure: this.onGoogleFailure
         };
@@ -34,7 +34,7 @@ class Login extends Component {
         return (
             <div className="login splash-screen">
                 <h1 className="logo">Gloomhaven.Party</h1>
-                <GoogleLogin { ...this.googleLoginConfig } style={ { } }>
+                <GoogleLogin { ...this.googleLoginConfig } style={ { } } className="login__google-signin-container">
                     <div className="login__google-signin"></div>
                 </GoogleLogin>
             </div>
