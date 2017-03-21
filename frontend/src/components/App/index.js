@@ -16,6 +16,13 @@ const muiTheme = getMuiTheme({
 })
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            open: false
+        };
+    }
 
     componentWillMount() {
         injectTapEventPlugin();
@@ -23,14 +30,10 @@ class App extends Component {
 
     render() {
 
-        console.log(this.props)
-
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
-                <div>
-                    <div className="app">
-                        <AppBar pathname={ this.props.location.pathname } />
-                    </div>
+                <div className="app">
+                    <AppBar pathname={ this.props.location.pathname } />
                     <Route exact path="/" component={ Login } />
                 </div>
             </MuiThemeProvider>

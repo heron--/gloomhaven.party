@@ -1,20 +1,29 @@
-import React from 'react';
+import React, { Component } from 'react';
 import MaterialAppBar from 'material-ui/AppBar';
+import Divider from 'material-ui/Divider';
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
 
-const AppBar = ({
-    pathname
-}) => {
+class AppBar extends Component {
 
-    const defaultProps = {
-        title: "Gloomhaven.Party",
-        iconClassNameRight: "muidocs-icon-navigation-expand-more"
-    };
+    constructor(props) {
+        super(props);
+        this.handleToggle = this.handleToggle.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.state = {
+            open: false 
+        };
+    }
 
-    return (
-        <MaterialAppBar { ...getProps(defaultProps, pathname) } />
-    );
+    handleToggle() {
+        this.setState({open: !this.state.open});
+    }
 
-    function getProps(defaultProps, pathname) {
+    handleClose() {
+        this.setState({open: false});
+    }
+
+    getProps(defaultProps, pathname) {
         switch(pathname) {
             case '/':            
                 return Object.assign({}, defaultProps, {
@@ -23,6 +32,37 @@ const AppBar = ({
             default: 
                 return defaultProps;
         }
+    }
+
+    render() {
+        const {
+            pathname
+        } = this.props;
+
+        const defaultProps = {
+            title: "Gloomhaven.Party",
+            iconClassNameRight: "muidocs-icon-navigation-expand-more",
+            onLeftIconButtonTouchTap: this.handleToggle
+        };
+
+        return (
+            <div>
+                <MaterialAppBar { ...this.getProps(defaultProps, pathname) } />
+                <Drawer
+                    docked={false}
+                    open={this.state.open}
+                    onRequestChange={(open) => this.setState({open})}
+                >
+                    <MenuItem onTouchTap={this.handleClose}>Characters</MenuItem>
+                    <MenuItem onTouchTap={this.handleClose}>Parties</MenuItem>
+                    <Divider />
+                    <MenuItem onTouchTap={this.handleClose}>My Profile</MenuItem>
+                    <MenuItem onTouchTap={this.handleClose}>Settings</MenuItem>
+                    <MenuItem onTouchTap={this.handleClose}>Sign Out</MenuItem>
+                </Drawer>
+            </div>
+        );
+
     }
 };
 
