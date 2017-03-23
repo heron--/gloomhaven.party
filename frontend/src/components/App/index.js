@@ -6,6 +6,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import AppBar from '../AppBar';
 import Login from '../Login';
+import Profile from '../Profile';
 
 const muiTheme = getMuiTheme({
     palette: {
@@ -35,6 +36,7 @@ class App extends Component {
                 <div className="app">
                     <AppBar pathname={ this.props.location.pathname } />
                     <Route exact path="/" component={ Login } />
+                    <Route exact path="/profile" component={ Profile } />
                 </div>
             </MuiThemeProvider>
         );
