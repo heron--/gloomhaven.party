@@ -29,7 +29,7 @@ router.post('/login', verifyUser, checkUserExists, (req, res) => {
 
 router.get('/logout', (req, res) => {
 	req.gloomhavensession.reset(); 
-	res.send(getResponseMessage('User session terminated', 200, null));
+	res.send(getResponseMessage(res, 'User session terminated', 200, null));
 });
 
 function verifyUser(req, res, next) {
@@ -74,7 +74,7 @@ function checkUserExists(req, res, next) {
 
 		const encryptedEmail = cryptr.encrypt(user.get().email);
 
-		connection.query('SELECT * FROM Users AS U WHERE U.email', [encryptedEmail], (error, results) => {
+		connection.query('SELECT * FROM Users AS U WHERE U.email=?', [encryptedEmail], (error, results) => {
 
 			if(error) return next(error);
 
