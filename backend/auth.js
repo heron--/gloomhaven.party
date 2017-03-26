@@ -4,6 +4,7 @@ const GoogleAuth = require('google-auth-library');
 const config = require('config');
 const Cryptr = require('cryptr');
 const utils = require('./utils');
+const User =  require('./models/User');
 
 const googleConfig = config.get('googleConfig');
 const googleAuth = new GoogleAuth;
@@ -22,7 +23,7 @@ const router = express.Router({
 
 router.post('/login', verifyUser, checkUserExists, (req, res) => {
 	res.send(getResponseMessage(res, 'Login successful', 200, {
-		newUser: typeof req.gloomhavensession.newUser !== 'undefined' ? req.gloomhavensession.newUser : false
+		user: req.gloomhavensession.user
 	}));
 });
 
@@ -57,7 +58,7 @@ function verifyGoogle(req, res, next) {
 
 		if(payload.email_verified) {
 			req.gloomhavensession.reset();
-			req.gloomhavensession.email = payload.email;
+			res.user = new User(payload.email);
 			next();	
 		}
 	});
@@ -69,7 +70,9 @@ function checkUserExists(req, res, next) {
 		
 		if(error) return next(error);	
 
-		const encryptedEmail = cryptr.encrypt(req.gloomhavensession.email);
+		const user = res.user;
+
+		const encryptedEmail = cryptr.encrypt(user.get().email);
 
 		connection.query('SELECT * FROM Users AS U WHERE U.email', [encryptedEmail], (error, results) => {
 
@@ -79,7 +82,7 @@ function checkUserExists(req, res, next) {
 
 				// User exists, continue
 				console.log('User exists');
-				req.gloomhavensession.newUser = false;
+				req.gloomhavensession.user = user.get();
 				next();
 
 			} else {
@@ -90,8 +93,9 @@ function checkUserExists(req, res, next) {
 
 					if(error) return next(error);
 
-					console.log('User inserted');
-					req.gloomhavensession.newUser = true;
+					user.setFirstSession(true);
+					req.gloomhavensession.user = user.get();
+
 					next();
 				});
 			}

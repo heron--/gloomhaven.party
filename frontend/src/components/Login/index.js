@@ -31,11 +31,11 @@ class Login extends Component {
         .then(result => {
 
             const {
-                data
-            } = result;
+                user
+            } = result.data;
 
-            if(typeof data.newUser !== 'undefined') {
-                if(data.newUser) {
+            if(typeof user.firstSession !== 'undefined') {
+                if(user.firstSession) {
                     // Redirect to Tutorial 
                 } else {
                     // Redirect to Profile
