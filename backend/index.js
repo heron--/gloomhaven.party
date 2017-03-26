@@ -14,8 +14,6 @@ app.use(session(sessionConfig));
 app.use(myConnection(mysql, dbConfig, 'single'));
 app.use(bodyParser.json());
 
-app.get('/api', (req, res) => { res.send('gosh dang it'); });
-
 app.get('/', (req, res) => {
 	res.send('Welcome to the Gloomhaven.Party API!');
 });
