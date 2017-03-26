@@ -21,7 +21,9 @@ const router = express.Router({
 });
 
 router.post('/login', verifyUser, checkUserExists, (req, res) => {
-	res.send(getResponseMessage(res, 'Login successful', 200, null));
+	res.send(getResponseMessage(res, 'Login successful', 200, {
+		newUser: typeof req.gloomhavensession.newUser !== 'undefined' ? req.gloomhavensession.newUser : false
+	}));
 });
 
 router.get('/logout', (req, res) => {
@@ -64,6 +66,7 @@ function verifyGoogle(req, res, next) {
 function checkUserExists(req, res, next) {
 	// Check if the user exists in the DB. If not, create it
 	req.getConnection((error, connection) => {
+		
 		if(error) return next(error);	
 
 		const encryptedEmail = cryptr.encrypt(req.gloomhavensession.email);
@@ -76,6 +79,7 @@ function checkUserExists(req, res, next) {
 
 				// User exists, continue
 				console.log('User exists');
+				req.gloomhavensession.newUser = false;
 				next();
 
 			} else {
@@ -83,14 +87,16 @@ function checkUserExists(req, res, next) {
 				// User does not exist, insert into table
 				console.log('User does not exist');
 				connection.query('INSERT INTO Users (email) VALUES (?)', [encryptedEmail], (error, results) => {
+
 					if(error) return next(error);
+
 					console.log('User inserted');
-					console.log(results);
+					req.gloomhavensession.newUser = true;
 					next();
-				})
+				});
 			}
 		});
-	})
+	});
 }
 
 module.exports = router;

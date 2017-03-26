@@ -31,12 +31,14 @@ class App extends Component {
 
     render() {
 
+        console.log(this.props);
+
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div className="app">
                     <AppBar pathname={ this.props.location.pathname } />
                     <Route exact path="/" component={ Login } />
-                    <Route exact path="/profile" component={ Profile } />
+                    <Route path="/profile" component={ Profile } />
                 </div>
             </MuiThemeProvider>
         );

@@ -6,7 +6,7 @@ import './main.scss';
 
 window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => { document.body.style.display = 'block'; }, 0);
-    
+
     const rootNode = document.querySelector('#root');
 
     render(

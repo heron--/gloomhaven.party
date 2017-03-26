@@ -7,6 +7,7 @@ class Login extends Component {
 
     constructor(props) {
         super(props);
+        this.onGoogleSuccess = this.onGoogleSuccess.bind(this);
 
         this.googleLoginConfig = {
             clientId: "704150624273-pq6qof275opu09jore9qsgio5l0cdn5g.apps.googleusercontent.com",
@@ -17,17 +18,36 @@ class Login extends Component {
     }
 
     onGoogleSuccess(res) {
-        console.log(res);
+
+        const {
+            history 
+        } = this.props;
 
         login({
             type: 'google',
             authData: res.tokenObj,
             profileDate: res.profileObj
+        })
+        .then(result => {
+
+            const {
+                data
+            } = result;
+
+            if(typeof data.newUser !== 'undefined') {
+                if(data.newUser) {
+                    // Redirect to Tutorial 
+                } else {
+                    // Redirect to Profile
+                    history.push('/profile', {});
+                }
+            }
+
         });
     }
 
     onGoogleFailure() {
-        console.log('google fail');
+        console.log('google failure');
     }
 
     render() {

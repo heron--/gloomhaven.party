@@ -14,11 +14,8 @@ export const login = (data) => {
         credentials: 'include'
     };
 
-    fetch(loginEndpoint, loginConfig) 
+    return fetch(loginEndpoint, loginConfig) 
     .then(res => res.json()) 
-    .then(res => {
-        console.log(res); 
-    })
     .catch(err => {
         console.error(err);
     });

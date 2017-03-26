@@ -63,6 +63,7 @@
     "whatwg-fetch": "^2.0.2"
   },
   "dependencies": {
+    "history": "^4.6.1",
     "react-google-login": "^2.8.2"
   }
 }
