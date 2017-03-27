@@ -1,6 +1,8 @@
 import { render } from 'react-dom';
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './store';
 import App from './components/App';
 import './main.scss';
 
@@ -10,7 +12,9 @@ window.addEventListener('DOMContentLoaded', () => {
     const rootNode = document.querySelector('#root');
 
     render(
-        <Router>
-            <Route path="/" component={ App } />
-        </Router>, rootNode);
+        <Provider store={ store }>
+            <Router>
+                <Route path="/" component={ App } />
+            </Router>
+        </Provider>, rootNode);
 });

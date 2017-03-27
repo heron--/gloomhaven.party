@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { amber500, amber700, amber400 } from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import { checkSession } from '~/api';
+import { updateUser } from '~/actions';
 import AppBar from '../AppBar';
 import Login from '../Login';
 import Profile from '../Profile';
@@ -26,12 +29,57 @@ class App extends Component {
     }
 
     componentWillMount() {
+        // Material UI Requirement 
         injectTapEventPlugin();
+
+        const {
+            updateUser
+        } = this.props;
+
+        checkSession() 
+        .then(result => {
+
+            const {
+                user
+            } = result.data;
+
+            if(typeof user !== 'undefined') {
+                updateUser(user); 
+            }
+
+        });
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        console.log(nextProps)
+
+        const {
+            history
+        } = this.props;
+
+        const {
+            user,
+            location
+        } = nextProps;
+
+        if(location.pathname === '/') {
+
+            if(user.email !== 'undefined') {
+                if(user.firstSession !== 'undefined') {
+                    if(user.firstSession) {
+                        // Redirect to Tutorial 
+                        history.push('/profile', {});
+                    } else {
+                        // Redirect to Profile
+                        history.push('/profile', {});
+                    }
+                }
+            }
+        };
     }
 
     render() {
-
-        console.log(this.props);
 
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
@@ -45,4 +93,18 @@ class App extends Component {
     } 
 }
 
-export { App as default };
+function mapStateToProps(state) {
+    return {
+        user: state.user
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        updateUser: user => dispatch(updateUser(user))
+    };
+}
+
+const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App)
+
+export { ConnectedApp as default };

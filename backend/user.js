@@ -16,6 +16,32 @@ const router = express.Router({
 	mergeParams: true
 });
 
+router.get('/check-session', (req, res) => {
+
+	// Cookie not set
+	if(typeof req.gloomhavensession === 'undefined') {
+
+		res.send(getResponseMessage(res, 'User not logged in', 200, null));
+
+	} else {
+
+		// Cookie set but session not started
+		if(typeof req.gloomhavensession.user === 'undefined') {
+
+			res.send(getResponseMessage(res, 'User not logged in', 200, null));
+
+		// Everything's good
+		} else {
+			
+			res.send(getResponseMessage(res, 'User is logged in', 200, {
+				user: new User(req.gloomhavensession.user.email)
+			}));
+
+		}
+
+	}
+});
+
 router.get('/activate', (req, res) => {
 	if(typeof req.gloomhavensession.user === 'undefined') {
 

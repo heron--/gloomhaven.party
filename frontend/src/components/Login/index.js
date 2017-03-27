@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import GoogleLogin from 'react-google-login';
 import { login } from '~/api';
 import './login.scss';
@@ -20,7 +21,7 @@ class Login extends Component {
     onGoogleSuccess(res) {
 
         const {
-            history 
+            updateUser
         } = this.props;
 
         login({
@@ -34,15 +35,7 @@ class Login extends Component {
                 user
             } = result.data;
 
-            if(typeof user.firstSession !== 'undefined') {
-                if(user.firstSession) {
-                    // Redirect to Tutorial 
-                } else {
-                    // Redirect to Profile
-                    history.push('/profile', {});
-                }
-            }
-
+            updateUser(typeof user === 'undefined' ? {} : user);
         });
     }
 
@@ -51,15 +44,31 @@ class Login extends Component {
     }
 
     render() {
+
+        const {
+            user
+        } = this.props;
+
         return (
             <div className="login splash-screen">
                 <h1 className="logo">Gloomhaven.Party</h1>
-                <GoogleLogin { ...this.googleLoginConfig } style={ {} } className="login__google-signin-container">
-                    <div className="login__google-signin"></div>
-                </GoogleLogin>
+                { 
+                    user.email === 'undefined' ?
+                    <GoogleLogin { ...this.googleLoginConfig } style={ {} } className="login__google-signin-container">
+                        <div className="login__google-signin"></div>
+                    </GoogleLogin> : null
+                }
             </div>
         );
     }
 }
 
-export { Login as default };
+function mapStateToProps(state) {
+    return {
+        user: state.user
+    };
+}
+
+const ConnectedLogin = connect(mapStateToProps)(Login);
+
+export { ConnectedLogin as default };

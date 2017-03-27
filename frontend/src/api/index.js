@@ -20,3 +20,22 @@ export const login = (data) => {
         console.error(err);
     });
 };
+
+export const checkSession = () => {
+    const sessionEndpoint = __DEV__ ? devEndpoints.checkSession : endpoints.checkSession;
+
+    const sessionConfig = {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "GET",
+        credentials: 'include'
+    };
+
+    return fetch(sessionEndpoint, sessionConfig)
+    .then(res => res.json())
+    .catch(err => {
+        console.error(err);
+    })
+};

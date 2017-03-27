@@ -4,7 +4,7 @@ function utils() {
 		return JSON.stringify({
 			message,
 			code,
-			data
+			data: data ? data : {}
 		});
 	}
 
