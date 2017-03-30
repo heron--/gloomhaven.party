@@ -49,10 +49,12 @@ class Login extends Component {
             user
         } = this.props;
 
+        console.log(user)
+
         return (
             <div className="login splash-screen">
                 <h1 className="logo">Gloomhaven.Party</h1>
-                { 
+                {
                     typeof user.email === 'undefined' ?
                     <GoogleLogin { ...this.googleLoginConfig } style={ {} } className="login__google-signin-container">
                         <div className="login__google-signin"></div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { amber500, amber700, amber400 } from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -24,6 +24,7 @@ class App extends Component {
         super(props);
 
         this.state = {
+            initialSessionCheck: false,
             open: false
         };
     }
@@ -47,12 +48,14 @@ class App extends Component {
                 updateUser(user); 
             }
 
+            this.setState({
+                initialSessionCheck: true
+            });
+
         });
     }
 
     componentWillReceiveProps(nextProps) {
-
-        console.log(nextProps)
 
         const {
             history
@@ -65,8 +68,8 @@ class App extends Component {
 
         if(location.pathname === '/') {
 
-            if(user.email !== 'undefined') {
-                if(user.firstSession !== 'undefined') {
+            if(typeof user.email !== 'undefined') {
+                if(typeof user.firstSession !== 'undefined') {
                     if(user.firstSession) {
                         // Redirect to Tutorial 
                         history.push('/profile', {});
@@ -81,21 +84,55 @@ class App extends Component {
 
     render() {
 
+        const {
+            updateUser,
+            user
+        } = this.props;
+
         const loginProps = {
-            updateUser: this.props.updateUser
+            updateUser
         };
 
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div className="app">
                     <AppBar pathname={ this.props.location.pathname } />
-                    <Route exact path="/" render={ props => <Login { ...props } { ...loginProps } /> }/>
-                    <Route path="/profile" component={ Profile } />
+                    {
+                        // Not loading login until we've checked for a session
+                        this.state.initialSessionCheck ? (
+                            <Route exact path="/" render={ props => <Login { ...props } { ...loginProps } /> }/> 
+                        ) : null
+                    }
+                    <AuthedRoute user={ user } path="/profile" component={ Profile } />
                 </div>
             </MuiThemeProvider>
         );
     } 
 }
+
+const AuthedRoute = ({
+    user,
+    component,
+    ...rest
+}) => {
+    return (
+        <Route { ...rest } render={props => (
+
+            typeof user.email !== 'undefined' ? (
+
+                React.createElement(component, props)
+
+            ) : (
+
+                <Redirect to={{
+                    pathname: '/',
+                    state: { from: props.location }
+                }}/>
+
+            )
+        )}/>
+    ); 
+};
 
 function mapStateToProps(state) {
     return {
