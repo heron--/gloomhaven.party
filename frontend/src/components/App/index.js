@@ -4,12 +4,14 @@ import { Route, Redirect } from 'react-router-dom';
 import { amber500, amber700, amber400 } from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import CircularProgress from 'material-ui/CircularProgress';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { checkSession } from '~/api';
 import { updateUser } from '~/actions';
 import AppBar from '../AppBar';
 import Login from '../Login';
 import Profile from '../Profile';
+import './app.scss';
 
 const muiTheme = getMuiTheme({
     palette: {
@@ -101,7 +103,11 @@ class App extends Component {
                         // Not loading login until we've checked for a session
                         this.state.initialSessionCheck ? (
                             <Route exact path="/" render={ props => <Login { ...props } { ...loginProps } /> }/> 
-                        ) : null
+                        ) : (
+                            <div className="app-progress">
+                                <CircularProgress className="app-progress__circle"/>
+                            </div>
+                        )
                     }
                     <AuthedRoute user={ user } path="/profile" component={ Profile } />
                 </div>
