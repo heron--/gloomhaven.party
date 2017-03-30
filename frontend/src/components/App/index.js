@@ -81,11 +81,15 @@ class App extends Component {
 
     render() {
 
+        const loginProps = {
+            updateUser: this.props.updateUser
+        };
+
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div className="app">
                     <AppBar pathname={ this.props.location.pathname } />
-                    <Route exact path="/" component={ Login } />
+                    <Route exact path="/" render={ props => <Login { ...props } { ...loginProps } /> }/>
                     <Route path="/profile" component={ Profile } />
                 </div>
             </MuiThemeProvider>
