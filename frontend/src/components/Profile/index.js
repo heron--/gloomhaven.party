@@ -1,14 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const Profile = ({
     user
 }) => {
     return (
-        <div>
-            PROFILE!
-            { `Email: ${ user.email }` }
-        </div>
+		<Card>
+			<CardTitle title="My Profile" subtitle={ user.email } />
+			<CardText>
+				<RaisedButton label="Deactivate Account" />
+			</CardText>
+		</Card>
     );
 };
 

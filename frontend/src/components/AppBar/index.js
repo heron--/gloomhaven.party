@@ -3,6 +3,7 @@ import MaterialAppBar from 'material-ui/AppBar';
 import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
+import { Link } from 'react-router-dom';
 
 class AppBar extends Component {
 
@@ -56,9 +57,13 @@ class AppBar extends Component {
                     <MenuItem onTouchTap={this.handleClose}>Characters</MenuItem>
                     <MenuItem onTouchTap={this.handleClose}>Parties</MenuItem>
                     <Divider />
-                    <MenuItem onTouchTap={this.handleClose}>My Profile</MenuItem>
+                    <Link to={`/profile`}>
+                        <MenuItem onTouchTap={this.handleClose}>My Profile</MenuItem>
+                    </Link>
                     <MenuItem onTouchTap={this.handleClose}>Settings</MenuItem>
-                    <MenuItem onTouchTap={this.handleClose}>Sign Out</MenuItem>
+                    <Link to={`/api/auth/logout`}>
+                        <MenuItem onTouchTap={this.handleClose}>Sign Out</MenuItem>
+                    </Link>
                 </Drawer>
             </div>
         );
