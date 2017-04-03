@@ -9,6 +9,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import AppBar from '../AppBar';
 import Login from '../Login';
 import Profile from '../Profile';
+import Character from '../Character';
 import './app.scss';
 
 const muiTheme = getMuiTheme({
@@ -85,14 +86,17 @@ class App extends Component {
                     {
                         // Not loading login until we've checked for a session
                         user.initialCheck ? (
-                            <Route exact path="/" component={ Login } />  
+                            <div>
+                                <Route exact path="/" component={ Login } />  
+                                <AuthedRoute user={ user } path="/profile" component={ Profile } />
+                                <AuthedRoute user={ user } path="/character" component={ Character } />
+                            </div>
                         ) : (
                             <div className="app-progress">
                                 <CircularProgress className="app-progress__circle"/>
                             </div>
                         )
                     }
-                    <AuthedRoute user={ user } path="/profile" component={ Profile } />
                 </div>
             </MuiThemeProvider>
         );
@@ -107,7 +111,7 @@ const AuthedRoute = ({
     return (
         <Route { ...rest } render={props => (
 
-            typeof user.email !== 'undefined' ? (
+            user.email.length > 0 ? (
 
                 React.createElement(component, props)
 

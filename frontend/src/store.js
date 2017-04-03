@@ -12,6 +12,9 @@ const initialState = {
     user: {
         email: '',
         initialCheck: false
+    },
+    character: {
+        classes: []
     }
 };
 

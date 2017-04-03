@@ -8,6 +8,7 @@ const app = express();
 
 const authRouter = require('./auth');
 const userRouter = require('./user');
+const characterRouter = require('./character');
 
 const sessionConfig = config.get('sessionConfig');
 const dbConfig = config.get('dbConfig');
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
+app.use('/character', characterRouter);
 
 const server = app.listen(3000, 'localhost', () => {
 	console.log('API Server started on port 3000');

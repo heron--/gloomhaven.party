@@ -70,6 +70,26 @@ function* checkSession() {
     }
 }
 
+function* getAllCharacterClasses() {
+    try {
+
+        const classes = yield call(API.getCharacterClasses);
+
+        yield put({
+            type: 'GET_CHARACTER_CLASSES',
+            classes
+        });
+
+    } catch(e) {
+
+        yield put({
+            type: 'GET_CHARACTER_CLASSES_FAILURE',
+            message: e.message
+        });
+
+    }
+}
+
 function* watchLoginRequest() {
     yield takeLatest('LOGIN_REQUEST', loginRequest);
 }
@@ -81,7 +101,8 @@ function* watchLogoutRequest() {
 function* mainSaga() {
 
     yield [
-        fork( checkSession),
+        fork(checkSession),
+        fork(getAllCharacterClasses),
         fork(watchLoginRequest),
         fork(watchLogoutRequest)
     ];

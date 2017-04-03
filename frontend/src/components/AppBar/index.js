@@ -67,10 +67,12 @@ class AppBar extends Component {
                     open={this.state.open}
                     onRequestChange={(open) => this.setState({open})}
                 >
-                    <MenuItem onTouchTap={ this.handleClose }>Characters</MenuItem>
+                    <Link to="/character">
+                        <MenuItem onTouchTap={ this.handleClose }>Characters</MenuItem>
+                    </Link>
                     <MenuItem onTouchTap={ this.handleClose }>Parties</MenuItem>
                     <Divider />
-                    <Link to={`/profile`}>
+                    <Link to="/profile">
                         <MenuItem onTouchTap={ this.handleClose }>My Profile</MenuItem>
                     </Link>
                     <MenuItem onTouchTap={ this.handleClose }>Settings</MenuItem>

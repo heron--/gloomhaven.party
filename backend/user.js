@@ -93,7 +93,7 @@ router.get('/deactivate', (req, res) => {
 				res.send(getResponseMessage(res, 'Account activated', 200, null));
 			});
 
-		})
+		});
 
 	}
 });

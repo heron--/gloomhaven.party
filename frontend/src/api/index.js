@@ -49,6 +49,34 @@ const API = {
         return fetch(logoutEndpoint, logoutConfig) 
         .then(res => res.json());
     },
+    getCharacterClasses: () => {
+        const getClassesEndpoint = __DEV__ ? devEndpoints.getClasses : endpoints.getClasses;
+
+        const getClassesConfig = {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: "GET",
+            credentials: 'include'
+        };
+
+        return fetch(getClassesEndpoint, getClassesConfig)
+        .then(res => res.json())
+        .then(res => {
+            if(typeof res.data !== 'undefined') {
+                if(typeof res.data !== 'undefined') {
+
+                    return res.data;
+
+                }
+
+                return [];
+            }
+
+            return [];
+        });
+    },
     checkSession: () => {
         const sessionEndpoint = __DEV__ ? devEndpoints.checkSession : endpoints.checkSession;
 

@@ -19,8 +19,21 @@ const user = (state = {}, action) => {
     }
 };
 
+const character = (state = {}, action) => {
+    switch(action.type) {
+        case 'GET_CHARACTER_CLASSES':
+            return Object.assign({}, state, {
+                classes: action.classes
+            });
+
+        default:
+            return state;
+    }
+};
+
 const rootReducer = combineReducers({
-    user
+    user,
+    character
 });
 
 export { rootReducer as default };
