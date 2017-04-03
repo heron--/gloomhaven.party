@@ -1,26 +1,34 @@
 import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
+import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducers';
+import mainSaga from './sagas';
 
 const logger = createLogger();
 
+const sagaMiddleware = createSagaMiddleware();
+
 const initialState = {
-    user: {}
+    user: {
+        email: '',
+        initialCheck: false
+    }
 };
 
-function configureStore(initalState) {
-    const devStore = createStore(
+const stores = {
+    development: () => createStore(
         rootReducer,
-        initalState,
-        applyMiddleware(logger)
-    );
-
-    const prodStore = createStore(
+        initialState,
+        applyMiddleware(sagaMiddleware, logger)
+    ),
+    production: () => createStore(
         rootReducer,
-        initalState
-    );
-
-    return process.env.NODE_ENV === 'development' ? devStore : prodStore;
+        initialState,
+        applyMiddleware(sagaMiddleware)
+    )
 }
 
-export const store = configureStore(initialState);
+export const store = stores[process.env.NODE_ENV]();
+
+sagaMiddleware.run(mainSaga);
+

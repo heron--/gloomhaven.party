@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import MaterialAppBar from 'material-ui/AppBar';
 import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import { Link } from 'react-router-dom';
+import { logoutRequest } from '~/actions';
 
 class AppBar extends Component {
 
@@ -11,6 +13,7 @@ class AppBar extends Component {
         super(props);
         this.handleToggle = this.handleToggle.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
         this.state = {
             open: false 
         };
@@ -22,6 +25,16 @@ class AppBar extends Component {
 
     handleClose() {
         this.setState({open: false});
+    }
+
+    handleLogout() {
+
+        const {
+            logout 
+        } = this.props;
+
+        logout();
+        this.handleClose();
     }
 
     getProps(defaultProps, pathname) {
@@ -54,16 +67,14 @@ class AppBar extends Component {
                     open={this.state.open}
                     onRequestChange={(open) => this.setState({open})}
                 >
-                    <MenuItem onTouchTap={this.handleClose}>Characters</MenuItem>
-                    <MenuItem onTouchTap={this.handleClose}>Parties</MenuItem>
+                    <MenuItem onTouchTap={ this.handleClose }>Characters</MenuItem>
+                    <MenuItem onTouchTap={ this.handleClose }>Parties</MenuItem>
                     <Divider />
                     <Link to={`/profile`}>
-                        <MenuItem onTouchTap={this.handleClose}>My Profile</MenuItem>
+                        <MenuItem onTouchTap={ this.handleClose }>My Profile</MenuItem>
                     </Link>
-                    <MenuItem onTouchTap={this.handleClose}>Settings</MenuItem>
-                    <Link to={`/api/auth/logout`}>
-                        <MenuItem onTouchTap={this.handleClose}>Sign Out</MenuItem>
-                    </Link>
+                    <MenuItem onTouchTap={ this.handleClose }>Settings</MenuItem>
+                    <MenuItem onTouchTap={ this.handleLogout }>Sign Out</MenuItem>
                 </Drawer>
             </div>
         );
@@ -71,4 +82,18 @@ class AppBar extends Component {
     }
 };
 
-export { AppBar as default };
+function mapStateToProps(state) {
+    return {
+        user: state.user
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        logout: () => dispatch(logoutRequest())
+    }
+}
+
+const ConnectedAppBar = connect(mapStateToProps, mapDispatchToProps)(AppBar);
+
+export { ConnectedAppBar as default };

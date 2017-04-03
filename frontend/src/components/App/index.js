@@ -6,8 +6,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import CircularProgress from 'material-ui/CircularProgress';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { checkSession } from '~/api';
-import { updateUser } from '~/actions';
 import AppBar from '../AppBar';
 import Login from '../Login';
 import Profile from '../Profile';
@@ -26,7 +24,6 @@ class App extends Component {
         super(props);
 
         this.state = {
-            initialSessionCheck: false,
             open: false
         };
     }
@@ -34,27 +31,6 @@ class App extends Component {
     componentWillMount() {
         // Material UI Requirement 
         injectTapEventPlugin();
-
-        const {
-            updateUser
-        } = this.props;
-
-        checkSession() 
-        .then(result => {
-
-            const {
-                user
-            } = result.data;
-
-            if(typeof user !== 'undefined') {
-                updateUser(user); 
-            }
-
-            this.setState({
-                initialSessionCheck: true
-            });
-
-        });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -70,7 +46,13 @@ class App extends Component {
 
         if(location.pathname === '/') {
 
-            if(typeof user.email !== 'undefined') {
+            if(typeof location.state !== 'undefined') {
+                if(typeof location.state.initLogout !== 'undefined') {
+
+                }
+            }
+
+            if(user.email.length > 0) {
                 if(typeof user.firstSession !== 'undefined') {
                     if(user.firstSession) {
                         // Redirect to Tutorial 
@@ -79,21 +61,22 @@ class App extends Component {
                         // Redirect to Profile
                         history.push('/profile', {});
                     }
+                } else {
+                    history.push('/profile', {});
                 }
             }
-        };
+        }
+
+        if(user.email.length === 0 && location.pathname !== '/') {
+            history.push('/', {});
+        }
     }
 
     render() {
 
         const {
-            updateUser,
             user
         } = this.props;
-
-        const loginProps = {
-            updateUser
-        };
 
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
@@ -101,8 +84,8 @@ class App extends Component {
                     <AppBar pathname={ this.props.location.pathname } />
                     {
                         // Not loading login until we've checked for a session
-                        this.state.initialSessionCheck ? (
-                            <Route exact path="/" render={ props => <Login { ...props } { ...loginProps } /> }/> 
+                        user.initialCheck ? (
+                            <Route exact path="/" component={ Login } />  
                         ) : (
                             <div className="app-progress">
                                 <CircularProgress className="app-progress__circle"/>
@@ -146,12 +129,6 @@ function mapStateToProps(state) {
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        updateUser: user => dispatch(updateUser(user))
-    };
-}
-
-const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App)
+const ConnectedApp = connect(mapStateToProps)(App)
 
 export { ConnectedApp as default };

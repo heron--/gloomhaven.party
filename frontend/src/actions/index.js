@@ -4,3 +4,17 @@ export function updateUser(user) {
         user
     };
 }
+
+export function loginRequest(tokenObj, profileObj) {
+    return {
+        type: 'LOGIN_REQUEST',
+        tokenObj,
+        profileObj
+    };
+}
+
+export function logoutRequest() {
+    return {
+        type: 'LOGOUT_REQUEST'
+    };
+}

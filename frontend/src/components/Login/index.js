@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import GoogleLogin from 'react-google-login';
-import { login } from '~/api';
+import { loginRequest } from '~/actions';
 import './login.scss';
 
 class Login extends Component {
@@ -21,22 +21,11 @@ class Login extends Component {
     onGoogleSuccess(res) {
 
         const {
-            updateUser
+            loginRequest
         } = this.props;
 
-        login({
-            type: 'google',
-            authData: res.tokenObj,
-            profileDate: res.profileObj
-        })
-        .then(result => {
+        loginRequest(res.tokenObj, res.profileObj);
 
-            const {
-                user
-            } = result.data;
-
-            updateUser(typeof user === 'undefined' ? {} : user);
-        });
     }
 
     onGoogleFailure() {
@@ -49,13 +38,11 @@ class Login extends Component {
             user
         } = this.props;
 
-        console.log(user)
-
         return (
             <div className="login splash-screen">
                 <h1 className="logo">Gloomhaven.Party</h1>
                 {
-                    typeof user.email === 'undefined' ?
+                    user.email.length === 0 ?
                     <GoogleLogin { ...this.googleLoginConfig } style={ {} } className="login__google-signin-container">
                         <div className="login__google-signin"></div>
                     </GoogleLogin> : null
@@ -71,6 +58,12 @@ function mapStateToProps(state) {
     };
 }
 
-const ConnectedLogin = connect(mapStateToProps)(Login);
+function mapDispatchToProps(dispatch) {
+    return {
+        loginRequest: (tokenObj, profileObj) => dispatch(loginRequest(tokenObj, profileObj))
+    }
+}
+
+const ConnectedLogin = connect(mapStateToProps, mapDispatchToProps)(Login);
 
 export { ConnectedLogin as default };
