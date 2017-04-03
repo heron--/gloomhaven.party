@@ -65,13 +65,7 @@ const API = {
         .then(res => res.json())
         .then(res => {
             if(typeof res.data !== 'undefined') {
-                if(typeof res.data !== 'undefined') {
-
-                    return res.data;
-
-                }
-
-                return [];
+                return res.data;
             }
 
             return [];
