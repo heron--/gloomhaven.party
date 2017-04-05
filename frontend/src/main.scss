@@ -14,8 +14,9 @@ a {
 	text-decoration: none;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Medula+One');
+@import url('https://fonts.googleapis.com/css?family=Fjord+One|Medula+One');
 $header-font-family: 'Medula One', cursive;
+$serif-font-family: 'Fjord One', serif;
 
 h1, h2, h3, h4, h5, h6 {
 	font-family: $header-font-family;

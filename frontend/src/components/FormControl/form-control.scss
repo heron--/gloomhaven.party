@@ -1,0 +1,29 @@
+// Forms
+
+$form-control-color: #999;
+$form-control-label-font-family: 'Medula One', cursive;
+
+.form-control {
+	width: 100%;
+	border: 2px solid $form-control-color;
+	position: relative;
+	background: #fff;
+	&:before {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: -2px;
+		width: 4px;
+		height: 100%;
+		background: #fff;
+		border: 2px solid #999;
+		box-shadow: 4px 0 0 #fff;
+	}
+	label {
+		font-family: $form-control-label-font-family;
+		font-size: 30px;
+	}
+	hr {
+		margin-bottom: -8px;
+	}
+}
