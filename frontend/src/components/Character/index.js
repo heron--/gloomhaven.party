@@ -142,14 +142,18 @@ class Character extends Component {
                         underlineStyle={styles.input.underlineStyle}
                         underlineFocusStyle={styles.input.underlineFocusStyle}
                     />
-                    <h3>Level {this.state.levelSlider}</h3>
-                    <Slider
-                        defaultValue={1}
-                        min={1}
-                        max={9}
-                        onChange={this.handleLevelSlider}
-                        step={1}
-                        value={this.state.levelSlider} />
+                    <div className="form-control form-control-checks">
+                        <h3 style={{ paddingBottom: '10px' }}>Level {this.state.levelSlider}</h3>
+                        <Slider
+                            defaultValue={1}
+                            min={1}
+                            max={9}
+                            onChange={this.handleLevelSlider}
+                            step={1}
+                            sliderStyle={{ margin:'0' }}
+                            value={this.state.levelSlider}
+                        />
+                    </div>
                     <TextField
                         className="form-control"
                         floatingLabelText="Experience Notes"
@@ -184,35 +188,79 @@ class Character extends Component {
                         underlineStyle={styles.input.underlineStyle}
                         underlineFocusStyle={styles.input.underlineFocusStyle}
                     />
-                    <h3>Perks</h3>
-                    <Checkbox
-                        label="Remove two -1 cards"
-                        labelStyle={styles.checkbox.labelStyle}
-                    />
-                    <Checkbox
-                        label="Replace one -1 card with one +1 card"
-                        labelStyle={styles.checkbox.labelStyle}
-                    />
-                    <Checkbox
-                        label="Add two +1 cards"
-                        labelStyle={styles.checkbox.labelStyle}
-                    />
-                    <Checkbox
-                        label="Add two +1 cards"
-                        labelStyle={styles.checkbox.labelStyle}
-                    />
-                    <Checkbox
-                        label="Add one +3 card"
-                        labelStyle={styles.checkbox.labelStyle}
-                    />
-                    <h3>Checks</h3>
-                    <div className="checks-container">
-                        <FontIcon
-                            className="gloomhaven-icon-general-check"
+                    <div className="form-control form-control-checks">
+                        <h3>Perks</h3>
+                        <Checkbox
+                            label="Remove two -1 cards"
+                            labelStyle={styles.checkbox.labelStyle}
                         />
-                        <Checkbox />
-                        <Checkbox />
-                        <Checkbox />
+                        <Checkbox
+                            label="Replace one -1 card with one +1 card"
+                            labelStyle={styles.checkbox.labelStyle}
+                        />
+                        <Checkbox
+                            label="Add two +1 cards"
+                            labelStyle={styles.checkbox.labelStyle}
+                        />
+                        <Checkbox
+                            label="Add two +1 cards"
+                            labelStyle={styles.checkbox.labelStyle}
+                        />
+                        <Checkbox
+                            label="Add one +3 card"
+                            labelStyle={styles.checkbox.labelStyle}
+                        />
+                    </div>
+                    <div className="form-control form-control-checks">
+                        <h3>Checks</h3>
+                        <div className="checks-container">
+                            <FontIcon
+                                className="gloomhaven-icon-general-check"
+                            />
+                            <Checkbox />
+                            <Checkbox />
+                            <Checkbox />
+                        </div>
+                        <div className="checks-container">
+                            <FontIcon
+                                className="gloomhaven-icon-general-check"
+                            />
+                            <Checkbox />
+                            <Checkbox />
+                            <Checkbox />
+                        </div>
+                        <div className="checks-container">
+                            <FontIcon
+                                className="gloomhaven-icon-general-check"
+                            />
+                            <Checkbox />
+                            <Checkbox />
+                            <Checkbox />
+                        </div>
+                        <div className="checks-container">
+                            <FontIcon
+                                className="gloomhaven-icon-general-check"
+                            />
+                            <Checkbox />
+                            <Checkbox />
+                            <Checkbox />
+                        </div>
+                        <div className="checks-container">
+                            <FontIcon
+                                className="gloomhaven-icon-general-check"
+                            />
+                            <Checkbox />
+                            <Checkbox />
+                            <Checkbox />
+                        </div>
+                        <div className="checks-container">
+                            <FontIcon
+                                className="gloomhaven-icon-general-check"
+                            />
+                            <Checkbox />
+                            <Checkbox />
+                            <Checkbox />
+                        </div>
                     </div>
                     <TextField
                         className="form-control"
