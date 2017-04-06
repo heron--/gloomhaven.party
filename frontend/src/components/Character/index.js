@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
+import { Card, CardText } from 'material-ui/Card';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
+import Slider from 'material-ui/Slider';
+import Checkbox from 'material-ui/Checkbox';
 import '../FormControl/form-control.scss';
 
 var styles = {
     input:{
+        errorStyle:{
+            bottom: '15px',
+            paddingLeft: '20px'
+        },
         floatingLabelStyle:{
             marginTop: '-12px',
             paddingLeft: '20px',
@@ -26,6 +32,9 @@ var styles = {
         },
         style:{
             width: '100%'
+        },
+        textareaStyle:{
+            marginTop: '20px'
         },
         underlineStyle:{
             bottom: '-2px',
@@ -66,6 +75,11 @@ var styles = {
             height: '72px',
             width: '100%'
         }
+    },
+    checkbox:{
+        labelStyle:{
+            fontFamily: '"Fjord One", serif',
+        }
     }
 };
 
@@ -75,6 +89,7 @@ class Character extends Component {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.state = {
+            levelSlider: 1,
             value: null,
         };
     }
@@ -83,21 +98,22 @@ class Character extends Component {
         this.setState({value});
     }
 
+    handleLevelSlider(event, value) {
+        this.setState({levelSlider: value});
+    }
+
     render() {
         const {
             characterClasses
         } = this.props;
 
         return (
-            <Card>
-                <CardHeader
-                    title="My Character Name"
-                    subtitle="My Character Class"
-                    avatar="images/jsa-128.jpg"
-                />
+            <Card style={{ maxWidth: '600px', margin: '10px auto' }}>
                 <CardText>
                     <SelectField
                         className="form-control"
+                        errorStyle={styles.input.errorStyle}
+                        errorText="This field is required"
                         hintStyle={styles.classSelect.hintStyle}
                         hintText="Class"
                         iconStyle={styles.classSelect.iconStyle}
@@ -106,6 +122,7 @@ class Character extends Component {
                         onChange={this.handleChange}
                         style={styles.classSelect.style}
                         underlineStyle={styles.input.underlineStyle}
+                        underlineFocusStyle={styles.input.underlineFocusStyle}
                         value={this.state.value}
                     >
                         {
@@ -114,7 +131,8 @@ class Character extends Component {
                     </SelectField>
                     <TextField
                         className="form-control"
-                        hintText="Hint Text"
+                        errorStyle={styles.input.errorStyle}
+                        errorText="This field is required"
                         floatingLabelText="Name"
                         floatingLabelStyle={styles.input.floatingLabelStyle}
                         floatingLabelShrinkStyle={styles.input.floatingLabelShrinkStyle}
@@ -123,6 +141,70 @@ class Character extends Component {
                         underlineStyle={styles.input.underlineStyle}
                         underlineFocusStyle={styles.input.underlineFocusStyle}
                     />
+                    <h3>Level {this.state.levelSlider}</h3>
+                    <Slider
+                        defaultValue={1}
+                        min={1}
+                        max={9}
+                        onChange={this.handleLevelSlider}
+                        step={1}
+                        value={this.state.levelSlider} />
+                    <TextField
+                        className="form-control"
+                        floatingLabelText="Experience Notes"
+                        floatingLabelStyle={styles.input.floatingLabelStyle}
+                        floatingLabelShrinkStyle={styles.input.floatingLabelShrinkStyle}
+                        style={styles.input.style}
+                        inputStyle={styles.input.inputStyle}
+                        underlineStyle={styles.input.underlineStyle}
+                        underlineFocusStyle={styles.input.underlineFocusStyle}
+                    />
+                    <TextField
+                        className="form-control"
+                        floatingLabelText="Gold Notes"
+                        floatingLabelStyle={styles.input.floatingLabelStyle}
+                        floatingLabelShrinkStyle={styles.input.floatingLabelShrinkStyle}
+                        style={styles.input.style}
+                        inputStyle={styles.input.inputStyle}
+                        underlineStyle={styles.input.underlineStyle}
+                        underlineFocusStyle={styles.input.underlineFocusStyle}
+                    />
+                    <TextField
+                        className="form-control"
+                        floatingLabelText="Items"
+                        floatingLabelStyle={styles.input.floatingLabelStyle}
+                        floatingLabelShrinkStyle={styles.input.floatingLabelShrinkStyle}
+                        multiLine={true}
+                        rows={2}
+                        rowsMax={4}
+                        style={styles.input.style}
+                        inputStyle={styles.input.inputStyle}
+                        textareaStyle={styles.input.textareaStyle}
+                        underlineStyle={styles.input.underlineStyle}
+                        underlineFocusStyle={styles.input.underlineFocusStyle}
+                    />
+                    <h3>Perks</h3>
+                    <Checkbox
+                        label="Remove two -1 cards"
+                        labelStyle={styles.checkbox.labelStyle}
+                    />
+                    <Checkbox
+                        label="Replace one -1 card with one +1 card"
+                        labelStyle={styles.checkbox.labelStyle}
+                    />
+                    <Checkbox
+                        label="Add two +1 cards"
+                        labelStyle={styles.checkbox.labelStyle}
+                    />
+                    <Checkbox
+                        label="Add two +1 cards"
+                        labelStyle={styles.checkbox.labelStyle}
+                    />
+                    <Checkbox
+                        label="Add one +3 card"
+                        labelStyle={styles.checkbox.labelStyle}
+                    />
+                    
                 </CardText>
             </Card>
         );
