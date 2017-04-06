@@ -33,5 +33,20 @@ $form-control-label-font-family: 'Medula One', cursive;
 	> div {
 		display: inline-block !important;
 		width: auto !important;
+		> div > div {
+			margin-right: 0 !important;
+		}
+	}
+	.gloomhaven-icon-general-check {
+		bottom: 6px;
+		margin-right: 8px;
+		font-size: 14px !important;
+		&:after {
+			position: absolute;
+		    content: ":";
+		    bottom: 2px;
+		    right: -6px;
+		    font-weight: bold;
+		}
 	}
 }

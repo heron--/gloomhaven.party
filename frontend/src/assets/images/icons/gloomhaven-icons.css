@@ -1,0 +1,234 @@
+@font-face {
+  font-family: 'Gloomhaven Icons';
+  src:  url('fonts/gloomhaven-icons.eot?udch0');
+  src:  url('fonts/gloomhaven-icons.eot?udch0#iefix') format('embedded-opentype'),
+    url('fonts/gloomhaven-icons.ttf?udch0') format('truetype'),
+    url('fonts/gloomhaven-icons.woff?udch0') format('woff'),
+    url('fonts/gloomhaven-icons.svg?udch0#gloomhaven-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="gloomhaven-icon-"], [class*=" gloomhaven-icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'Gloomhaven Icons' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.gloomhaven-icon-class-01:before {
+  content: "\e900";
+}
+.gloomhaven-icon-class-02:before {
+  content: "\e901";
+}
+.gloomhaven-icon-class-03:before {
+  content: "\e902";
+}
+.gloomhaven-icon-class-04:before {
+  content: "\e903";
+}
+.gloomhaven-icon-class-05:before {
+  content: "\e904";
+}
+.gloomhaven-icon-class-06:before {
+  content: "\e905";
+}
+.gloomhaven-icon-class-07:before {
+  content: "\e906";
+}
+.gloomhaven-icon-class-08:before {
+  content: "\e907";
+}
+.gloomhaven-icon-class-09:before {
+  content: "\e908";
+}
+.gloomhaven-icon-class-10:before {
+  content: "\e909";
+}
+.gloomhaven-icon-class-11:before {
+  content: "\e90a";
+}
+.gloomhaven-icon-class-12:before {
+  content: "\e90b";
+}
+.gloomhaven-icon-class-13:before {
+  content: "\e90c";
+}
+.gloomhaven-icon-class-14:before {
+  content: "\e90d";
+}
+.gloomhaven-icon-class-15:before {
+  content: "\e90e";
+}
+.gloomhaven-icon-class-16:before {
+  content: "\e90f";
+}
+.gloomhaven-icon-class-17:before {
+  content: "\e910";
+}
+.gloomhaven-icon-condition-add-target:before {
+  content: "\e911";
+}
+.gloomhaven-icon-condition-bless:before {
+  content: "\e912";
+}
+.gloomhaven-icon-condition-curse:before {
+  content: "\e913";
+}
+.gloomhaven-icon-condition-disarm:before {
+  content: "\e914";
+}
+.gloomhaven-icon-condition-immobilize:before {
+  content: "\e915";
+}
+.gloomhaven-icon-condition-invisibility:before {
+  content: "\e916";
+}
+.gloomhaven-icon-condition-muddle:before {
+  content: "\e917";
+}
+.gloomhaven-icon-condition-pierce:before {
+  content: "\e918";
+}
+.gloomhaven-icon-condition-poison:before {
+  content: "\e919";
+}
+.gloomhaven-icon-condition-pull:before {
+  content: "\e91a";
+}
+.gloomhaven-icon-condition-push:before {
+  content: "\e91b";
+}
+.gloomhaven-icon-condition-rolling-modifier:before {
+  content: "\e91c";
+}
+.gloomhaven-icon-condition-strengthen:before {
+  content: "\e91d";
+}
+.gloomhaven-icon-condition-stun:before {
+  content: "\e91e";
+}
+.gloomhaven-icon-condition-wound:before {
+  content: "\e91f";
+}
+.gloomhaven-icon-element-air:before {
+  content: "\e920";
+}
+.gloomhaven-icon-element-dark:before {
+  content: "\e921";
+}
+.gloomhaven-icon-element-earth:before {
+  content: "\e922";
+}
+.gloomhaven-icon-element-fire:before {
+  content: "\e923";
+}
+.gloomhaven-icon-element-ice:before {
+  content: "\e924";
+}
+.gloomhaven-icon-element-light:before {
+  content: "\e925";
+}
+.gloomhaven-icon-element-use:before {
+  content: "\e926";
+}
+.gloomhaven-icon-equip-body:before {
+  content: "\e927";
+}
+.gloomhaven-icon-equip-head:before {
+  content: "\e928";
+}
+.gloomhaven-icon-equip-legs:before {
+  content: "\e929";
+}
+.gloomhaven-icon-equip-one-hand:before {
+  content: "\e92a";
+}
+.gloomhaven-icon-equip-small-item:before {
+  content: "\e92b";
+}
+.gloomhaven-icon-equip-two-hands:before {
+  content: "\e92c";
+}
+.gloomhaven-icon-general-attack:before {
+  content: "\e92d";
+}
+.gloomhaven-icon-general-cannot-recover:before {
+  content: "\e92e";
+}
+.gloomhaven-icon-general-check:before {
+  content: "\e92f";
+}
+.gloomhaven-icon-general-fly:before {
+  content: "\e930";
+}
+.gloomhaven-icon-general-heal:before {
+  content: "\e931";
+}
+.gloomhaven-icon-general-hex:before {
+  content: "\e932";
+}
+.gloomhaven-icon-general-jump:before {
+  content: "\e933";
+}
+.gloomhaven-icon-general-loot:before {
+  content: "\e934";
+}
+.gloomhaven-icon-general-lost-consumed:before {
+  content: "\e935";
+}
+.gloomhaven-icon-general-minus-one-attack-modifier:before {
+  content: "\e936";
+}
+.gloomhaven-icon-general-move:before {
+  content: "\e937";
+}
+.gloomhaven-icon-general-range:before {
+  content: "\e938";
+}
+.gloomhaven-icon-general-recover-ability:before {
+  content: "\e939";
+}
+.gloomhaven-icon-general-refresh-item:before {
+  content: "\e93a";
+}
+.gloomhaven-icon-general-remove-from-game:before {
+  content: "\e93b";
+}
+.gloomhaven-icon-general-retaliate:before {
+  content: "\e93c";
+}
+.gloomhaven-icon-general-return-to-deck:before {
+  content: "\e93d";
+}
+.gloomhaven-icon-general-shield:before {
+  content: "\e93e";
+}
+.gloomhaven-icon-general-shuffle-deck:before {
+  content: "\e93f";
+}
+.gloomhaven-icon-general-spend-item:before {
+  content: "\e940";
+}
+.gloomhaven-icon-general-target:before {
+  content: "\e941";
+}
+.gloomhaven-icon-general-use-slot-gain-xp:before {
+  content: "\e942";
+}
+.gloomhaven-icon-general-use-slot:before {
+  content: "\e943";
+}
+.gloomhaven-icon-general-xp:before {
+  content: "\e944";
+}
+

@@ -6,6 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import Slider from 'material-ui/Slider';
 import Checkbox from 'material-ui/Checkbox';
+import FontIcon from 'material-ui/FontIcon';
 import '../FormControl/form-control.scss';
 
 var styles = {
@@ -206,6 +207,9 @@ class Character extends Component {
                     />
                     <h3>Checks</h3>
                     <div className="checks-container">
+                        <FontIcon
+                            className="gloomhaven-icon-general-check"
+                        />
                         <Checkbox />
                         <Checkbox />
                         <Checkbox />
