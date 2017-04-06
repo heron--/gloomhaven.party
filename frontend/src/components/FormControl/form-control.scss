@@ -8,6 +8,7 @@ $form-control-label-font-family: 'Medula One', cursive;
 	border: 2px solid $form-control-color;
 	position: relative;
 	background: #fff;
+	margin-bottom: 20px;
 	&:before {
 		content: "";
 		position: absolute;
