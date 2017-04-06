@@ -204,7 +204,26 @@ class Character extends Component {
                         label="Add one +3 card"
                         labelStyle={styles.checkbox.labelStyle}
                     />
-                    
+                    <h3>Checks</h3>
+                    <div className="checks-container">
+                        <Checkbox />
+                        <Checkbox />
+                        <Checkbox />
+                    </div>
+                    <TextField
+                        className="form-control"
+                        floatingLabelText="Notes"
+                        floatingLabelStyle={styles.input.floatingLabelStyle}
+                        floatingLabelShrinkStyle={styles.input.floatingLabelShrinkStyle}
+                        multiLine={true}
+                        rows={2}
+                        rowsMax={4}
+                        style={styles.input.style}
+                        inputStyle={styles.input.inputStyle}
+                        textareaStyle={styles.input.textareaStyle}
+                        underlineStyle={styles.input.underlineStyle}
+                        underlineFocusStyle={styles.input.underlineFocusStyle}
+                    />
                 </CardText>
             </Card>
         );

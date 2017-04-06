@@ -28,3 +28,10 @@ $form-control-label-font-family: 'Medula One', cursive;
 		margin-bottom: -8px;
 	}
 }
+
+.checks-container {
+	> div {
+		display: inline-block !important;
+		width: auto !important;
+	}
+}
