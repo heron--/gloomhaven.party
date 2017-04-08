@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card, CardText } from 'material-ui/Card';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import TextField from 'material-ui/TextField';
-import Slider from 'material-ui/Slider';
 import Checkbox from 'material-ui/Checkbox';
 import FontIcon from 'material-ui/FontIcon';
-import '../FormControl/form-control.scss';
+import FormControl from '~/components/FormControl';
 
-var styles = {
+const styles = {
     input:{
         errorStyle:{
             bottom: '15px',
@@ -89,6 +85,7 @@ class Character extends Component {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
+        this.handleLevelSlider = this.handleLevelSlider.bind(this);
         this.state = {
             levelSlider: 1,
             value: null,
@@ -111,82 +108,55 @@ class Character extends Component {
         return (
             <Card style={{ maxWidth: '600px', margin: '10px auto' }}>
                 <CardText>
-                    <SelectField
-                        className="form-control"
-                        errorStyle={styles.input.errorStyle}
-                        errorText="This field is required"
-                        hintStyle={styles.classSelect.hintStyle}
-                        hintText="Class"
-                        iconStyle={styles.classSelect.iconStyle}
-                        labelStyle={styles.classSelect.labelStyle}
-                        menuStyle={styles.classSelect.menuStyle}
-                        onChange={this.handleChange}
-                        style={styles.classSelect.style}
-                        underlineStyle={styles.input.underlineStyle}
-                        underlineFocusStyle={styles.input.underlineFocusStyle}
-                        value={this.state.value}
-                    >
-                        {
-                            characterClasses.map(c => <MenuItem key={ c.id } value={ c.id } primaryText={ c.name } />)
-                        } 
-                    </SelectField>
-                    <TextField
-                        className="form-control"
-                        errorStyle={styles.input.errorStyle}
-                        errorText="This field is required"
-                        floatingLabelText="Name"
-                        floatingLabelStyle={styles.input.floatingLabelStyle}
-                        floatingLabelShrinkStyle={styles.input.floatingLabelShrinkStyle}
-                        style={styles.input.style}
-                        inputStyle={styles.input.inputStyle}
-                        underlineStyle={styles.input.underlineStyle}
-                        underlineFocusStyle={styles.input.underlineFocusStyle}
+                    <FormControl
+                        type="select"
+                        properties={{
+                            required: true,
+                            hintText: "Class",
+                            handleOnChange: () => { },
+                            currentValue: null,
+                            menuItems: characterClasses.map(c => { return { value: c.id, primaryText: c.name } } )
+                        }}
                     />
-                    <div className="form-control form-control-checks">
-                        <h3 style={{ paddingBottom: '10px' }}>Level {this.state.levelSlider}</h3>
-                        <Slider
-                            defaultValue={1}
-                            min={1}
-                            max={9}
-                            onChange={this.handleLevelSlider}
-                            step={1}
-                            sliderStyle={{ margin:'0' }}
-                            value={this.state.levelSlider}
-                        />
-                    </div>
-                    <TextField
-                        className="form-control"
-                        floatingLabelText="Experience Notes"
-                        floatingLabelStyle={styles.input.floatingLabelStyle}
-                        floatingLabelShrinkStyle={styles.input.floatingLabelShrinkStyle}
-                        style={styles.input.style}
-                        inputStyle={styles.input.inputStyle}
-                        underlineStyle={styles.input.underlineStyle}
-                        underlineFocusStyle={styles.input.underlineFocusStyle}
+                    <FormControl
+                        type="text"
+                        properties={{
+                            required: true,
+                            labelText: "Name" 
+                        }}
                     />
-                    <TextField
-                        className="form-control"
-                        floatingLabelText="Gold Notes"
-                        floatingLabelStyle={styles.input.floatingLabelStyle}
-                        floatingLabelShrinkStyle={styles.input.floatingLabelShrinkStyle}
-                        style={styles.input.style}
-                        inputStyle={styles.input.inputStyle}
-                        underlineStyle={styles.input.underlineStyle}
-                        underlineFocusStyle={styles.input.underlineFocusStyle}
+                    <FormControl
+                        type="slider"
+                        properties={{
+                            labelText: `Level ${ this.state.levelSlider }`,
+                            defaultValue: 1,
+                            min: 1,
+                            max: 9,
+                            step: 1,
+                            currentValue: this.state.levelSlider,
+                            handleOnChange: this.handleLevelSlider  
+                        }}
                     />
-                    <TextField
-                        className="form-control"
-                        floatingLabelText="Items"
-                        floatingLabelStyle={styles.input.floatingLabelStyle}
-                        floatingLabelShrinkStyle={styles.input.floatingLabelShrinkStyle}
-                        multiLine={true}
-                        rows={2}
-                        rowsMax={4}
-                        style={styles.input.style}
-                        inputStyle={styles.input.inputStyle}
-                        textareaStyle={styles.input.textareaStyle}
-                        underlineStyle={styles.input.underlineStyle}
-                        underlineFocusStyle={styles.input.underlineFocusStyle}
+                    <FormControl
+                        type="text"
+                        properties={{
+                            required: false, 
+                            labelText: "Experience Notes" 
+                        }}
+                    />
+                    <FormControl
+                        type="text"
+                        properties={{
+                            required: false, 
+                            labelText: "Gold Notes" 
+                        }}
+                    />
+                    <FormControl
+                        type="text"
+                        properties={{
+                            required: false, 
+                            labelText: "Items" 
+                        }}
                     />
                     <div className="form-control form-control-checks">
                         <h3>Perks</h3>
@@ -262,19 +232,17 @@ class Character extends Component {
                             <Checkbox />
                         </div>
                     </div>
-                    <TextField
-                        className="form-control"
-                        floatingLabelText="Notes"
-                        floatingLabelStyle={styles.input.floatingLabelStyle}
-                        floatingLabelShrinkStyle={styles.input.floatingLabelShrinkStyle}
-                        multiLine={true}
-                        rows={2}
-                        rowsMax={4}
-                        style={styles.input.style}
-                        inputStyle={styles.input.inputStyle}
-                        textareaStyle={styles.input.textareaStyle}
-                        underlineStyle={styles.input.underlineStyle}
-                        underlineFocusStyle={styles.input.underlineFocusStyle}
+                    <FormControl
+                        type="text"
+                        properties={{
+                            required: false, 
+                            labelText: "Notes",
+                            textArea: {
+                                multiLine: true,
+                                rows: 2,
+                                rowsMax: 4
+                            } 
+                        }}
                     />
                 </CardText>
             </Card>
