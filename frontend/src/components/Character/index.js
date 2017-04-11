@@ -142,7 +142,7 @@ class Character extends Component {
                             hintText: "Class",
                             handleOnChange: () => { },
                             currentValue: null,
-                            menuItems: characterClasses.map(c => { return { value: c.id, primaryText: c.name } } )
+                            menuItems: characterClasses.map(c => { return { value: c.id, primaryText: c.displayName, className: c.className } } )
                         }}
                     />
                     <FormControl

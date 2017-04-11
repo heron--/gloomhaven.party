@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.42)
 # Database: Gloomhaven
-# Generation Time: 2017-04-03 23:54:55 +0000
+# Generation Time: 2017-04-11 18:37:24 +0000
 # ************************************************************
 
 
@@ -20,6 +20,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
+# Dump of table CharacterClasses
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `CharacterClasses`;
+
+CREATE TABLE `CharacterClasses` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `displayName` varchar(128) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `CharacterClasses` WRITE;
+/*!40000 ALTER TABLE `CharacterClasses` DISABLE KEYS */;
+
+INSERT INTO `CharacterClasses` (`id`, `displayName`)
+VALUES
+	(1,'Inox Brute'),
+	(2,'Savvas Cragheart'),
+	(3,'Vermling Mindthief'),
+	(4,'Orchide Spellweaver'),
+	(5,'Human Scoundrel'),
+	(6,'Quatryl Tinkerer');
+
+/*!40000 ALTER TABLE `CharacterClasses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 # Dump of table Characters
 # ------------------------------------------------------------
 
@@ -30,36 +57,9 @@ CREATE TABLE `Characters` (
   `classId` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `classId` (`classId`),
-  CONSTRAINT `characters_ibfk_1` FOREIGN KEY (`classId`) REFERENCES `characterclasses` (`id`)
+  CONSTRAINT `characters_ibfk_1` FOREIGN KEY (`classId`) REFERENCES `Classes` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-
-# Dump of table CharacterClasses
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `CharacterClasses`;
-
-CREATE TABLE `CharacterClasses` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-LOCK TABLES `CharacterClasses` WRITE;
-/*!40000 ALTER TABLE `CharacterClasses` DISABLE KEYS */;
-
-INSERT INTO `CharacterClasses` (`id`, `name`)
-VALUES
-	(1,'Inox Brute'),
-	(2,'Savvas Cragheart'),
-	(3,'Vermling Mindtheif'),
-	(4,'Orchid Spellweaver'),
-	(5,'Human Scoundrel'),
-	(6,'Quatryl Tinkerer');
-
-/*!40000 ALTER TABLE `CharacterClasses` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table Users
