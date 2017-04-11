@@ -68,6 +68,10 @@ const styles = {
             paddingLeft: '20px',
             paddingRight: '20px',
         },
+        menuItemStyle:{
+            fontFamily: '"Medula One", cursive',
+            fontSize: '24px',
+        },
         style:{
             height: '72px',
             width: '100%'
@@ -99,7 +103,8 @@ const FormControlText = ({
         floatingLabelShrinkStyle: styles.input.floatingLabelShrinkStyle,
         style: styles.input.style,
         inputStyle: styles.input.inputStyle,
-        underlineStyle: styles.input.underlineStyle
+        underlineStyle: styles.input.underlineStyle,
+        underlineFocusStyle: styles.input.underlineFocusStyle
     }, getTextAreaProps(textArea));
 
     return (
@@ -135,6 +140,7 @@ const FormControlSelect = ({
         iconStyle: styles.classSelect.iconStyle,
         labelStyle: styles.classSelect.labelStyle,
         menuStyle: styles.classSelect.menuStyle,
+        menuItemStyle: styles.classSelect.menuItemStyle,
         onChange: handleOnChange,
         style: styles.classSelect.style,
         underlineStyle: styles.input.underlineStyle,
@@ -161,7 +167,7 @@ const FormControlSlider = ({
     handleOnChange
 }) => {
     return (
-        <div className="form-control form-control-checks">
+        <div className="form-control form-control-container">
             <h3 style={{ paddingBottom: '10px' }}>{ labelText }</h3>
             <Slider
                 defaultValue={ defaultValue }

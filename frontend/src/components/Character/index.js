@@ -1,81 +1,38 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Card, CardText } from 'material-ui/Card';
+import { Card, CardActions, CardText } from 'material-ui/Card';
 import Checkbox from 'material-ui/Checkbox';
+import Dialog from 'material-ui/Dialog';
+import Divider from 'material-ui/Divider';
+import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
+import IconButton from 'material-ui/IconButton';
+import Toggle from 'material-ui/Toggle';
 import FormControl from '~/components/FormControl';
+import NavigationMoreVert from 'material-ui/svg-icons/navigation/more-vert';
+import Popover from 'material-ui/Popover/Popover';
+import { Menu, MenuItem } from 'material-ui/Menu';
 
 const styles = {
-    input:{
-        errorStyle:{
-            bottom: '15px',
-            paddingLeft: '20px'
-        },
-        floatingLabelStyle:{
-            marginTop: '-12px',
-            paddingLeft: '20px',
-        },
-        floatingLabelShrinkStyle:{
-            transform: 'scale(0.6) translate(13px, -30px)'
-        },
-        inputStyle:{
-            backgroundColor: '#fff',
-            fontFamily: '"Fjord One", serif',
-            fontSize: '20px',
-            marginTop: '0',
-            paddingLeft: '20px',
-            paddingRight: '20px',
-            paddingTop: '12px',
-        },
-        style:{
-            width: '100%'
-        },
-        textareaStyle:{
-            marginTop: '20px'
-        },
-        underlineStyle:{
-            bottom: '-2px',
-            borderColor: 'transparent'
-        },
-        underlineFocusStyle:{
-            right: '0',
-            width: 'calc(100% - 12px)'
-        }
-    },
-    classSelect:{
-        hintStyle:{
-            bottom: 'calc(50% - 12px)',
-            fontFamily: '"Medula One", cursive',
-            fontSize: '30px',
-            paddingLeft: '20px',
-            zIndex: '10'
-        },
-        iconStyle:{
-            right: '-20px',
-            top: '12px'
-        },
-        labelStyle:{
-            fontFamily: '"Medula One", cursive',
-            fontSize: '30px',
-            top: '7px'
-        },
-        menuStyle:{
-            backgroundColor: '#fff',
-            boxSizing: 'border-box',
-            fontFamily: '"Fjord One", serif',
-            fontSize: '20px',
-            marginTop: '0',
-            paddingLeft: '20px',
-            paddingRight: '20px',
-        },
-        style:{
-            height: '72px',
-            width: '100%'
+    card:{
+        cardActionsStyle:{
+            alignItems: 'center',
+            display: 'flex',
+            justifyContent: 'space-between'
         }
     },
     checkbox:{
         labelStyle:{
             fontFamily: '"Fjord One", serif',
+        }
+    },
+    toggle:{
+        labelStyle:{
+            fontFamily: '"Medula One", cursive',
+            fontSize: '24px',
+        },
+        trackStyle:{
+            backgroundColor: '#eee',
         }
     }
 };
@@ -86,9 +43,23 @@ class Character extends Component {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleLevelSlider = this.handleLevelSlider.bind(this);
+        this.handleOpen = this.handleOpen.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.handleTouchTap = this.handleTouchTap.bind(this);
+        this.handleRequestClose = this.handleRequestClose.bind(this);
         this.state = {
             levelSlider: 1,
             value: null,
+            openDialog: false,
+            openMenu: false,
+            anchorOrigin: {
+                horizontal: 'left',
+                vertical: 'bottom',
+            },
+            targetOrigin: {
+                horizontal: 'left',
+                vertical: 'bottom',
+            },
         };
     }
 
@@ -100,10 +71,66 @@ class Character extends Component {
         this.setState({levelSlider: value});
     }
 
+    handleOpen() {
+        this.setState({
+            openDialog: true,
+            openMenu: false
+        });
+    }
+
+    handleClose() {
+        this.setState({openDialog: false});
+    }
+
+    handleTouchTap(event) {
+        // This prevents ghost click.
+        event.preventDefault();
+        this.setState({
+            openMenu: true,
+            anchorEl: event.currentTarget,
+        });
+    }
+
+    handleRequestClose() {
+        this.setState({
+            openMenu: false,
+        });
+    }
+
+    setAnchor(positionElement, position) {
+        const {anchorOrigin} = this.state;
+        anchorOrigin[positionElement] = position;
+
+        this.setState({
+            anchorOrigin: anchorOrigin,
+        });
+    }
+
+    setTarget(positionElement, position) {
+        const {targetOrigin} = this.state;
+        targetOrigin[positionElement] = position;
+
+        this.setState({
+            targetOrigin: targetOrigin,
+        });
+    }
+
     render() {
         const {
             characterClasses
         } = this.props;
+
+        const actions = [
+            <FlatButton
+                label="Cancel"
+                onTouchTap={this.handleClose}
+            />,
+            <FlatButton
+                label="Delete"
+                keyboardFocused={true}
+                onTouchTap={this.handleClose}
+            />,
+        ];
 
         return (
             <Card style={{ maxWidth: '600px', margin: '10px auto' }}>
@@ -158,7 +185,7 @@ class Character extends Component {
                             labelText: "Items" 
                         }}
                     />
-                    <div className="form-control form-control-checks">
+                    <div className="form-control form-control-container">
                         <h3>Perks</h3>
                         <Checkbox
                             label="Remove two -1 cards"
@@ -181,7 +208,7 @@ class Character extends Component {
                             labelStyle={styles.checkbox.labelStyle}
                         />
                     </div>
-                    <div className="form-control form-control-checks">
+                    <div className="form-control form-control-container">
                         <h3>Checks</h3>
                         <div className="checks-container">
                             <FontIcon
@@ -244,7 +271,52 @@ class Character extends Component {
                             } 
                         }}
                     />
+                    <Toggle
+                        label="Retired"
+                        labelPosition="right"
+                        labelStyle={styles.toggle.labelStyle}
+                        trackStyle={styles.toggle.trackStyle}
+                    />
                 </CardText>
+                <Divider />
+                <CardActions style={styles.card.cardActionsStyle}>
+                    <div>
+                        <IconButton
+                            onTouchTap={this.handleTouchTap}
+                            tooltip="More Actions"
+                            tooltipPosition="top-center"
+                        >
+                            <NavigationMoreVert />
+                        </IconButton>
+                        <Popover
+                            open={this.state.openMenu}
+                            anchorEl={this.state.anchorEl}
+                            anchorOrigin={this.state.anchorOrigin}
+                            targetOrigin={this.state.targetOrigin}
+                            onRequestClose={this.handleRequestClose}
+                        >
+                            <Menu>
+                                <MenuItem
+                                    primaryText="Delete Character"
+                                    onTouchTap={this.handleOpen}
+                                />
+                            </Menu>
+                        </Popover>
+                    </div>
+                    <FlatButton
+                        label="Create Character"
+                        primary={true}
+                    />
+                </CardActions>
+                <Dialog
+                    title="Delete this character"
+                    actions={actions}
+                    modal={false}
+                    open={this.state.openDialog}
+                    onRequestClose={this.handleClose}
+                >
+                    This character will disappear from your characters list and all associated parties.
+                </Dialog>
             </Card>
         );
     } 
