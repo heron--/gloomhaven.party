@@ -151,7 +151,7 @@ const FormControlSelect = ({
     return (
         <SelectField { ...props }>
             {
-                menuItems.map(m => <MenuItem key={ m.value } className={ typeof m.className !== 'undefined' ? m.className : '' } value={ m.value } primaryText={ m.primaryText } />)
+                menuItems.map(m => <MenuItem key={ m.value } leftIcon={ <div className={ m.className }></div> } value={ m.value } primaryText={ m.primaryText } />)
             }
         </SelectField>
     ); 
