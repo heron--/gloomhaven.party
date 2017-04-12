@@ -182,7 +182,12 @@ class Character extends Component {
                         type="text"
                         properties={{
                             required: false, 
-                            labelText: "Items" 
+                            labelText: "Items",
+                            textArea: {
+                                multiLine: true,
+                                rows: 2,
+                                rowsMax: 4
+                            }
                         }}
                     />
                     <div className="form-control form-control-container">

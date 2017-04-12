@@ -24,6 +24,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+[class^="gloomhaven-icon-"]:before, [class*=" gloomhaven-icon-"]:before {
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
+
 .gloomhaven-icon-class-01:before {
   content: "\e900";
 }
@@ -65,6 +71,7 @@
 }
 .gloomhaven-icon-class-14:before {
   content: "\e90d";
+  font-size: small;
 }
 .gloomhaven-icon-class-15:before {
   content: "\e90e";
