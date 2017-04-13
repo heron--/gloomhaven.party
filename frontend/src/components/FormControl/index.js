@@ -156,7 +156,7 @@ const FormControlSelect = ({
     return (
         <SelectField { ...props }>
             {
-                menuItems.map(m => <MenuItem key={ m.value } label={ <div><FontIcon className={ m.className } style={{ marginRight: '10px' }} />{m.primaryText}</div> } leftIcon={ <div className={ m.className }></div> } value={ m.value } primaryText={ m.primaryText } />)
+                menuItems.map(m => <MenuItem key={ m.value } label={ <div><FontIcon className={ m.className } style={{ marginRight: '10px' }} />{ m.primaryText }</div> } leftIcon={ <div className={ m.className }></div> } value={ m.value } primaryText={ m.primaryText } />)
             }
         </SelectField>
     ); 

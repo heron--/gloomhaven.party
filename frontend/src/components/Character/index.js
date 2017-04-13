@@ -132,6 +132,16 @@ class Character extends Component {
             />,
         ];
 
+        const characterClassMenuItems = characterClasses.map(c => {
+            const primaryText = c.spoiler ? '???' : c.displayName;
+
+            return {
+                value: c.id,
+                className: c.className,
+                primaryText
+            }
+        });
+
         return (
             <Card style={{ maxWidth: '600px', margin: '10px auto' }}>
                 <CardText>
@@ -142,7 +152,7 @@ class Character extends Component {
                             hintText: "Class",
                             handleOnChange: this.handleChange,
                             currentValue: this.state.value,
-                            menuItems: characterClasses.map(c => { return { value: c.id, primaryText: c.displayName, className: c.className } } )
+                            menuItems: characterClassMenuItems 
                         }}
                     />
                     <FormControl
