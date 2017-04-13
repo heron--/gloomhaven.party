@@ -48,6 +48,14 @@ $form-control-label-font-family: 'Medula One', cursive;
 			}
 		}
 	}
+
+	&.form-control-disabled {
+		cursor: text !important;
+		label {
+			pointer-events: initial !important;
+    		user-select: initial !important;
+		}
+	}
 }
 
 .checks-container {

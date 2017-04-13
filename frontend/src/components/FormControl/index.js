@@ -37,6 +37,9 @@ const styles = {
             bottom: '-2px',
             borderColor: 'transparent'
         },
+        underlineDisabledStyle:{
+            display: 'none'
+        },
         underlineFocusStyle:{
             right: '0',
             width: 'calc(100% - 12px)'
@@ -103,6 +106,7 @@ const FormControlText = ({
         floatingLabelShrinkStyle: styles.input.floatingLabelShrinkStyle,
         style: styles.input.style,
         inputStyle: styles.input.inputStyle,
+        underlineDisabledStyle: styles.input.underlineDisabledStyle,
         underlineStyle: styles.input.underlineStyle,
         underlineFocusStyle: styles.input.underlineFocusStyle
     }, getTextAreaProps(textArea));
