@@ -15,6 +15,7 @@ CharacterClass.prototype.get = function get() {
 	return {
 		id: cryptr.encrypt(this.id),
 		className: `gloomhaven-icon-class-${leftPad(this.id, 2, '0')}`,
+		svgName: `Class${leftPad(this.id, 2, '0')}Icon`,
 		displayName: this.name
 	};
 };
