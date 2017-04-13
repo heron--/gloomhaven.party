@@ -25,7 +25,7 @@ router.get('/classes', (req, res) => {
 
 			if(error) return next(error);
 
-			res.send(getResponseMessage(res, 'Return character classes', 200, results.map(r => new CharacterClass(r.id, r.displayName).get())));
+			res.send(getResponseMessage(res, 'Return character classes', 200, results.map(r => new CharacterClass(r.id, r.displayName, !!r.spoiler).get())));
 		});
 
 	});

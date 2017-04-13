@@ -16,14 +16,19 @@ const Profile = ({
 			<CardText>
 				<h3>Spoilers</h3>
 				<p style={{ marginBottom: '10px' }}>Check off which character classes you would not mind seeing throughout the system.</p>
-				{characterClasses.map(c => {
-					const labelName = <FontIcon className={c.className} />
-					return (
-						<Checkbox
-							label={labelName}
-						/>
-					)
-				})}
+				{
+                    characterClasses.filter(c => c.spoiler).map(c => {
+
+    					const labelName = <FontIcon className={ c.className } />
+
+    					return (
+    						<Checkbox
+                                key={ c.id }
+    							label={ labelName }
+    						/>
+    					)
+    				})
+                }
 				<Divider style={{ marginTop: '10px', marginBottom: '10px' }} />
 				<RaisedButton label="Deactivate Account" />
 			</CardText>

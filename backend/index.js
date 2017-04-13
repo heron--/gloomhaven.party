@@ -20,6 +20,13 @@ app.get('/', (req, res) => {
 	res.send('Welcome to the Gloomhaven.Party API!');
 });
 
+app.use((req, res, next) => {
+	res.set({
+		'Content-Type': 'application/json'
+	});
+	next();
+});
+
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
 app.use('/character', characterRouter);
