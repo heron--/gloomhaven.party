@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
+import FontIcon from 'material-ui/FontIcon';
 import './form-control.scss';
 
 const styles = {
@@ -155,7 +156,7 @@ const FormControlSelect = ({
     return (
         <SelectField { ...props }>
             {
-                menuItems.map(m => <MenuItem key={ m.value } leftIcon={ <div className={ m.className }></div> } value={ m.value } primaryText={ m.primaryText } />)
+                menuItems.map(m => <MenuItem key={ m.value } label={ <div><FontIcon className={ m.className } style={{ marginRight: '10px' }} />{m.primaryText}</div> } leftIcon={ <div className={ m.className }></div> } value={ m.value } primaryText={ m.primaryText } />)
             }
         </SelectField>
     ); 

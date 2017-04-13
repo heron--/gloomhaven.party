@@ -140,8 +140,8 @@ class Character extends Component {
                         properties={{
                             required: true,
                             hintText: "Class",
-                            handleOnChange: () => { },
-                            currentValue: null,
+                            handleOnChange: this.handleChange,
+                            currentValue: this.state.value,
                             menuItems: characterClasses.map(c => { return { value: c.id, primaryText: c.displayName, className: c.className } } )
                         }}
                     />
