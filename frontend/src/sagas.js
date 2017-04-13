@@ -8,7 +8,7 @@ function* loginRequest(action) {
         const loginRequestBody = {
             type: 'google',
             authData: action.tokenObj,
-            profileDate: action.profileObj
+            profileData: action.profileObj
         };
 
         const user = yield call(API.login, loginRequestBody);
