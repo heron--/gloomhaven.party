@@ -23,10 +23,6 @@ const router = express.Router({
 });
 
 router.post('/login', verifyUser, checkUserExists, (req, res) => {
-	// res.send(getResponseMessage(res, 'Login successful', 200, {
-	// 	user: req.gloomhavensession.user
-	// }));
-
 	getUserCharacters(req, res);
 });
 
