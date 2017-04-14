@@ -9,7 +9,8 @@ const cryptr = new Cryptr(encryptionConfig.secret);
 
 const {
 	getResponseMessage,
-	getLoginErrorMessage
+	getLoginErrorMessage,
+	getUserCharacters
 } = new utils();
 
 const router = express.Router({
@@ -32,10 +33,8 @@ router.get('/check-session', (req, res) => {
 
 		// Everything's good
 		} else {
-			
-			res.send(getResponseMessage(res, 'User is logged in', 200, {
-				user: new User(req.gloomhavensession.user.email)
-			}));
+
+			getUserCharacters(req, res);
 
 		}
 
@@ -65,7 +64,7 @@ router.get('/activate', (req, res) => {
 				res.send(getResponseMessage(res, 'Account activated', 200, null));
 			});
 
-		})
+		});
 
 	}
 });

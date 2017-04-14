@@ -14,7 +14,8 @@ const encryptionConfig = config.get('encryptionConfig');
 const cryptr = new Cryptr(encryptionConfig.secret);
 
 const {
-	getResponseMessage
+	getResponseMessage,
+	getUserCharacters
 } = new utils();
 
 const router = express.Router({
@@ -22,9 +23,11 @@ const router = express.Router({
 });
 
 router.post('/login', verifyUser, checkUserExists, (req, res) => {
-	res.send(getResponseMessage(res, 'Login successful', 200, {
-		user: req.gloomhavensession.user
-	}));
+	// res.send(getResponseMessage(res, 'Login successful', 200, {
+	// 	user: req.gloomhavensession.user
+	// }));
+
+	getUserCharacters(req, res);
 });
 
 router.get('/logout', (req, res) => {
