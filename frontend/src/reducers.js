@@ -26,6 +26,12 @@ const character = (state = {}, action) => {
                 classes: action.classes
             });
 
+        case 'LOGIN_SUCCESS':
+        case 'CHECK_SESSION':
+            return Object.assign({}, state, {
+                userCharacters: action.userCharacters
+            });
+
         default:
             return state;
     }

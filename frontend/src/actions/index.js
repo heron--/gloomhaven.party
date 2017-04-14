@@ -1,7 +1,8 @@
-export function updateUser(user) {
+export function updateUser(user, userCharacters) {
     return {
         type: 'UPDATE_USER',
-        user
+        user,
+        userCharacters
     };
 }
 

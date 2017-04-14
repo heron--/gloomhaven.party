@@ -11,11 +11,15 @@ function* loginRequest(action) {
             profileData: action.profileObj
         };
 
-        const user = yield call(API.login, loginRequestBody);
+        const data = yield call(API.login, loginRequestBody);
+
+        const user = typeof data.user !== 'undefined' ? data.user : {};
+        const userCharacters = typeof data.userCharacters !== 'undefined' ? data.userCharacters : [];
 
         yield put({
             type: 'LOGIN_SUCCESS',
-            user
+            user,
+            userCharacters
         });
 
     } catch(e) {
@@ -51,13 +55,17 @@ function* logoutRequest(action) {
 function* checkSession() {
     try {
 
-        const user = yield call(API.checkSession);
+        const data = yield call(API.checkSession);
+
+        const user = typeof data.user !== 'undefined' ? data.user : {};
+        const userCharacters = typeof data.userCharacters !== 'undefined' ? data.userCharacters : [];
 
         yield put({
             type: 'CHECK_SESSION',
             user: Object.assign({}, user, {
                 initialCheck: true
-            })
+            }),
+            userCharacters
         });
 
     } catch(e) {

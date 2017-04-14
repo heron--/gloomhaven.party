@@ -14,7 +14,8 @@ const initialState = {
         initialCheck: false
     },
     character: {
-        classes: []
+        classes: [],
+        userCharacters: []
     }
 };
 

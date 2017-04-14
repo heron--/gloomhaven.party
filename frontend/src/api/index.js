@@ -20,13 +20,9 @@ const API = {
         .then(res => res.json()) 
         .then(res => {
             if(typeof res.data !== 'undefined') {
-                if(typeof res.data.user !== 'undefined') {
 
-                    return res.data.user;
+                return res.data;
 
-                }
-
-                return {};
             }
 
             return {};
@@ -86,14 +82,9 @@ const API = {
         return fetch(sessionEndpoint, sessionConfig)
         .then(res => res.json())
         .then(res => {
+
             if(typeof res.data !== 'undefined') {
-                if(typeof res.data.user !== 'undefined') {
-
-                    return res.data.user;
-
-                }
-
-                return {};
+                return res.data;
             }
 
             return {};
