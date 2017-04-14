@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.42)
 # Database: Gloomhaven
-# Generation Time: 2017-04-14 16:56:39 +0000
+# Generation Time: 2017-04-14 17:25:22 +0000
 # ************************************************************
 
 
@@ -254,7 +254,18 @@ VALUES
 	(86,6,'Add one +1 Heal 2 card'),
 	(87,6,'Add one +1 Heal 2 card'),
 	(88,6,'Add one +0 ADD TARGET card'),
-	(89,6,'Ignore negative scenario effects');
+	(89,6,'Ignore negative scenario effects'),
+	(90,7,'Add one +1 card'),
+	(91,8,'Add one +1 card'),
+	(92,9,'Add one +1 card'),
+	(93,10,'Ignore negative scenario effects'),
+	(94,11,'Add one +1 card'),
+	(95,12,'Add one +1 card'),
+	(96,13,'Add one +1 card'),
+	(97,14,'Add one +1 card'),
+	(98,15,'Add one +1 card'),
+	(99,16,'Add one +1 card'),
+	(100,17,'Add one +1 card');
 
 /*!40000 ALTER TABLE `Perks` ENABLE KEYS */;
 UNLOCK TABLES;

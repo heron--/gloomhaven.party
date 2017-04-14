@@ -17,16 +17,35 @@ const router = express.Router({
 	mergeParams: true
 });
 
-router.get('/classes', (req, res) => {
+router.get('/classes', (req, res, next) => {
 	req.getConnection((error, connection) => {
 
 		if(error) return next(error);
 
-		connection.query('SELECT * FROM `CharacterClasses`', (error, results) => {
+		const selectQuery = 'SELECT cc.id, cc.displayName, cc.spoiler, p.description AS perkDescription, p.id AS perkId FROM `CharacterClasses` AS cc JOIN `Perks` AS p ON p.characterClassId = cc.id';
+
+		connection.query(selectQuery, (error, results) => {
 
 			if(error) return next(error);
 
-			res.send(getResponseMessage(res, 'Return character classes', 200, results.map(r => new CharacterClass(r.id, r.displayName, !!r.spoiler).get())));
+			const characterClasses = [];
+
+			results.forEach(r => {
+		
+				const characterClass = characterClasses.filter(cc => cc.id === r.id)[0];
+
+				if(typeof characterClass === 'undefined') {
+
+					characterClasses.push(new CharacterClass(r.id, r.displayName, !!r.spoiler).addPerk(r.perkDescription, r.perkId));
+
+				} else {
+
+					characterClass.addPerk(r.perkDescription, r.perkId);
+
+				}
+			});
+
+			res.send(getResponseMessage(res, 'Return character classes', 200, characterClasses.map(c => c.get())));
 		});
 
 	});
