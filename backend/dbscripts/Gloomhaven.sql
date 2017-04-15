@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.42)
 # Database: Gloomhaven
-# Generation Time: 2017-04-14 17:25:22 +0000
+# Generation Time: 2017-04-15 15:00:18 +0000
 # ************************************************************
 
 
@@ -238,7 +238,7 @@ VALUES
 	(70,5,'Add two ROLLING MODIFIER POISON cards'),
 	(71,5,'Add two ROLLING MODIFIER POISON cards'),
 	(72,5,'Add two ROLLING MODIFIER MUDDLE cards'),
-	(73,5,'Add one ROLLING MODIFIER Invisible card'),
+	(73,5,'Add one ROLLING MODIFIER INVISIBLE card'),
 	(74,5,'Ignore negative scenario effects'),
 	(75,6,'Remove two -1 cards'),
 	(76,6,'Remove two -1 cards'),
