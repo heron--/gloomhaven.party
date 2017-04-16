@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import CharacterDetails from './Details';
+import CharacterDetails from './details';
 
 class Character extends Component {
 
     render() {
-            return <CharacterDetails />;
+        return <CharacterDetails />;
     } 
 }
 
