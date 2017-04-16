@@ -13,7 +13,6 @@ import FormControl from '~/components/FormControl';
 import NavigationMoreVert from 'material-ui/svg-icons/navigation/more-vert';
 import Popover from 'material-ui/Popover/Popover';
 import { Menu, MenuItem } from 'material-ui/Menu';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 const styles = {
     card:{
@@ -39,11 +38,12 @@ const styles = {
     }
 };
 
-class Character extends Component {
+class CharacterDetails extends Component {
 
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
+        this.handleClassChange = this.handleClassChange.bind(this);
         this.handleLevelSlider = this.handleLevelSlider.bind(this);
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -62,11 +62,16 @@ class Character extends Component {
                 horizontal: 'left',
                 vertical: 'bottom',
             },
+            currentClass: null
         };
     }
 
     handleChange(event, index, value) {
         this.setState({value});
+    }
+
+    handleClassChange(event, index, currentClass) {
+        this.setState({ currentClass });
     }
 
     handleLevelSlider(event, value) {
@@ -118,6 +123,7 @@ class Character extends Component {
     }
 
     render() {
+
         const {
             characterClasses
         } = this.props;
@@ -133,6 +139,11 @@ class Character extends Component {
                 onTouchTap={this.handleClose}
             />,
         ];
+
+        console.log(this.state);
+
+        const currentCharacterClass = characterClasses.filter(c => c.id === this.state.currentClass)[0];
+        console.log(currentCharacterClass)
 
         const characterClassMenuItems = characterClasses.map(c => {
             const primaryText = c.spoiler ? '???' : c.displayName;
@@ -158,18 +169,10 @@ class Character extends Component {
                             properties={{
                                 required: true,
                                 hintText: "Class",
-                                handleOnChange: this.handleChange,
-                                currentValue: this.state.value,
+                                handleOnChange: this.handleClassChange,
+                                currentValue: this.state.currentClass,
                                 menuItems: characterClassMenuItems 
                             }}
-                        />
-                        <FormsyText
-                            name="name"
-                            validations="isWords"
-                            validationError={wordsError}
-                            required
-                            hintText="What is your name?"
-                            floatingLabelText="Name"
                         />
                         <FormControl
                             type="text"
@@ -216,29 +219,13 @@ class Character extends Component {
                                 }
                             }}
                         />
-                        <div className="form-control form-control-container">
-                            <h3>Perks</h3>
-                            <Checkbox
-                                label="Remove two -1 cards"
-                                labelStyle={styles.checkbox.labelStyle}
-                            />
-                            <Checkbox
-                                label="Replace one -1 card with one +1 card"
-                                labelStyle={styles.checkbox.labelStyle}
-                            />
-                            <Checkbox
-                                label="Add two +1 cards"
-                                labelStyle={styles.checkbox.labelStyle}
-                            />
-                            <Checkbox
-                                label="Add two +1 cards"
-                                labelStyle={styles.checkbox.labelStyle}
-                            />
-                            <Checkbox
-                                label="Add one +3 card"
-                                labelStyle={styles.checkbox.labelStyle}
-                            />
-                        </div>
+                        <FormControl
+                            type="perks"
+                            properties={{
+                                perks: typeof currentCharacterClass !== 'undefined' ? currentCharacterClass.perks : [],
+                                handleOnChange: () => {}
+                            }}
+                        />
                         <div className="form-control form-control-container">
                             <h3>Checks</h3>
                             <div className="checks-container">
@@ -361,6 +348,6 @@ function mapStateToProps(state) {
     };
 }
 
-const ConnectedCharacter = connect(mapStateToProps)(Character);
+const ConnectedCharacterDetails = connect(mapStateToProps)(CharacterDetails);
 
-export { ConnectedCharacter as default };
+export { ConnectedCharacterDetails as default };
