@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Formsy from 'formsy-react';
 import { connect } from 'react-redux';
 import { Card, CardActions, CardText } from 'material-ui/Card';
 import Checkbox from 'material-ui/Checkbox';
@@ -177,188 +176,181 @@ class CharacterDetails extends Component {
         });
 
         return (
-            <Formsy.Form
-                onValid={this.enableButton}
-                onInvalid={this.disableButton}
-                onValidSubmit={this.submitForm}
-                onInvalidSubmit={this.notifyFormError}
-              >
-                <Card style={{ maxWidth: '600px', margin: '10px auto' }}>
-                    <CardText>
-                        <FormControl
-                            type="select"
-                            properties={{
-                                required: true,
-                                hintText: "Class",
-                                handleOnChange: this.handleClassChange,
-                                currentValue: this.state.currentClass,
-                                menuItems: characterClassMenuItems 
-                            }}
-                        />
-                        <FormControl
-                            type="text"
-                            properties={{
-                                required: true,
-                                labelText: "Name" 
-                            }}
-                        />
-                        <FormControl
-                            type="slider"
-                            properties={{
-                                labelText: `Level ${ this.state.levelSlider }`,
-                                defaultValue: 1,
-                                min: 1,
-                                max: 9,
-                                step: 1,
-                                currentValue: this.state.levelSlider,
-                                handleOnChange: this.handleLevelSlider  
-                            }}
-                        />
-                        <FormControl
-                            type="text"
-                            properties={{
-                                required: false, 
-                                labelText: "Experience Notes" 
-                            }}
-                        />
-                        <FormControl
-                            type="text"
-                            properties={{
-                                required: false, 
-                                labelText: "Gold Notes" 
-                            }}
-                        />
-                        <FormControl
-                            type="text"
-                            properties={{
-                                required: false, 
-                                labelText: "Items",
-                                textArea: {
-                                    multiLine: true,
-                                    rows: 2,
-                                    rowsMax: 4
-                                }
-                            }}
-                        />
-                        <FormControl
-                            type="perks"
-                            properties={{
-                                perks: typeof currentCharacterClass !== 'undefined' ? currentCharacterClass.perks : [],
-                                handleOnChange: () => {}
-                            }}
-                        />
-                        <div className="form-control form-control-container">
-                            <h3>Checks</h3>
-                            <div className="checks-container">
-                                <FontIcon
-                                    className="gloomhaven-icon-general-check"
-                                />
-                                <Checkbox />
-                                <Checkbox />
-                                <Checkbox />
-                            </div>
-                            <div className="checks-container">
-                                <FontIcon
-                                    className="gloomhaven-icon-general-check"
-                                />
-                                <Checkbox />
-                                <Checkbox />
-                                <Checkbox />
-                            </div>
-                            <div className="checks-container">
-                                <FontIcon
-                                    className="gloomhaven-icon-general-check"
-                                />
-                                <Checkbox />
-                                <Checkbox />
-                                <Checkbox />
-                            </div>
-                            <div className="checks-container">
-                                <FontIcon
-                                    className="gloomhaven-icon-general-check"
-                                />
-                                <Checkbox />
-                                <Checkbox />
-                                <Checkbox />
-                            </div>
-                            <div className="checks-container">
-                                <FontIcon
-                                    className="gloomhaven-icon-general-check"
-                                />
-                                <Checkbox />
-                                <Checkbox />
-                                <Checkbox />
-                            </div>
-                            <div className="checks-container">
-                                <FontIcon
-                                    className="gloomhaven-icon-general-check"
-                                />
-                                <Checkbox />
-                                <Checkbox />
-                                <Checkbox />
-                            </div>
+            <Card style={{ maxWidth: '600px', margin: '10px auto' }}>
+                <CardText>
+                    <FormControl
+                        type="select"
+                        properties={{
+                            required: true,
+                            hintText: "Class",
+                            handleOnChange: this.handleClassChange,
+                            currentValue: this.state.currentClass,
+                            menuItems: characterClassMenuItems 
+                        }}
+                    />
+                    <FormControl
+                        type="text"
+                        properties={{
+                            required: true,
+                            labelText: "Name" 
+                        }}
+                    />
+                    <FormControl
+                        type="slider"
+                        properties={{
+                            labelText: `Level ${ this.state.levelSlider }`,
+                            defaultValue: 1,
+                            min: 1,
+                            max: 9,
+                            step: 1,
+                            currentValue: this.state.levelSlider,
+                            handleOnChange: this.handleLevelSlider  
+                        }}
+                    />
+                    <FormControl
+                        type="text"
+                        properties={{
+                            required: false, 
+                            labelText: "Experience Notes" 
+                        }}
+                    />
+                    <FormControl
+                        type="text"
+                        properties={{
+                            required: false, 
+                            labelText: "Gold Notes" 
+                        }}
+                    />
+                    <FormControl
+                        type="text"
+                        properties={{
+                            required: false, 
+                            labelText: "Items",
+                            textArea: {
+                                multiLine: true,
+                                rows: 2,
+                                rowsMax: 4
+                            }
+                        }}
+                    />
+                    <FormControl
+                        type="perks"
+                        properties={{
+                            perks: typeof currentCharacterClass !== 'undefined' ? currentCharacterClass.perks : [],
+                            handleOnChange: () => {}
+                        }}
+                    />
+                    <div className="form-control form-control-container">
+                        <h3>Checks</h3>
+                        <div className="checks-container">
+                            <FontIcon
+                                className="gloomhaven-icon-general-check"
+                            />
+                            <Checkbox />
+                            <Checkbox />
+                            <Checkbox />
                         </div>
-                        <FormControl
-                            type="text"
-                            properties={{
-                                required: false, 
-                                labelText: "Notes",
-                                textArea: {
-                                    multiLine: true,
-                                    rows: 2,
-                                    rowsMax: 4
-                                } 
-                            }}
-                        />
-                        <Toggle
-                            label="Retired"
-                            labelPosition="right"
-                            labelStyle={styles.toggle.labelStyle}
-                            trackStyle={styles.toggle.trackStyle}
-                        />
-                    </CardText>
-                    <Divider />
-                    <CardActions style={styles.card.cardActionsStyle}>
-                        <div>
-                            <IconButton
-                                onTouchTap={this.handleTouchTap}
-                                tooltip="More Actions"
-                                tooltipPosition="top-center"
-                            >
-                                <NavigationMoreVert />
-                            </IconButton>
-                            <Popover
-                                open={this.state.openMenu}
-                                anchorEl={this.state.anchorEl}
-                                anchorOrigin={this.state.anchorOrigin}
-                                targetOrigin={this.state.targetOrigin}
-                                onRequestClose={this.handleRequestClose}
-                            >
-                                <Menu>
-                                    <MenuItem
-                                        primaryText="Delete Character"
-                                        onTouchTap={this.handleOpen}
-                                    />
-                                </Menu>
-                            </Popover>
+                        <div className="checks-container">
+                            <FontIcon
+                                className="gloomhaven-icon-general-check"
+                            />
+                            <Checkbox />
+                            <Checkbox />
+                            <Checkbox />
                         </div>
-                        <FlatButton
-                            label="Create Character"
-                            primary={true}
-                            type="submit"
-                        />
-                    </CardActions>
-                    <Dialog
-                        title="Delete this character"
-                        actions={actions}
-                        modal={false}
-                        open={this.state.openDialog}
-                        onRequestClose={this.handleClose}
-                    >
-                        This character will disappear from your characters list and all associated parties.
-                    </Dialog>
-                </Card>
-            </Formsy.Form>
+                        <div className="checks-container">
+                            <FontIcon
+                                className="gloomhaven-icon-general-check"
+                            />
+                            <Checkbox />
+                            <Checkbox />
+                            <Checkbox />
+                        </div>
+                        <div className="checks-container">
+                            <FontIcon
+                                className="gloomhaven-icon-general-check"
+                            />
+                            <Checkbox />
+                            <Checkbox />
+                            <Checkbox />
+                        </div>
+                        <div className="checks-container">
+                            <FontIcon
+                                className="gloomhaven-icon-general-check"
+                            />
+                            <Checkbox />
+                            <Checkbox />
+                            <Checkbox />
+                        </div>
+                        <div className="checks-container">
+                            <FontIcon
+                                className="gloomhaven-icon-general-check"
+                            />
+                            <Checkbox />
+                            <Checkbox />
+                            <Checkbox />
+                        </div>
+                    </div>
+                    <FormControl
+                        type="text"
+                        properties={{
+                            required: false, 
+                            labelText: "Notes",
+                            textArea: {
+                                multiLine: true,
+                                rows: 2,
+                                rowsMax: 4
+                            } 
+                        }}
+                    />
+                    <Toggle
+                        label="Retired"
+                        labelPosition="right"
+                        labelStyle={styles.toggle.labelStyle}
+                        trackStyle={styles.toggle.trackStyle}
+                    />
+                </CardText>
+                <Divider />
+                <CardActions style={styles.card.cardActionsStyle}>
+                    <div>
+                        <IconButton
+                            onTouchTap={this.handleTouchTap}
+                            tooltip="More Actions"
+                            tooltipPosition="top-center"
+                        >
+                            <NavigationMoreVert />
+                        </IconButton>
+                        <Popover
+                            open={this.state.openMenu}
+                            anchorEl={this.state.anchorEl}
+                            anchorOrigin={this.state.anchorOrigin}
+                            targetOrigin={this.state.targetOrigin}
+                            onRequestClose={this.handleRequestClose}
+                        >
+                            <Menu>
+                                <MenuItem
+                                    primaryText="Delete Character"
+                                    onTouchTap={this.handleOpen}
+                                />
+                            </Menu>
+                        </Popover>
+                    </div>
+                    <FlatButton
+                        label="Create Character"
+                        primary={true}
+                        type="submit"
+                    />
+                </CardActions>
+                <Dialog
+                    title="Delete this character"
+                    actions={actions}
+                    modal={false}
+                    open={this.state.openDialog}
+                    onRequestClose={this.handleClose}
+                >
+                    This character will disappear from your characters list and all associated parties.
+                </Dialog>
+            </Card>
         );
     } 
 }
