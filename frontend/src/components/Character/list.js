@@ -12,14 +12,14 @@ const CharacterList = ({
     characterClasses
 }) => {
 
-    const cardTitle = [
+    const cardTitle = (
         <span>
             Characters&nbsp;
             <Link to={ `/character/create` }>
                 <FlatButton label="Add Character" primary={true} />
             </Link>
         </span>
-    ];
+    );
 
     const emptyView = (
         <div style={{ textAlign: "center" }}>
@@ -58,18 +58,18 @@ const CharacterList = ({
 
                             const iconClass = characterClasses.filter(cc => cc.id === c.classId)[0].className;
 
-                                return (
-                                    <TableRow key={ c.id }>
-                                        <TableRowColumn style={{ width: '30px', textAlign: 'center' }}><FontIcon className={ iconClass } /></TableRowColumn>
-                                        <TableRowColumn>
-                                            <Link to={ `/character/${ c.id }/edit` } key={ c.id }>{c.name}</Link>
-                                        </TableRowColumn>
-                                        <TableRowColumn className="hidden-xs">{c.level}</TableRowColumn>
-                                        <TableRowColumn className="hidden-xs">{c.experienceNotes}</TableRowColumn>
-                                        <TableRowColumn className="hidden-xs">{c.goldNotes}</TableRowColumn>
-                                        <TableRowColumn className="hidden-xs">{c.owner}</TableRowColumn>
-                                    </TableRow>
-                                );
+                            return (
+                                <TableRow key={ c.id }>
+                                    <TableRowColumn style={{ width: '30px', textAlign: 'center' }}><FontIcon className={ iconClass } /></TableRowColumn>
+                                    <TableRowColumn>
+                                        <Link to={ `/character/${ c.id }/edit` } key={ c.id }>{c.name}</Link>
+                                    </TableRowColumn>
+                                    <TableRowColumn className="hidden-xs">{c.level}</TableRowColumn>
+                                    <TableRowColumn className="hidden-xs">{c.experienceNotes}</TableRowColumn>
+                                    <TableRowColumn className="hidden-xs">{c.goldNotes}</TableRowColumn>
+                                    <TableRowColumn className="hidden-xs">{c.owner}</TableRowColumn>
+                                </TableRow>
+                            );
                         })
                     }
                 </TableBody>
