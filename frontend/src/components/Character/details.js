@@ -47,7 +47,7 @@ const _CharacterDetailsEdit = ({
         'class'
     ];
 
-    return <CharacterDetails characterClasses={ characterClasses } />;
+    return <CharacterDetails characterClasses={ characterClasses } readOnly={ readOnly }/>;
 };
 
 function mapStateToEditProps(state) {
@@ -146,7 +146,8 @@ class CharacterDetails extends Component {
     render() {
 
         const {
-            characterClasses
+            characterClasses,
+            readOnly
         } = this.props;
 
         const actions = [
@@ -178,6 +179,7 @@ class CharacterDetails extends Component {
                 name: 'class',
                 type: 'select',
                 properties: {
+                    readOnly: readOnly.indexOf('class') !== -1,
                     required: true,
                     hintText: 'Class',
                     handleOnChange: this.handleClassChange,
@@ -189,6 +191,7 @@ class CharacterDetails extends Component {
                 name: 'name',
                 type: 'text',
                 properties: {
+                    readOnly: readOnly.indexOf('name') !== -1,
                     required: true,
                     labelText: 'Name' 
                 }
@@ -197,6 +200,7 @@ class CharacterDetails extends Component {
                 name: 'level',
                 type: 'slider',
                 properties: {
+                    readOnly: readOnly.indexOf('level') !== -1,
                     labelText: `Level ${ this.state.levelSlider }`,
                     defaultValue: 1,
                     min: 1,
@@ -210,6 +214,7 @@ class CharacterDetails extends Component {
                 name: 'experience',
                 type: 'text',
                 properties: {
+                    readOnly: readOnly.indexOf('experience') !== -1,
                     required: false, 
                     labelText: 'Experience Notes'
                 }
@@ -218,6 +223,7 @@ class CharacterDetails extends Component {
                 name: 'gold',
                 type: 'text',
                 properties: {
+                    readOnly: readOnly.indexOf('gold') !== -1,
                     required: false, 
                     labelText: 'Gold Notes'
                 }
@@ -226,6 +232,7 @@ class CharacterDetails extends Component {
                 name: 'items',
                 type: 'text',
                 properties: {
+                    readOnly: readOnly.indexOf('items') !== -1,
                     required: false, 
                     labelText: "Items",
                     textArea: {
@@ -239,18 +246,23 @@ class CharacterDetails extends Component {
                 name: 'perks',
                 type: 'perks',
                 properties: {
+                    readOnly: readOnly.indexOf('perks') !== -1,
                     perks: typeof currentCharacterClass !== 'undefined' ? currentCharacterClass.perks : [],
                     handleOnChange: () => {}
                 }
             },
             {
                 name: 'checks',
-                type: 'checks'
+                type: 'checks',
+                properties: {
+                    readOnly: readOnly.indexOf('checks') !== -1,
+                }
             },
             {
                 name: 'notes',
                 type: 'text',
                 properties: {
+                    readOnly: readOnly.indexOf('notes') !== -1,
                     required: false, 
                     labelText: 'Notes',
                     textArea: {
