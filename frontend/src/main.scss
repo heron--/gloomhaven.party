@@ -42,6 +42,14 @@ h6 { font-size: $h6-font-size; }
 
 @import './assets/images/icons/gloomhaven-icons.css';
 
+// Layout
+
+/// Tables
+
+td, th {
+	vertical-align: middle;
+}
+
 // Modules
 
 .splash-screen {
