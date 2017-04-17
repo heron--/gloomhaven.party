@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card, CardActions, CardText } from 'material-ui/Card';
-import Checkbox from 'material-ui/Checkbox';
 import Dialog from 'material-ui/Dialog';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
@@ -174,86 +173,101 @@ class CharacterDetails extends Component {
             }
         });
 
+        const formControls = [
+            {
+                name: 'class',
+                type: 'select',
+                properties: {
+                    required: true,
+                    hintText: 'Class',
+                    handleOnChange: this.handleClassChange,
+                    currentValue: this.state.currentClass,
+                    menuItems: characterClassMenuItems 
+                }
+            },
+            {
+                name: 'name',
+                type: 'text',
+                properties: {
+                    required: true,
+                    labelText: 'Name' 
+                }
+            },
+            {
+                name: 'level',
+                type: 'slider',
+                properties: {
+                    labelText: `Level ${ this.state.levelSlider }`,
+                    defaultValue: 1,
+                    min: 1,
+                    max: 9,
+                    step: 1,
+                    currentValue: this.state.levelSlider,
+                    handleOnChange: this.handleLevelSlider  
+                }
+            },
+            {
+                name: 'experience',
+                type: 'text',
+                properties: {
+                    required: false, 
+                    labelText: 'Experience Notes'
+                }
+            },
+            {
+                name: 'gold',
+                type: 'text',
+                properties: {
+                    required: false, 
+                    labelText: 'Gold Notes'
+                }
+            },
+            {
+                name: 'items',
+                type: 'text',
+                properties: {
+                    required: false, 
+                    labelText: "Items",
+                    textArea: {
+                        multiLine: true,
+                        rows: 2,
+                        rowsMax: 4
+                    }
+                }
+            },
+            {
+                name: 'perks',
+                type: 'perks',
+                properties: {
+                    perks: typeof currentCharacterClass !== 'undefined' ? currentCharacterClass.perks : [],
+                    handleOnChange: () => {}
+                }
+            },
+            {
+                name: 'checks',
+                type: 'checks'
+            },
+            {
+                name: 'notes',
+                type: 'text',
+                properties: {
+                    required: false, 
+                    labelText: 'Notes',
+                    textArea: {
+                        multiLine: true,
+                        rows: 2,
+                        rowsMax: 4
+                    } 
+                }  
+            }
+        ];
+
         return (
             <Card style={{ maxWidth: '600px', margin: '10px auto' }}>
                 <CardText>
-                    <FormControl
-                        type="select"
-                        properties={{
-                            required: true,
-                            hintText: "Class",
-                            handleOnChange: this.handleClassChange,
-                            currentValue: this.state.currentClass,
-                            menuItems: characterClassMenuItems 
-                        }}
-                    />
-                    <FormControl
-                        type="text"
-                        properties={{
-                            required: true,
-                            labelText: "Name" 
-                        }}
-                    />
-                    <FormControl
-                        type="slider"
-                        properties={{
-                            labelText: `Level ${ this.state.levelSlider }`,
-                            defaultValue: 1,
-                            min: 1,
-                            max: 9,
-                            step: 1,
-                            currentValue: this.state.levelSlider,
-                            handleOnChange: this.handleLevelSlider  
-                        }}
-                    />
-                    <FormControl
-                        type="text"
-                        properties={{
-                            required: false, 
-                            labelText: "Experience Notes" 
-                        }}
-                    />
-                    <FormControl
-                        type="text"
-                        properties={{
-                            required: false, 
-                            labelText: "Gold Notes" 
-                        }}
-                    />
-                    <FormControl
-                        type="text"
-                        properties={{
-                            required: false, 
-                            labelText: "Items",
-                            textArea: {
-                                multiLine: true,
-                                rows: 2,
-                                rowsMax: 4
-                            }
-                        }}
-                    />
-                    <FormControl
-                        type="perks"
-                        properties={{
-                            perks: typeof currentCharacterClass !== 'undefined' ? currentCharacterClass.perks : [],
-                            handleOnChange: () => {}
-                        }}
-                    />
-                    <FormControl
-                        type="checks"
-                    />
-                    <FormControl
-                        type="text"
-                        properties={{
-                            required: false, 
-                            labelText: "Notes",
-                            textArea: {
-                                multiLine: true,
-                                rows: 2,
-                                rowsMax: 4
-                            } 
-                        }}
-                    />
+                    {
+                        formControls.map(f => <FormControl key={ f.name } { ...f } />)
+                    }
                     <Toggle
                         label="Retired"
                         labelPosition="right"
