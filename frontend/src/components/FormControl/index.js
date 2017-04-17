@@ -5,6 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
 import FontIcon from 'material-ui/FontIcon';
 import Checkbox from 'material-ui/Checkbox';
+import perkIcons from './perkIcons';
 import './form-control.scss';
 
 const styles = {
@@ -105,275 +106,14 @@ const FormControlPerks = ({
     function getLabel(description) {
 
         // This function looks for certain patterns in the description and replaces them with corresponding React Components
-
-        const replacementComponents = {
-            'ROLLING MODIFIER': {
-                component: FontIcon,
-                props: {
-                    className:"gloomhaven-icon-condition-rolling-modifier"
-                },
-                children: null
-            },
-            'AIR': {
-                component: FontIcon,
-                props: {
-                    className:"gloomhaven-icon-element-air"
-                },
-                children: null
-            },
-            'DARK': {
-                component: FontIcon,
-                props: {
-                    className:"gloomhaven-icon-element-dark"
-                },
-                children: null
-            },
-            'EARTH': {
-                component: FontIcon,
-                props: {
-                    className:"gloomhaven-icon-element-earth"
-                },
-                children: null
-            },
-            'FIRE': {
-                component: FontIcon,
-                props: {
-                    className:"gloomhaven-icon-element-fire"
-                },
-                children: null
-            },
-            'ICE': {
-                component: FontIcon,
-                props: {
-                    className:"gloomhaven-icon-element-ice"
-                },
-                children: null
-            },
-            'LIGHT': {
-                component: FontIcon,
-                props: {
-                    className:"gloomhaven-icon-element-light"
-                },
-                children: null
-            },
-            'ADD TARGET': {
-                component: 'span',
-                props: null,
-                children: [
-                    'ADD TARGET',
-                    {
-                        component: FontIcon,
-                        props: {
-                            className:"gloomhaven-icon-condition-add-target"
-                        },
-                        children: null
-                    }
-                ]
-            },
-            'BLESS': {
-                component: 'span',
-                props: null,
-                children: [
-                    'BLESS',
-                    {
-                        component: FontIcon,
-                        props: {
-                            className:"gloomhaven-icon-condition-bless"
-                        },
-                        children: null
-                    }
-                ]
-            },
-            'CURSE': {
-                component: 'span',
-                props: null,
-                children: [
-                    'CURSE',
-                    {
-                        component: FontIcon,
-                        props: {
-                            className:"gloomhaven-icon-condition-curse"
-                        },
-                        children: null
-                    }
-                ]
-            },
-            'DISARM': {
-                component: 'span',
-                props: null,
-                children: [
-                    'DISARM',
-                    {
-                        component: FontIcon,
-                        props: {
-                            className:"gloomhaven-icon-condition-disarm"
-                        },
-                        children: null
-                    }
-                ]
-            },
-            'PUSH': {
-                component: 'span',
-                props: null,
-                children: [
-                    'PUSH',
-                    {
-                        component: FontIcon,
-                        props: {
-                            className:"gloomhaven-icon-condition-push"
-                        },
-                        children: null
-                    }
-                ]
-            },
-            'PULL': {
-                component: 'span',
-                props: null,
-                children: [
-                    'PULL',
-                    {
-                        component: FontIcon,
-                        props: {
-                            className:"gloomhaven-icon-condition-pull"
-                        },
-                        children: null
-                    }
-                ]
-            },
-            'PIERCE': {
-                component: 'span',
-                props: null,
-                children: [
-                    'PIERCE',
-                    {
-                        component: FontIcon,
-                        props: {
-                            className:"gloomhaven-icon-condition-pierce"
-                        },
-                        children: null
-                    }
-                ]
-            },
-            'POISON': {
-                component: 'span',
-                props: null,
-                children: [
-                    'POISON',
-                    {
-                        component: FontIcon,
-                        props: {
-                            className:"gloomhaven-icon-condition-poison"
-                        },
-                        children: null
-                    }
-                ]
-            },
-            'MUDDLE': {
-                component: 'span',
-                props: null,
-                children: [
-                    'MUDDLE',
-                    {
-                        component: FontIcon,
-                        props: {
-                            className:"gloomhaven-icon-condition-muddle"
-                        },
-                        children: null
-                    }
-                ]
-            },
-            'IMMOBILIZE': {
-                component: 'span',
-                props: null,
-                children: [
-                    'IMMOBILIZE',
-                    {
-                        component: FontIcon,
-                        props: {
-                            className:"gloomhaven-icon-condition-immobilize"
-                        },
-                        children: null
-                    }
-                ]
-            },
-            'INVISIBLE': {
-                component: 'span',
-                props: null,
-                children: [
-                    'INVISIBLE',
-                    {
-                        component: FontIcon,
-                        props: {
-                            className:"gloomhaven-icon-condition-invisibility"
-                        },
-                        children: null
-                    }
-                ]
-            },
-            'STUN': {
-                component: 'span',
-                props: null,
-                children: [
-                    'STUN',
-                    {
-                        component: FontIcon,
-                        props: {
-                            className:"gloomhaven-icon-condition-stun"
-                        },
-                        children: null
-                    }
-                ]
-            },
-            'WOUND': {
-                component: 'span',
-                props: null,
-                children: [
-                    'WOUND',
-                    {
-                        component: FontIcon,
-                        props: {
-                            className:"gloomhaven-icon-condition-wound"
-                        },
-                        children: null
-                    }
-                ]
-            },
-            'Heal': {
-                component: 'span',
-                props: null,
-                children: [
-                    'Heal',
-                    {
-                        component: FontIcon,
-                        props: {
-                            className:"gloomhaven-icon-general-heal"
-                        },
-                        children: null
-                    }
-                ]
-            },
-            'Shield': {
-                component: 'span',
-                props: null,
-                children: [
-                    'Shield',
-                    {
-                        component: FontIcon,
-                        props: {
-                            className:"gloomhaven-icon-general-shield"
-                        },
-                        children: null
-                    }
-                ]
-            }
-        }
-
+        // The actual replacement components are in the perkIcons.js file
+        
         let splitRegexPattern = '(';
         
         // Build the pattern
-        Object.keys(replacementComponents).forEach((rc, i) => {
+        Object.keys(perkIcons).forEach((rc, i) => {
             splitRegexPattern += rc;
-            if(i < Object.keys(replacementComponents).length - 1) {
+            if(i < Object.keys(perkIcons).length - 1) {
                 splitRegexPattern += '|';
             } else {
                 splitRegexPattern += ')';
@@ -385,12 +125,12 @@ const FormControlPerks = ({
         const label = description.split(splitRegex);
 
         label.forEach((l, i) => {
-            const replacements = Object.keys(replacementComponents);
+            const replacements = Object.keys(perkIcons);
 
             replacements.forEach(r => {
                 if(typeof l === 'string') {
                     if(l.indexOf(r) !== -1) {
-                        label[i] = replacementComponents[r];
+                        label[i] = perkIcons[r];
                     } 
                 }
             });
