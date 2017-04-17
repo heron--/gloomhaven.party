@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
-import CharacterDetails from './details';
+import { Route } from 'react-router-dom';
+import { CharacterDetailsEdit } from './details';
+import CharacterList from './list';
 
 class Character extends Component {
 
     render() {
-        return <CharacterDetails />;
+        return (
+            <div className="character">
+                <Route exact path="/character" component={ CharacterList } />
+                <Route path="/character/:characterId/edit" component={ CharacterDetailsEdit } />
+            </div>
+        );
     } 
 }
 

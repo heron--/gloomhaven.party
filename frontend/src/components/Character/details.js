@@ -38,6 +38,30 @@ const styles = {
     }
 };
 
+const _CharacterDetailsEdit = ({
+    characters,
+    characterClasses,
+    match
+}) => {
+
+    const character = characters.filter(c => c.id === match.params.characterId)[0];
+
+    const readOnly = [
+        'class'
+    ];
+
+    return <CharacterDetails characterClasses={ characterClasses } />;
+};
+
+function mapStateToEditProps(state) {
+    return {
+        characters: state.character.userCharacters,
+        characterClasses: state.character.classes
+    };
+}
+
+export const CharacterDetailsEdit = connect(mapStateToEditProps)(_CharacterDetailsEdit);
+
 class CharacterDetails extends Component {
 
     constructor(props) {
@@ -140,10 +164,7 @@ class CharacterDetails extends Component {
             />,
         ];
 
-        console.log(this.state);
-
         const currentCharacterClass = characterClasses.filter(c => c.id === this.state.currentClass)[0];
-        console.log(currentCharacterClass)
 
         const characterClassMenuItems = characterClasses.map(c => {
             const primaryText = c.spoiler ? '???' : c.displayName;

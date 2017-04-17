@@ -109,21 +109,34 @@ const AuthedRoute = ({
     ...rest
 }) => {
     return (
-        <Route { ...rest } render={props => (
+        <Route { ...rest } render={props => {
 
-            user.email.length > 0 ? (
+            if(typeof user !== 'undefined') {
+                return (
+                    (user.email.length > 0) ? (
 
-                React.createElement(component, props)
+                        React.createElement(component, props)
 
-            ) : (
+                    ) : (
 
-                <Redirect to={{
-                    pathname: '/',
-                    state: { from: props.location }
-                }}/>
+                        <Redirect to={{
+                            pathname: '/',
+                            state: { from: props.location }
+                        }}/>
 
-            )
-        )}/>
+                    )
+                )
+            } else {
+
+                return (
+                    <Redirect to={{
+                        pathname: '/',
+                        state: { from: props.location }
+                    }}/>
+                );
+
+            }
+        }}/>
     ); 
 };
 
