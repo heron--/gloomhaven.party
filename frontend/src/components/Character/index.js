@@ -10,6 +10,7 @@ class Character extends Component {
             <div className="character">
                 <Route exact path="/character" component={ CharacterList } />
                 <Route path="/character/:characterId/edit" component={ CharacterDetailsEdit } />
+                <Route path="/character/create" component={ CharacterDetailsEdit } />
             </div>
         );
     } 
