@@ -160,6 +160,62 @@ const FormControlPerks = ({
     }
 }
 
+const FormControlChecks = () => {
+    return (
+        <div className="form-control form-control-container">
+            <h3>Checks</h3>
+            <div className="checks-container">
+                <FontIcon
+                    className="gloomhaven-icon-general-check"
+                />
+                <Checkbox />
+                <Checkbox />
+                <Checkbox />
+            </div>
+            <div className="checks-container">
+                <FontIcon
+                    className="gloomhaven-icon-general-check"
+                />
+                <Checkbox />
+                <Checkbox />
+                <Checkbox />
+            </div>
+            <div className="checks-container">
+                <FontIcon
+                    className="gloomhaven-icon-general-check"
+                />
+                <Checkbox />
+                <Checkbox />
+                <Checkbox />
+            </div>
+            <div className="checks-container">
+                <FontIcon
+                    className="gloomhaven-icon-general-check"
+                />
+                <Checkbox />
+                <Checkbox />
+                <Checkbox />
+            </div>
+            <div className="checks-container">
+                <FontIcon
+                    className="gloomhaven-icon-general-check"
+                />
+                <Checkbox />
+                <Checkbox />
+                <Checkbox />
+            </div>
+            <div className="checks-container">
+                <FontIcon
+                    className="gloomhaven-icon-general-check"
+                />
+                <Checkbox />
+                <Checkbox />
+                <Checkbox />
+            </div>
+        </div>
+    );
+};
+
 const FormControlText = ({
     labelText,
     required,
@@ -266,7 +322,8 @@ class FormControl extends Component {
             'text': FormControlText,
             'select': FormControlSelect,
             'slider': FormControlSlider,
-            'perks': FormControlPerks
+            'perks': FormControlPerks,
+            'checks': FormControlChecks
         };
 
         const {

@@ -5,7 +5,6 @@ import Checkbox from 'material-ui/Checkbox';
 import Dialog from 'material-ui/Dialog';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
-import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import Toggle from 'material-ui/Toggle';
 import FormControl from '~/components/FormControl';
@@ -240,57 +239,9 @@ class CharacterDetails extends Component {
                             handleOnChange: () => {}
                         }}
                     />
-                    <div className="form-control form-control-container">
-                        <h3>Checks</h3>
-                        <div className="checks-container">
-                            <FontIcon
-                                className="gloomhaven-icon-general-check"
-                            />
-                            <Checkbox />
-                            <Checkbox />
-                            <Checkbox />
-                        </div>
-                        <div className="checks-container">
-                            <FontIcon
-                                className="gloomhaven-icon-general-check"
-                            />
-                            <Checkbox />
-                            <Checkbox />
-                            <Checkbox />
-                        </div>
-                        <div className="checks-container">
-                            <FontIcon
-                                className="gloomhaven-icon-general-check"
-                            />
-                            <Checkbox />
-                            <Checkbox />
-                            <Checkbox />
-                        </div>
-                        <div className="checks-container">
-                            <FontIcon
-                                className="gloomhaven-icon-general-check"
-                            />
-                            <Checkbox />
-                            <Checkbox />
-                            <Checkbox />
-                        </div>
-                        <div className="checks-container">
-                            <FontIcon
-                                className="gloomhaven-icon-general-check"
-                            />
-                            <Checkbox />
-                            <Checkbox />
-                            <Checkbox />
-                        </div>
-                        <div className="checks-container">
-                            <FontIcon
-                                className="gloomhaven-icon-general-check"
-                            />
-                            <Checkbox />
-                            <Checkbox />
-                            <Checkbox />
-                        </div>
-                    </div>
+                    <FormControl
+                        type="checks"
+                    />
                     <FormControl
                         type="text"
                         properties={{
