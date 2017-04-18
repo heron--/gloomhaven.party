@@ -219,17 +219,21 @@ const FormControlChecks = () => {
 const FormControlText = ({
     labelText,
     required,
+    currentValue,
+    handleOnChange,
+    errorText,
     textArea = {}
 }) => {
 
 
     const requiredProps = {
         errorStyle: styles.input.errorStyle,
-        errorText: "This field is required"
+        errorText: typeof errorText === 'undefined' ? '' : errorText
     };
 
     const props = Object.assign({}, required ? requiredProps : {}, {
         className: "form-control",
+        value: currentValue,
         floatingLabelText: labelText,
         floatingLabelStyle: styles.input.floatingLabelStyle,
         floatingLabelShrinkStyle: styles.input.floatingLabelShrinkStyle,
@@ -237,7 +241,8 @@ const FormControlText = ({
         inputStyle: styles.input.inputStyle,
         underlineDisabledStyle: styles.input.underlineDisabledStyle,
         underlineStyle: styles.input.underlineStyle,
-        underlineFocusStyle: styles.input.underlineFocusStyle
+        underlineFocusStyle: styles.input.underlineFocusStyle,
+        onChange: handleOnChange
     }, getTextAreaProps(textArea));
 
     return (
@@ -257,13 +262,14 @@ const FormControlSelect = ({
     menuItems,
     required,
     hintText,
+    errorText,
     handleOnChange,
     currentValue
 }) => {
 
     const requiredProps = {
         errorStyle: styles.input.errorStyle,
-        errorText: "This field is required"
+        errorText: typeof errorText !== 'undefined' ? '' : errorText
     };
 
     const props = Object.assign({}, required ? requiredProps : { }, {

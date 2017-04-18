@@ -19,6 +19,16 @@ const user = (state = {}, action) => {
     }
 };
 
+const currentCharacter = (state = {}, action) => {
+    switch(action.type) {
+        case 'UPDATE_CURRENT_CHARACTER':
+            return Object.assign({}, state, action.values);
+
+        default:
+            return state;
+    }
+};
+
 const character = (state = {}, action) => {
     switch(action.type) {
         case 'GET_CHARACTER_CLASSES':
@@ -30,6 +40,11 @@ const character = (state = {}, action) => {
         case 'CHECK_SESSION':
             return Object.assign({}, state, {
                 userCharacters: action.userCharacters
+            });
+
+        case 'UPDATE_CURRENT_CHARACTER':
+            return Object.assign({}, state, {
+                currentCharacter: currentCharacter(state.currentCharacter, action)
             });
 
         default:

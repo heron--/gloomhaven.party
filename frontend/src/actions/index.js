@@ -6,6 +6,14 @@ export function updateUser(user, userCharacters) {
     };
 }
 
+export function updateCurrentCharacter(values, detailType) {
+    return {
+        type: 'UPDATE_CURRENT_CHARACTER',
+        values,
+        detailType
+    };
+}
+
 export function loginRequest(tokenObj, profileObj) {
     return {
         type: 'LOGIN_REQUEST',
