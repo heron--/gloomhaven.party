@@ -277,7 +277,7 @@ class CharacterDetails extends Component {
                 case 'string':
                     return typeof value === 'undefined' ? '' : value;
                 case 'number':
-                    return 1;
+                    return typeof value === 'undefined' ? 1 : value;
                 default:
                     return value;
             }
