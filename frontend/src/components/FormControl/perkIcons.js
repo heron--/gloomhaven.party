@@ -56,7 +56,7 @@ const perkIcons = {
         component: 'span',
         props: null,
         children: [
-            'ADD TARGET',
+            'ADD TARGET ',
             {
                 component: FontIcon,
                 props: {
@@ -70,7 +70,7 @@ const perkIcons = {
         component: 'span',
         props: null,
         children: [
-            'BLESS',
+            'BLESS ',
             {
                 component: FontIcon,
                 props: {
@@ -84,7 +84,7 @@ const perkIcons = {
         component: 'span',
         props: null,
         children: [
-            'CURSE',
+            'CURSE ',
             {
                 component: FontIcon,
                 props: {
@@ -112,7 +112,7 @@ const perkIcons = {
         component: 'span',
         props: null,
         children: [
-            'PUSH',
+            'PUSH ',
             {
                 component: FontIcon,
                 props: {
@@ -126,7 +126,7 @@ const perkIcons = {
         component: 'span',
         props: null,
         children: [
-            'PULL',
+            'PULL ',
             {
                 component: FontIcon,
                 props: {
@@ -140,7 +140,7 @@ const perkIcons = {
         component: 'span',
         props: null,
         children: [
-            'PIERCE',
+            'PIERCE ',
             {
                 component: FontIcon,
                 props: {
@@ -154,7 +154,7 @@ const perkIcons = {
         component: 'span',
         props: null,
         children: [
-            'POISON',
+            'POISON ',
             {
                 component: FontIcon,
                 props: {
@@ -168,7 +168,7 @@ const perkIcons = {
         component: 'span',
         props: null,
         children: [
-            'MUDDLE',
+            'MUDDLE ',
             {
                 component: FontIcon,
                 props: {
@@ -182,7 +182,7 @@ const perkIcons = {
         component: 'span',
         props: null,
         children: [
-            'IMMOBILIZE',
+            'IMMOBILIZE ',
             {
                 component: FontIcon,
                 props: {
@@ -196,7 +196,7 @@ const perkIcons = {
         component: 'span',
         props: null,
         children: [
-            'INVISIBLE',
+            'INVISIBLE ',
             {
                 component: FontIcon,
                 props: {
@@ -210,7 +210,7 @@ const perkIcons = {
         component: 'span',
         props: null,
         children: [
-            'STUN',
+            'STUN ',
             {
                 component: FontIcon,
                 props: {
@@ -224,7 +224,7 @@ const perkIcons = {
         component: 'span',
         props: null,
         children: [
-            'WOUND',
+            'WOUND ',
             {
                 component: FontIcon,
                 props: {
@@ -238,7 +238,7 @@ const perkIcons = {
         component: 'span',
         props: null,
         children: [
-            'Heal',
+            'Heal ',
             {
                 component: FontIcon,
                 props: {
@@ -252,7 +252,7 @@ const perkIcons = {
         component: 'span',
         props: null,
         children: [
-            'Shield',
+            'Shield ',
             {
                 component: FontIcon,
                 props: {

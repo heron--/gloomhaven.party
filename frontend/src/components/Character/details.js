@@ -130,7 +130,7 @@ class CharacterDetails extends Component {
         const currentCharacterClass = characterClasses.filter(c => c.id === currentCharacter.classId)[0];
 
         const characterClassMenuItems = characterClasses.map(c => {
-            const primaryText = c.spoiler ? '???' : c.displayName;
+            const primaryText = c.spoiler ? (<span style={{ position: "relative", bottom: "5px" }}>???</span>) : c.displayName;
 
             return {
                 value: c.id,
