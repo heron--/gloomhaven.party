@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { amber500, amber700, amber400 } from 'material-ui/styles/colors';
+import { deepPurple500, deepPurple700, deepPurple400 } from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -14,9 +14,9 @@ import './app.scss';
 
 const muiTheme = getMuiTheme({
     palette: {
-        primary1Color: amber500,
-        primary2Color: amber700,
-        primary3Color: amber400,
+        primary1Color: deepPurple500,
+        primary2Color: deepPurple700,
+        primary3Color: deepPurple400,
     },
 })
 

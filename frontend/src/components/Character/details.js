@@ -196,7 +196,7 @@ class CharacterDetails extends Component {
                     required: false, 
                     labelText: 'Gold Notes',
                     currentValue: checkExists(currentCharacter.goldNotes, 'string'),
-                    handleOnChange: (e, v) => { this.handleChange('experienceNotes', v) },
+                    handleOnChange: (e, v) => { this.handleChange('goldNotes', v) },
                 }
             },
             {
