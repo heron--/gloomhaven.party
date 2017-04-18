@@ -86,7 +86,7 @@ const styles = {
     checkbox:{
         labelStyle:{
             fontFamily: '"Fjord One", serif',
-        }
+        },
     }
 };
 
@@ -98,7 +98,12 @@ const FormControlPerks = ({
         <div className="form-control form-control-container">
             <h3>Perks</h3>
             {
-                perks.map(p => <Checkbox key={ p.id } label={ getLabel(p.description) } labelStyle={ styles.checkbox.labelStyle } />)
+                perks.map(p =>
+                    <Checkbox
+                        key={ p.id }
+                        label={ getLabel(p.description) }
+                        labelStyle={ styles.checkbox.labelStyle }
+                    />)
             }
         </div>
     );

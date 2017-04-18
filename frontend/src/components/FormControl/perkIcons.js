@@ -1,52 +1,54 @@
 import FontIcon from 'material-ui/FontIcon';
 
+import './perk-icons.scss';
+
 const perkIcons = {
     'ROLLING MODIFIER': {
         component: FontIcon,
         props: {
-            className:"gloomhaven-icon-condition-rolling-modifier"
+            className:"perk-icon gloomhaven-icon-condition-rolling-modifier"
         },
         children: null
     },
     'AIR': {
         component: FontIcon,
         props: {
-            className:"gloomhaven-icon-element-air"
+            className:"perk-icon gloomhaven-icon-element-air"
         },
         children: null
     },
     'DARK': {
         component: FontIcon,
         props: {
-            className:"gloomhaven-icon-element-dark"
+            className:"perk-icon gloomhaven-icon-element-dark"
         },
         children: null
     },
     'EARTH': {
         component: FontIcon,
         props: {
-            className:"gloomhaven-icon-element-earth"
+            className:"perk-icon gloomhaven-icon-element-earth"
         },
         children: null
     },
     'FIRE': {
         component: FontIcon,
         props: {
-            className:"gloomhaven-icon-element-fire"
+            className:"perk-icon gloomhaven-icon-element-fire"
         },
         children: null
     },
     'ICE': {
         component: FontIcon,
         props: {
-            className:"gloomhaven-icon-element-ice"
+            className:"perk-icon gloomhaven-icon-element-ice"
         },
         children: null
     },
     'LIGHT': {
         component: FontIcon,
         props: {
-            className:"gloomhaven-icon-element-light"
+            className:"perk-icon gloomhaven-icon-element-light"
         },
         children: null
     },
@@ -58,7 +60,7 @@ const perkIcons = {
             {
                 component: FontIcon,
                 props: {
-                    className:"gloomhaven-icon-condition-add-target"
+                    className:"perk-icon gloomhaven-icon-condition-add-target"
                 },
                 children: null
             }
@@ -72,7 +74,7 @@ const perkIcons = {
             {
                 component: FontIcon,
                 props: {
-                    className:"gloomhaven-icon-condition-bless"
+                    className:"perk-icon gloomhaven-icon-condition-bless"
                 },
                 children: null
             }
@@ -86,7 +88,7 @@ const perkIcons = {
             {
                 component: FontIcon,
                 props: {
-                    className:"gloomhaven-icon-condition-curse"
+                    className:"perk-icon gloomhaven-icon-condition-curse"
                 },
                 children: null
             }
@@ -100,7 +102,7 @@ const perkIcons = {
             {
                 component: FontIcon,
                 props: {
-                    className:"gloomhaven-icon-condition-disarm"
+                    className:"perk-icon gloomhaven-icon-condition-disarm"
                 },
                 children: null
             }
@@ -114,7 +116,7 @@ const perkIcons = {
             {
                 component: FontIcon,
                 props: {
-                    className:"gloomhaven-icon-condition-push"
+                    className:"perk-icon gloomhaven-icon-condition-push"
                 },
                 children: null
             }
@@ -128,7 +130,7 @@ const perkIcons = {
             {
                 component: FontIcon,
                 props: {
-                    className:"gloomhaven-icon-condition-pull"
+                    className:"perk-icon gloomhaven-icon-condition-pull"
                 },
                 children: null
             }
@@ -142,7 +144,7 @@ const perkIcons = {
             {
                 component: FontIcon,
                 props: {
-                    className:"gloomhaven-icon-condition-pierce"
+                    className:"perk-icon gloomhaven-icon-condition-pierce"
                 },
                 children: null
             }
@@ -156,7 +158,7 @@ const perkIcons = {
             {
                 component: FontIcon,
                 props: {
-                    className:"gloomhaven-icon-condition-poison"
+                    className:"perk-icon gloomhaven-icon-condition-poison"
                 },
                 children: null
             }
@@ -170,7 +172,7 @@ const perkIcons = {
             {
                 component: FontIcon,
                 props: {
-                    className:"gloomhaven-icon-condition-muddle"
+                    className:"perk-icon gloomhaven-icon-condition-muddle"
                 },
                 children: null
             }
@@ -184,7 +186,7 @@ const perkIcons = {
             {
                 component: FontIcon,
                 props: {
-                    className:"gloomhaven-icon-condition-immobilize"
+                    className:"perk-icon gloomhaven-icon-condition-immobilize"
                 },
                 children: null
             }
@@ -198,7 +200,7 @@ const perkIcons = {
             {
                 component: FontIcon,
                 props: {
-                    className:"gloomhaven-icon-condition-invisibility"
+                    className:"perk-icon gloomhaven-icon-condition-invisibility"
                 },
                 children: null
             }
@@ -212,7 +214,7 @@ const perkIcons = {
             {
                 component: FontIcon,
                 props: {
-                    className:"gloomhaven-icon-condition-stun"
+                    className:"perk-icon gloomhaven-icon-condition-stun"
                 },
                 children: null
             }
@@ -226,7 +228,7 @@ const perkIcons = {
             {
                 component: FontIcon,
                 props: {
-                    className:"gloomhaven-icon-condition-wound"
+                    className:"perk-icon gloomhaven-icon-condition-wound"
                 },
                 children: null
             }
@@ -240,7 +242,7 @@ const perkIcons = {
             {
                 component: FontIcon,
                 props: {
-                    className:"gloomhaven-icon-general-heal"
+                    className:"perk-icon gloomhaven-icon-general-heal"
                 },
                 children: null
             }
@@ -254,7 +256,7 @@ const perkIcons = {
             {
                 component: FontIcon,
                 props: {
-                    className:"gloomhaven-icon-general-shield"
+                    className:"perk-icon gloomhaven-icon-general-shield"
                 },
                 children: null
             }
