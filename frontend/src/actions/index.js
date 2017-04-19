@@ -6,11 +6,12 @@ export function updateUser(user, userCharacters) {
     };
 }
 
-export function updateCurrentCharacter(values, detailType) {
+export function updateCurrentCharacter(values, detailType, currentCharacter) {
     return {
         type: 'UPDATE_CURRENT_CHARACTER',
         values,
-        detailType
+        detailType,
+        currentCharacter
     };
 }
 

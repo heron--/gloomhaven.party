@@ -72,7 +72,7 @@ function mapStateToEditProps(state) {
 
 function mapDispatchToEditProps(dispatch) {
     return {
-        updateCharacter: (values, detailType) => dispatch(updateCurrentCharacter(values, detailType))
+        updateCharacter: (values, detailType, currentCharacter) => dispatch(updateCurrentCharacter(values, detailType, currentCharacter))
     };
 }
 
@@ -89,21 +89,23 @@ class CharacterDetails extends Component {
         const {
             initValues,
             detailType,
-            updateCharacter
+            updateCharacter,
+            currentCharacter
         } = this.props;
 
         if(typeof initValues !== 'undefined') {
-            updateCharacter(initValues, detailType);
+            updateCharacter(initValues, detailType, currentCharacter);
         }
     }
 
     handleChange(name, value) {
         const {
             updateCharacter,
-            detailType
+            detailType,
+            currentCharacter
         } = this.props;
 
-        updateCharacter({[name]: value}, detailType)
+        updateCharacter({[name]: value}, detailType, currentCharacter)
     }
 
     render() {

@@ -89,7 +89,33 @@ const API = {
 
             return {};
         });
-    }
+    },
+    updateCharacter: character => {
+
+        const updateEndpoint = __DEV__ ? devEndpoints.updateCharacter + character.id : endpoints.checkSession + character.id;
+
+        const updateConfig = {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({character}),
+            credentials: 'include'
+        };
+
+        return fetch(updateEndpoint, updateConfig)
+        .then(res => res.json())
+        .then(res => {
+            
+            if(typeof res.data !== 'undefined') {
+                return res.data;
+            }
+
+            return {};
+        })
+
+    } 
 };
 
 export { API as default };

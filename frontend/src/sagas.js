@@ -78,6 +78,37 @@ function* checkSession() {
     }
 }
 
+function* characterUpdate(action) {
+    try {
+
+        const {
+            values: updateValues,
+            currentCharacter
+        } = action;
+
+        console.log(Object.assign({}, currentCharacter, updateValues));
+
+        if(typeof updateValues.id === 'undefined' && currentCharacter.id === 'undefined') {
+            throw new Error('Character id not defined');
+        }
+
+        const character = yield call(API.updateCharacter, Object.assign({}, currentCharacter, updateValues));
+
+        yield put({
+            type: 'UPDATE_CHARACTER_REQUEST_SUCCESS',
+            character
+        });
+
+    } catch(e) {
+
+        yield put({
+            type: 'UPDATE_CHARACTER_REQUEST_FAILURE',
+            message: e.message
+        });
+
+    }
+}
+
 function* getAllCharacterClasses() {
     try {
 
@@ -106,13 +137,18 @@ function* watchLogoutRequest() {
     yield takeLatest('LOGOUT_REQUEST', logoutRequest);
 }
 
+function* watchUpdateCharacter() {
+    yield takeLatest('UPDATE_CURRENT_CHARACTER', characterUpdate);
+}
+
 function* mainSaga() {
 
     yield [
         fork(checkSession),
         fork(getAllCharacterClasses),
         fork(watchLoginRequest),
-        fork(watchLogoutRequest)
+        fork(watchLogoutRequest),
+        fork(watchUpdateCharacter)
     ];
 }
 
