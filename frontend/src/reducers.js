@@ -29,6 +29,21 @@ const currentCharacter = (state = {}, action) => {
     }
 };
 
+const userCharacter = (state = {}, action) => {
+    switch(action.type) {
+        case 'UPDATE_CURRENT_CHARACTER':
+
+            if(state.id === action.currentCharacter.id) {
+                return Object.assign({}, state, action.values);
+            }
+
+            return state;
+
+        default:
+            return state;
+    }
+};
+
 const character = (state = {}, action) => {
     switch(action.type) {
         case 'GET_CHARACTER_CLASSES':
@@ -44,6 +59,13 @@ const character = (state = {}, action) => {
 
         case 'UPDATE_CURRENT_CHARACTER':
             return Object.assign({}, state, {
+                userCharacters: state.userCharacters.map(uc => {
+                    if(uc.id === action.currentCharacter.id) {
+                        return userCharacter(uc, action);
+                    } else {
+                        return uc;
+                    }
+                }),
                 currentCharacter: currentCharacter(state.currentCharacter, action)
             });
 
