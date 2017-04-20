@@ -128,7 +128,6 @@ class CharacterDetails extends Component {
             />,
         ];
 
-
         const currentCharacterClass = characterClasses.filter(c => c.id === currentCharacter.classId)[0];
 
         const characterClassMenuItems = characterClasses.map(c => {
@@ -209,7 +208,7 @@ class CharacterDetails extends Component {
                     required: false, 
                     labelText: "Items",
                     currentValue: checkExists(currentCharacter.items, 'string'),
-                    handleOnChange: (e, v) => { this.handleChange('items', v) },
+                    handleOnChange: (e, v) => { this.handleChange('items', v); },
                     textArea: {
                         multiLine: true,
                         rows: 2,
@@ -232,7 +231,7 @@ class CharacterDetails extends Component {
                 properties: {
                     readOnly: readOnly.indexOf('checks') !== -1,
                     currentValue: checkExists(currentCharacter.checks, 'number'),
-                    handleOnChange: () => { }
+                    handleOnChange: v => { this.handleChange('checks', v); }
                 }
             },
             {

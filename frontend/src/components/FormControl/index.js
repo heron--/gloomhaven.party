@@ -165,60 +165,113 @@ const FormControlPerks = ({
     }
 }
 
-const FormControlChecks = () => {
-    return (
-        <div className="form-control form-control-container">
-            <h3>Checks</h3>
-            <div className="checks-container">
-                <FontIcon
-                    className="gloomhaven-icon-general-check"
-                />
-                <Checkbox />
-                <Checkbox />
-                <Checkbox />
+class FormControlChecks extends Component {
+    constructor(props) {
+        super(props);
+        this.getCheckContainers = this.getCheckContainers.bind(this);
+        this.initializeChecks = this.initializeChecks.bind(this);
+        this.handleCheck = this.handleCheck.bind(this);
+        this.maxChecks = 18; // Must be divisible by three, or things might explode
+        this.state = {
+            checks: []
+        };
+
+        for(let i = 0; i < this.maxChecks; i++) {
+            this.state.checks.push(false);
+        }
+    }
+
+    componentWillMount() {
+        this.initializeChecks();
+    }
+
+    initializeChecks() {
+        const {
+            currentValue
+        } = this.props;
+
+        console.log(currentValue)
+
+        const copyArray = this.state.checks.slice();
+
+        for(let i = 0; i < copyArray.length; i++) {
+            if(i + 1 <= currentValue) {
+                copyArray[i] = true;
+            }
+        }
+
+        this.setState({
+            checks: copyArray
+        });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        let currentCount = 0;
+        this.state.checks.forEach(c => { if(c) currentCount++; });
+
+        if(currentCount !== nextProps.currentValue) {
+            const copyArray = this.state.checks.slice();
+
+            for(let i = 0; i < copyArray.length; i++) {
+                if(i + 1 <= nextProps.currentValue) {
+                    copyArray[i] = true;
+                }
+            }
+
+            this.setState({
+                checks: copyArray
+            });
+        }
+    }
+
+    handleCheck(i, value) {
+
+        const {
+            handleOnChange
+        } = this.props;
+
+        const copyArray = this.state.checks.slice(); 
+
+        copyArray[i] = value;
+
+        this.setState({
+            checks: copyArray
+        });
+
+        let count = 0;
+        copyArray.forEach(c => { if(c) count++; });
+        setTimeout(() => handleOnChange(count), 1);
+    }
+
+    getCheckContainers() {
+
+        const children = [];
+
+        for(let i = 0; i < this.state.checks.length; i += 3) {
+            children.push((
+                <div className="checks-container" key={ i }>
+                    <FontIcon className="gloomhaven-icon-general-check" />
+                    <Checkbox checked={ this.state.checks[i] } onCheck={ (e,v) => { this.handleCheck(i, v); }} />
+                    <Checkbox checked={ this.state.checks[i + 1] } onCheck={ (e,v) => { this.handleCheck(i + 1, v); }} />
+                    <Checkbox checked={ this.state.checks[i + 2] }  onCheck={ (e,v) => { this.handleCheck(i + 2, v); }} />
+                </div>
+            ));
+        }
+
+        return React.createElement('div', null, children);
+    }
+
+    render() {
+
+        return (
+            <div className="form-control form-control-container">
+                <h3>Checks</h3>
+                {
+                    this.getCheckContainers()
+                }
             </div>
-            <div className="checks-container">
-                <FontIcon
-                    className="gloomhaven-icon-general-check"
-                />
-                <Checkbox />
-                <Checkbox />
-                <Checkbox />
-            </div>
-            <div className="checks-container">
-                <FontIcon
-                    className="gloomhaven-icon-general-check"
-                />
-                <Checkbox />
-                <Checkbox />
-                <Checkbox />
-            </div>
-            <div className="checks-container">
-                <FontIcon
-                    className="gloomhaven-icon-general-check"
-                />
-                <Checkbox />
-                <Checkbox />
-                <Checkbox />
-            </div>
-            <div className="checks-container">
-                <FontIcon
-                    className="gloomhaven-icon-general-check"
-                />
-                <Checkbox />
-                <Checkbox />
-                <Checkbox />
-            </div>
-            <div className="checks-container">
-                <FontIcon
-                    className="gloomhaven-icon-general-check"
-                />
-                <Checkbox />
-                <Checkbox />
-                <Checkbox />
-            </div>
-        </div>
-    );
+        );
+    }
 };
 
 const FormControlText = ({
