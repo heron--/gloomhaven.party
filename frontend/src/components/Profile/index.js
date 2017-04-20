@@ -78,7 +78,6 @@ class Profile extends Component {
                     >
                         Your account will be deactivated.  All characters and parties you have created will disappear throughout the system.
                     </Dialog>
-
     			</CardText>
     		</Card>
         );

@@ -2,12 +2,22 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import GoogleLogin from 'react-google-login';
 import { loginRequest } from '~/actions';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
 import './login.scss';
 
 class Login extends Component {
 
     constructor(props) {
         super(props);
+        this.handleOpen = this.handleOpen.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.state = {
+            openDialog: false,
+            openLoginSnackbar: false,
+        };
+
         this.onGoogleSuccess = this.onGoogleSuccess.bind(this);
 
         this.googleLoginConfig = {
@@ -18,11 +28,31 @@ class Login extends Component {
         };
     }
 
+    handleOpen() {
+        this.setState({
+            openDialog: true
+        });
+    }
+
+    handleClose() {
+        this.setState({openDialog: false});
+    }
+
+    handleRequestClose() {
+        this.setState({
+            openSnackbar: false,
+        });
+    };
+
     onGoogleSuccess(res) {
 
         const {
             loginRequest
         } = this.props;
+
+        this.setState({
+            openLoginSnackbar: true,
+        });
 
         loginRequest(res.tokenObj, res.profileObj);
 
@@ -38,6 +68,18 @@ class Login extends Component {
             user
         } = this.props;
 
+        const actions = [
+            <FlatButton
+                label="Cancel"
+                onTouchTap={this.handleClose}
+            />,
+            <FlatButton
+                label="Deactivate"
+                keyboardFocused={true}
+                onTouchTap={this.handleClose}
+            />,
+        ];
+
         return (
             <div className="login splash-screen">
                 <h1 className="logo">Gloomhaven.Party</h1>
@@ -47,6 +89,21 @@ class Login extends Component {
                         <div className="login__google-signin"></div>
                     </GoogleLogin> : null
                 }
+                <Dialog
+                    title="Reactivate your account"
+                    actions={actions}
+                    modal={false}
+                    open={this.state.openDialog}
+                    onRequestClose={this.handleClose}
+                >
+                    Your account will be reactivated.  All characters and parties you have created will return throughout the system.
+                </Dialog>
+                <Snackbar
+                    open={this.state.openLoginSnackbar}
+                    message="You have successfully logged in"
+                    autoHideDuration={4000}
+                    onRequestClose={this.handleRequestClose}
+                />
             </div>
         );
     }
