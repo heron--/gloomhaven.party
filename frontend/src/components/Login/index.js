@@ -14,7 +14,7 @@ class Login extends Component {
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.onGoogleSuccess = this.onGoogleSuccess.bind(this);
-        this.setSettings = this.setSetting.bind(this);
+        this.setSettings = this.setSettings.bind(this);
 
         this.state = {
             openDialog: false,
