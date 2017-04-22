@@ -94,6 +94,8 @@ const API = {
 
         const updateEndpoint = __DEV__ ? devEndpoints.updateCharacter + character.id : endpoints.checkSession + character.id;
 
+        console.log(character);
+
         const updateConfig = {
             headers: {
               'Accept': 'application/json',

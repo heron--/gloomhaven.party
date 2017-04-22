@@ -34,21 +34,59 @@ function utils() {
 				const r = results[0];
 				const userId = r.id;
 
-				connection.query('SELECT * FROM `Characters` AS c INNER JOIN `User-Character` as uc ON uc.userId=? AND c.id=uc.characterId', [userId], (error, results) => {
-					
+				const characterSelectQuery = `
+					SELECT * FROM \`Characters\` AS c
+					INNER JOIN \`User-Character\` AS uc
+					ON uc.userId=8 AND c.id=uc.characterId
+					INNER JOIN \`Character-Perk\` AS cp ON cp.characterId = uc.characterId
+				`;
+
+				connection.query(characterSelectQuery, [userId], (error, results) => {
+
+					const characters = [];
+
+					results.forEach(r => {
+						const matchingEntry = characters.filter(c => c.id === r.id)[0];
+
+						if(typeof matchingEntry === 'undefined') {
+							characters.push({
+								id: r.id,
+								classId: r.classId,
+								name: r.name,
+								level: r.level,
+								experienceNotes: r.experienceNotes,
+								goldNotes: r.goldNotes,
+								items: r.items,
+								checks: r.checks,
+								notes: r.notes,
+								retired: r.retired,
+								perks: [
+									r.perkId
+								]
+							})
+
+						} else {
+
+							matchingEntry.perks.push(r.perkId);
+
+						}
+
+					});
+
 					res.send(getResponseMessage(res, 'User is logged in', 200, {
 						user: new User(req.gloomhavensession.user.email),
-						userCharacters: results.map(r => new Character(
-							r.id,
-							r.classId,
-							r.name,
-							r.level,
-							r.experienceNotes,
-							r.goldNotes,
-							r.items,
-							r.checks,
-							r.notes,
-							r.retired
+						userCharacters: characters.map(c => new Character(
+							c.id,
+							c.classId,
+							c.name,
+							c.level,
+							c.experienceNotes,
+							c.goldNotes,
+							c.items,
+							c.checks,
+							c.notes,
+							c.retired,
+							c.perks
 						).get())
 					}));	
 				});

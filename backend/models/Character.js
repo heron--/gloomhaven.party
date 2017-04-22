@@ -5,7 +5,7 @@ const leftPad = require('left-pad');
 const encryptionConfig = config.get('encryptionConfig');
 const cryptr = new Cryptr(encryptionConfig.secret);
 
-function Character(id, classId, name, level, experienceNotes, goldNotes, items, checks, notes, retired) {
+function Character(id, classId, name, level, experienceNotes, goldNotes, items, checks, notes, retired, perks) {
 	this.id = id;	
 	this.classId = classId;
 	this.name = name;
@@ -16,6 +16,7 @@ function Character(id, classId, name, level, experienceNotes, goldNotes, items, 
 	this.checks = checks;
 	this.notes = notes;
 	this.retired = retired;
+	this.perks = perks;
 }
 
 Character.prototype.get = function get() {
@@ -30,7 +31,8 @@ Character.prototype.get = function get() {
 		items: this.items,
 		checks: this.checks,
 		notes: this.notes,
-		retired: this.retired
+		retired: this.retired,
+		perks: this.perks.map(p => cryptr.encrypt(p))
 	};
 };
 

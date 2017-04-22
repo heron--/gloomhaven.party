@@ -86,8 +86,6 @@ function* characterUpdate(action) {
             currentCharacter
         } = action;
 
-        console.log(Object.assign({}, currentCharacter, updateValues));
-
         if(typeof updateValues.id === 'undefined' && currentCharacter.id === 'undefined') {
             throw new Error('Character id not defined');
         }

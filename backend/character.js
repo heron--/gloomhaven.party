@@ -73,34 +73,41 @@ router.get('/:characterId', (req, res) => {
 
 				const characterId = cryptr.decrypt(req.params.characterId);
 
-				connection.query('SELECT * FROM `Characters` AS c WHERE c.id = ?', [characterId], (error, results) => {
+				connection.query('SELECT c.*, uc.userId FROM `Characters` AS c JOIN `User-Character` AS uc WHERE uc.characterId = ? AND c.id = ?', [characterId, characterId], (error, results) => {
 
 					if(error) return next(error);
 
 					const r = results[0];
 
-					if(typeof r !== 'undefined') {
-						const character = new Character(
-							r.id,
-							r.classId,
-							r.name,
-							r.level,
-							r.experienceNotes,
-							r.goldNotes,
-							r.items,
-							r.checks,
-							r.notes,
-							r.retired
-						);
+					connection.query('SELECT * FROM `Character-Perk` AS cp WHERE cp.characterId = ?', [characterId], (error, results) => {
 
-						res.send(getResponseMessage(res, 'Fetch Character', 200, character.get()));
+						if(error) return next(error);
 
-					} else {
+						const perks = results[0];
 
-						res.send(getResponseMessage(res, 'Character not found', 404, null));
+						if(typeof r !== 'undefined') {
+							const character = new Character(
+								r.id,
+								r.classId,
+								r.name,
+								r.level,
+								r.experienceNotes,
+								r.goldNotes,
+								r.items,
+								r.checks,
+								r.notes,
+								r.retired,
+								perks
+							);
 
-					}
+							res.send(getResponseMessage(res, 'Fetch Character', 200, character.get()));
 
+						} else {
+
+							res.send(getResponseMessage(res, 'Character not found', 404, null));
+
+						}
+					});
 				});
 
 			});
@@ -126,100 +133,83 @@ router.post('/:characterId', (req, res, next) => {
 			const decryptedCharacterId = cryptr.decrypt(req.params.characterId);
 
 			// Get current Character
-			connection.query('SELECT * FROM `Characters` AS c WHERE c.id=?', [decryptedCharacterId], (error, results) => {
+			connection.query('SELECT c.*, uc.userId FROM `Characters` AS c JOIN `User-Character` AS uc WHERE uc.characterId = ? AND c.id = ?', [decryptedCharacterId, decryptedCharacterId], (error, results) => {
 					
 				if(error) return next(error);
 
 				if(results.length === 0) {
 
 					res.send(getResponseMessage(res, 'Character not found', 404, null));
+					next();
 
 				} else {
 
-					const r = results[0];
+					const character = results[0];
 
-					const character = new Character(
-						r.id,
-						r.classId,
-						r.name,
-						r.level,
-						r.experienceNotes,
-						r.goldNotes,
-						r.items,
-						r.checks,
-						r.notes,
-						r.retired
-					);
+					if(character.userId !== user.id) {
+						res.send(getResponseMessage(res, 'Verfied user does not own this character', 401, null));	
+						next();
+					}
 
-					// Verify character ownership
-					connection.query('SELECT * FROM `User-Character` AS uc WHERE uc.characterId=? AND uc.userId=?', [character.id, user.id], (error, results) => {
+					const updateQuery = 'UPDATE `Characters` AS c SET c.name=?, c.level=?, c.experienceNotes=?, c.goldNotes=?, c.items=?, c.checks=?, c.notes=? WHERE c.id=?';
 
-						if(results.length === 0) {
+					const updateObject = Object.assign({}, character, req.body.character);
 
-							res.send(getResponseMessage(res, 'Verfied user does not own this character', 401, null));
+					const updateParams = [
+						updateObject.name,
+						updateObject.level,
+						updateObject.experienceNotes,
+						updateObject.goldNotes,
+						updateObject.items,
+						updateObject.checks,
+						updateObject.notes,
+						decryptedCharacterId	
+					];
 
-						} else {
+					// Update character
+					connection.query(updateQuery, updateParams, (error, results) => {
 
-							const updateQuery = 'UPDATE `Characters` AS c SET c.name=?, c.level=?, c.experienceNotes=?, c.goldNotes=?, c.items=?, c.checks=?, c.notes=? WHERE c.id=?';
+						if(error) return next(error);
 
-							const updateObject = Object.assign({}, character, req.body.character);
+						connection.query('SELECT * FROM `Characters` AS c WHERE c.id=?', [decryptedCharacterId], (error, results) => {
+											
+							if(error) return next(error);
 
-							const updateParams = [
-								updateObject.name,
-								updateObject.level,
-								updateObject.experienceNotes,
-								updateObject.goldNotes,
-								updateObject.items,
-								updateObject.checks,
-								updateObject.notes,
-								decryptedCharacterId	
-							];
- 
-							// Update character
-							connection.query(updateQuery, updateParams, (error, results) => {
+							if(results.length === 0) {
 
-								if(error) return next(error);
+								res.send(getResponseMessage(res, 'Character not found', 404, null));
 
+							} else {
 
-								connection.query('SELECT * FROM `Characters` AS c WHERE c.id=?', [decryptedCharacterId], (error, results) => {
-													
+								const r = results[0];
+
+								connection.query('SELECT * FROM `Character-Perk` AS cp WHERE cp.characterId = ?', [decryptedCharacterId], (error, results) => {
+
 									if(error) return next(error);
 
-									if(results.length === 0) {
+									const perkResults = results;
 
-										res.send(getResponseMessage(res, 'Character not found', 404, null));
+									const character = new Character(
+										r.id,
+										r.classId,
+										r.name,
+										r.level,
+										r.experienceNotes,
+										r.goldNotes,
+										r.items,
+										r.checks,
+										r.notes,
+										r.retired,
+										perkResults.map(p => p.perkId)
+									);
 
-									} else {
-
-										const r = results[0];
-
-										const character = new Character(
-											r.id,
-											r.classId,
-											r.name,
-											r.level,
-											r.experienceNotes,
-											r.goldNotes,
-											r.items,
-											r.checks,
-											r.notes,
-											r.retired
-										);
-
-										res.send(getResponseMessage(res, `Character ${ req.params.characterId } updated`, 200, character.get()));
-									}
+									res.send(getResponseMessage(res, `Character ${ req.params.characterId } updated`, 200, character.get()));
 								});
-
-							});
-
-						}
-
+							}
+						});
 					});
-
 				}
-
 			});
-
 		})
 	})
 });
