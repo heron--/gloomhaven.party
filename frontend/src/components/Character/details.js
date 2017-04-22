@@ -222,6 +222,7 @@ class CharacterDetails extends Component {
                 properties: {
                     readOnly: readOnly.indexOf('perks') !== -1,
                     perks: typeof currentCharacterClass !== 'undefined' ? currentCharacterClass.perks : [],
+                    characterPerks: currentCharacter.perks,
                     handleOnChange: () => {}
                 }
             },

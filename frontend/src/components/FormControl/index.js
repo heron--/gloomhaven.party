@@ -92,7 +92,8 @@ const styles = {
 
 const FormControlPerks = ({
     handleOnChange,
-    perks
+    perks,
+    characterPerks
 }) => {
     return (
         <div className="form-control form-control-container">
@@ -103,6 +104,7 @@ const FormControlPerks = ({
                         key={ p.id }
                         label={ getLabel(p.description) }
                         labelStyle={ styles.checkbox.labelStyle }
+                        checked={ characterPerks.indexOf(p.id) !== -1 }
                     />)
             }
         </div>
