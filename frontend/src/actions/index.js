@@ -1,3 +1,17 @@
+export function updateUserSettings(key, value) {
+    return {
+        type: 'UPDATE_USER_SETTINGS',
+        key,
+        value
+    };
+}
+
+export function initializeUserSettings() {
+    return {
+        type: 'INIT_USER_SETTINGS'
+    } 
+}
+
 export function updateUser(user, userCharacters) {
     return {
         type: 'UPDATE_USER',

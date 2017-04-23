@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
+import { initializeUserSettings } from '~/actions';
 import { deepPurple500, deepPurple700, deepPurple400 } from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -25,7 +26,8 @@ class App extends Component {
         super(props);
 
         this.state = {
-            open: false
+            open: false,
+            settingInitialized: false
         };
     }
 
@@ -37,7 +39,8 @@ class App extends Component {
     componentWillReceiveProps(nextProps) {
 
         const {
-            history
+            history,
+            initSettings
         } = this.props;
 
         const {
@@ -70,6 +73,11 @@ class App extends Component {
 
         if(user.email.length === 0 && location.pathname !== '/') {
             history.push('/', {});
+        }
+
+        if(user.initialCheck && !this.state.settingsInitialized) {
+            this.setState({settingsInitialized: true});
+            initSettings();
         }
     }
 
@@ -146,6 +154,12 @@ function mapStateToProps(state) {
     };
 }
 
-const ConnectedApp = connect(mapStateToProps)(App)
+function mapDispatchToProps(dispatch) {
+    return {
+        initSettings: () => dispatch(initializeUserSettings())
+    };
+}
+
+const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
 
 export { ConnectedApp as default };

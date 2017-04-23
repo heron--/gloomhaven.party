@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
+import { updateUserSettings } from '~/actions';
 import Checkbox from 'material-ui/Checkbox';
 import Dialog from 'material-ui/Dialog';
 import Divider from 'material-ui/Divider';
@@ -14,6 +15,7 @@ class Profile extends Component {
         super(props);
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.updateSpoiler = this.updateSpoiler.bind(this);
         this.state = {
             openDialog: false
         };
@@ -27,6 +29,35 @@ class Profile extends Component {
 
     handleClose() {
         this.setState({openDialog: false});
+    }
+
+    componentWillMount() {
+        const {
+            updateSettings,
+            user: { settings }
+        } = this.props;
+
+        if(typeof settings.spoilers === 'undefined') {
+            updateSettings('spoilers', []);
+        }
+    }
+
+    updateSpoiler(id, checked) {
+        const {
+            updateSettings,
+            user: { settings }
+        } = this.props;
+
+        if(checked) {
+            if(settings.spoilers.indexOf(id) === -1) {
+
+                const newSettings = settings.spoilers.slice();
+                newSettings.push(id);
+                updateSettings('spoilers', newSettings);
+            }
+        } else {
+            updateSettings('spoilers', settings.spoilers.filter(s => s !== id));
+        }
     }
 
     render() {
@@ -48,6 +79,8 @@ class Profile extends Component {
             />,
         ];
 
+        const spoilers = user.settings.spoilers || [];
+
         return (
     		<Card style={{ maxWidth: '600px', margin: '10px auto' }}>
     			<CardTitle title="My Profile" subtitle={ user.email } />
@@ -63,6 +96,8 @@ class Profile extends Component {
         						<Checkbox
                                     key={ c.id }
         							label={ labelName }
+                                    checked={ spoilers.indexOf(c.id) !== -1 }
+                                    onCheck={ (e,v) => { this.updateSpoiler(c.id, v); }}
         						/>
         					)
         				})
@@ -93,6 +128,12 @@ function mapStateToProps(state) {
     };
 }
 
-const ConnectedProfile = connect(mapStateToProps)(Profile);
+function mapDispatchToProps(dispatch) {
+    return {
+        updateSettings: (key, value) => dispatch(updateUserSettings(key, value))
+    }
+}
+
+const ConnectedProfile = connect(mapStateToProps, mapDispatchToProps)(Profile);
 
 export { ConnectedProfile as default };

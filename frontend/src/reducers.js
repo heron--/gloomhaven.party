@@ -12,6 +12,12 @@ const user = (state = {}, action) => {
                 email: ''
             });
 
+        case 'UPDATE_USER_SETTINGS':
+        case 'INIT_USER_SETTINGS':
+            return Object.assign({}, state, {
+                settings: Object.assign({}, state.settings, action.settings)
+            });
+
         case 'LOGOUT_REQUEST':
         case 'LOGIN_REQUEST':
         default:

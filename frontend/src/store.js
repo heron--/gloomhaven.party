@@ -8,10 +8,74 @@ const logger = createLogger();
 
 const sagaMiddleware = createSagaMiddleware();
 
+const settingsMiddleware = store => next => action => {
+
+    if(action.type === 'UPDATE_USER_SETTINGS') {
+
+        const storageKey = store.getState().user.settings.storageKey;
+        const storeUpdate = {
+            [action.key]: action.value
+        };
+
+        let currentStore;
+
+        try {
+
+            currentStore = JSON.parse(localStorage.getItem(storageKey));
+
+        } catch(e) {
+
+            console.error('Local storage parse error');
+            currentStore = {};
+
+        }
+
+        if(typeof currentStore === 'undefined') {
+
+            localStorage.setItem(storageKey, JSON.stringify(storeUpdate));
+
+        } else {
+
+            localStorage.setItem(storageKey, JSON.stringify(Object.assign({}, currentStore, storeUpdate)));
+
+        }
+
+        return next(Object.assign({}, action, {
+            settings: Object.assign({}, currentStore, storeUpdate)
+        }));
+         
+    }
+
+    if(action.type === 'INIT_USER_SETTINGS') {
+        const storageKey = store.getState().user.settings.storageKey;
+        let currentStore;
+
+        try {
+
+            currentStore = JSON.parse(localStorage.getItem(storageKey));
+
+        } catch(e) {
+            
+            console.error('Local storage parse error');
+            currentStore = {};
+
+        }
+
+        return next(Object.assign({}, action, {
+            settings: currentStore
+        }));
+    }
+
+    return next(action); 
+}
+
 const initialState = {
     user: {
         email: '',
-        initialCheck: false
+        initialCheck: false,
+        settings: {
+            'storageKey': 'gloomhaven.party'
+        }
     },
     character: {
         classes: [],
@@ -24,14 +88,14 @@ const stores = {
     development: () => createStore(
         rootReducer,
         initialState,
-        applyMiddleware(sagaMiddleware, logger)
+        applyMiddleware(sagaMiddleware, settingsMiddleware, logger)
     ),
     production: () => createStore(
         rootReducer,
         initialState,
-        applyMiddleware(sagaMiddleware)
+        applyMiddleware(sagaMiddleware, settingsMiddleware)
     )
-}
+};
 
 export const store = stores[process.env.NODE_ENV]();
 

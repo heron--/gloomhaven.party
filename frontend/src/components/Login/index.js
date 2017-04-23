@@ -14,12 +14,10 @@ class Login extends Component {
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.onGoogleSuccess = this.onGoogleSuccess.bind(this);
-        this.setSettings = this.setSettings.bind(this);
 
         this.state = {
             openDialog: false,
-            openLoginSnackbar: false,
-            settings: ''
+            openLoginSnackbar: false
         };
 
         this.googleLoginConfig = {
@@ -28,8 +26,6 @@ class Login extends Component {
             onSuccess: this.onGoogleSuccess,
             onFailure: this.onGoogleFailure
         };
-
-        this.storageKey = 'gloomhaven.party';
     }
 
     handleOpen() {
@@ -64,12 +60,6 @@ class Login extends Component {
 
     onGoogleFailure() {
         console.log('google failure');
-    }
-
-    setSettings() {
-        if(typeof window.localStorage !== 'undefined') {
-            localStorage.set(this.storageKey, JSON.stringify(this.state.settings))
-        }
     }
 
     render() {

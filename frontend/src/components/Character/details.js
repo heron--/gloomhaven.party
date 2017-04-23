@@ -41,8 +41,11 @@ const _CharacterDetailsEdit = ({
     characterClasses,
     updateCharacter,
     currentCharacter,
-    match
+    match,
+    settings
 }) => {
+
+    console.log(settings)
 
     const character = characters.filter(c => c.id === match.params.characterId)[0];
 
@@ -58,6 +61,7 @@ const _CharacterDetailsEdit = ({
             detailType="edit"
             currentCharacter={ currentCharacter }
             updateCharacter={ updateCharacter }
+            settings={ settings }
         />
     );
 };
@@ -66,7 +70,8 @@ function mapStateToEditProps(state) {
     return {
         characters: state.character.userCharacters,
         characterClasses: state.character.classes,
-        currentCharacter: state.character.currentCharacter
+        currentCharacter: state.character.currentCharacter,
+        settings: state.user.settings
     };
 }
 
@@ -113,7 +118,8 @@ class CharacterDetails extends Component {
         const {
             characterClasses,
             readOnly,
-            currentCharacter
+            currentCharacter,
+            settings
         } = this.props;
 
         const actions = [
@@ -131,7 +137,8 @@ class CharacterDetails extends Component {
         const currentCharacterClass = characterClasses.filter(c => c.id === currentCharacter.classId)[0];
 
         const characterClassMenuItems = characterClasses.map(c => {
-            const primaryText = c.spoiler ? (<span style={{ position: "relative", bottom: "5px" }}>???</span>) : c.displayName;
+
+            const primaryText = c.spoiler && settings.spoilers.indexOf(c.id) === -1 ? (<span style={{ position: "relative", bottom: "5px" }}>???</span>) : c.displayName;
 
             return {
                 value: c.id,
@@ -150,7 +157,7 @@ class CharacterDetails extends Component {
                     hintText: 'Class',
                     handleOnChange: (e,i,v) => { this.handleChange('classId', v) },
                     currentValue: checkExists(currentCharacter.classId, 'string'),
-                    menuItems: characterClassMenuItems 
+                    menuItems: characterClassMenuItems
                 }
             },
             {
