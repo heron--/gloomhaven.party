@@ -45,8 +45,6 @@ const _CharacterDetailsEdit = ({
     settings
 }) => {
 
-    console.log(settings)
-
     const character = characters.filter(c => c.id === match.params.characterId)[0];
 
     const readOnly = [
@@ -230,7 +228,7 @@ class CharacterDetails extends Component {
                     readOnly: readOnly.indexOf('perks') !== -1,
                     perks: typeof currentCharacterClass !== 'undefined' ? currentCharacterClass.perks : [],
                     characterPerks: currentCharacter.perks,
-                    handleOnChange: () => {}
+                    handleOnChange: perks => { console.log(perks); this.handleChange('perks', perks) }
                 }
             },
             {

@@ -105,6 +105,20 @@ const FormControlPerks = ({
                         label={ getLabel(p.description) }
                         labelStyle={ styles.checkbox.labelStyle }
                         checked={ characterPerks.indexOf(p.id) !== -1 }
+                        onCheck={ (e,v) => {
+            
+                            let newPerks;
+
+                            if(v) {
+                                newPerks = characterPerks.slice();
+                                newPerks.push(p.id);
+                            } else {
+                                newPerks = characterPerks.filter(cp => cp !== p.id);
+                                console.log(newPerks)
+                            }
+
+                            handleOnChange(newPerks);
+                        }}
                     />)
             }
         </div>

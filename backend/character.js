@@ -119,7 +119,7 @@ router.post('/:characterId', (req, res, next) => {
 							const currentPerks = results;
 
 							const newPerks = req.body.character.perks.filter(p => currentPerks.filter(cp => cp.perkId === +cryptr.decrypt(p)).length === 0);
-							const deletedPerks = currentPerks.filter(cp => req.body.character.perks.indexOf(+cryptr.encrypt(cp.perkId)) === -1).map(cp => cp.perkId);
+							const deletedPerks = currentPerks.filter(cp => req.body.character.perks.indexOf(cryptr.encrypt(cp.perkId)) === -1).map(cp => cp.perkId);
 
 							if(deletedPerks.length === 0 && newPerks.length === 0) {
 								getCharacter(req, res, next);

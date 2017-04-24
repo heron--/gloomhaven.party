@@ -106,8 +106,8 @@ function utils() {
 				const characterSelectQuery = `
 					SELECT * FROM \`Characters\` AS c
 					INNER JOIN \`User-Character\` AS uc
-					ON uc.userId=8 AND c.id=uc.characterId
-					INNER JOIN \`Character-Perk\` AS cp ON cp.characterId = uc.characterId
+					ON uc.userId=? AND c.id=uc.characterId
+					LEFT JOIN \`Character-Perk\` AS cp ON cp.characterId = uc.characterId
 				`;
 
 				connection.query(characterSelectQuery, [userId], (error, results) => {
@@ -129,9 +129,9 @@ function utils() {
 								checks: r.checks,
 								notes: r.notes,
 								retired: r.retired,
-								perks: [
+								perks: r.perkId ? [
 									r.perkId
-								]
+								] : []
 							})
 
 						} else {
