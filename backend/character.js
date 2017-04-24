@@ -10,7 +10,8 @@ const cryptr = new Cryptr(encryptionConfig.secret);
 
 const {
 	getResponseMessage,
-	getLoginErrorMessage
+	getLoginErrorMessage,
+	getCharacter
 } = new utils();
 
 const router = express.Router({
@@ -51,74 +52,14 @@ router.get('/classes', (req, res, next) => {
 	});
 });
 
-router.get('/:characterId', (req, res) => {
-	// Cookie not set
-	if(typeof req.gloomhavensession === 'undefined') {
-
-		res.send(getResponseMessage(res, 'User not logged in', 200, null));
-
-	} else {
-
-		// Cookie set but session not started
-		if(typeof req.gloomhavensession.user === 'undefined') {
-
-			res.send(getResponseMessage(res, 'User not logged in', 200, null));
-
-		// Everything's good
-		} else {
-
-			req.getConnection((error, connection) => {
-
-				if(error) return next(error);
-
-				const characterId = cryptr.decrypt(req.params.characterId);
-
-				connection.query('SELECT c.*, uc.userId FROM `Characters` AS c JOIN `User-Character` AS uc WHERE uc.characterId = ? AND c.id = ?', [characterId, characterId], (error, results) => {
-
-					if(error) return next(error);
-
-					const r = results[0];
-
-					connection.query('SELECT * FROM `Character-Perk` AS cp WHERE cp.characterId = ?', [characterId], (error, results) => {
-
-						if(error) return next(error);
-
-						const perks = results[0];
-
-						if(typeof r !== 'undefined') {
-							const character = new Character(
-								r.id,
-								r.classId,
-								r.name,
-								r.level,
-								r.experienceNotes,
-								r.goldNotes,
-								r.items,
-								r.checks,
-								r.notes,
-								r.retired,
-								perks
-							);
-
-							res.send(getResponseMessage(res, 'Fetch Character', 200, character.get()));
-
-						} else {
-
-							res.send(getResponseMessage(res, 'Character not found', 404, null));
-
-						}
-					});
-				});
-
-			});
-
-
-		}
-
-	}
+router.get('/:characterId', (req, res, next) => {
+	res.successMessage = `Fetch character ${ req.params.characterId }`;
+	getCharacter(req, res, next);
 });
 
 router.post('/:characterId', (req, res, next) => {
+
+	res.successMessage = `Character ${ req.params.characterId } updated`;
 
 	req.getConnection((error, connection) => {
 		const encryptedEmail = cryptr.encrypt(req.gloomhavensession.user.email);
@@ -171,40 +112,57 @@ router.post('/:characterId', (req, res, next) => {
 
 						if(error) return next(error);
 
-						connection.query('SELECT * FROM `Characters` AS c WHERE c.id=?', [decryptedCharacterId], (error, results) => {
-											
+						connection.query('SELECT * FROM `Character-Perk` AS cp WHERE cp.characterId = ?', [decryptedCharacterId], (error, results) => {
+
 							if(error) return next(error);
 
-							if(results.length === 0) {
+							const currentPerks = results;
 
-								res.send(getResponseMessage(res, 'Character not found', 404, null));
+							const newPerks = req.body.character.perks.filter(p => currentPerks.filter(cp => cp.perkId === +cryptr.decrypt(p)).length === 0);
+							const deletedPerks = currentPerks.filter(cp => req.body.character.perks.indexOf(+cryptr.encrypt(cp.perkId)) === -1).map(cp => cp.perkId);
 
+							if(deletedPerks.length === 0 && newPerks.length === 0) {
+								getCharacter(req, res, next);
 							} else {
 
-								const r = results[0];
+								const newPerkParams = newPerks.map(np => [+decryptedCharacterId, +cryptr.decrypt(np)]);
+								const deletePerkParams = deletedPerks.map(dp => [+decryptedCharacterId, dp]);
 
-								connection.query('SELECT * FROM `Character-Perk` AS cp WHERE cp.characterId = ?', [decryptedCharacterId], (error, results) => {
+								if(newPerks.length === 0) {
+									// Delete
+									connection.query('DELETE FROM `Character-Perk` WHERE (characterId, perkId) IN (?)', [deletePerkParams], (error, results) => {
 
-									if(error) return next(error);
+										if(error) return next(error);
+										
+										getCharacter(req, res, next);
+										
+									});
 
-									const perkResults = results;
+								} else if(deletedPerks.length === 0) {
+									// Insert
+									connection.query('INSERT INTO `Character-Perk` (characterId, perkId) VALUES ?', [newPerkParams], (error, results) => {
+										
+										if(error) return next(error);
 
-									const character = new Character(
-										r.id,
-										r.classId,
-										r.name,
-										r.level,
-										r.experienceNotes,
-										r.goldNotes,
-										r.items,
-										r.checks,
-										r.notes,
-										r.retired,
-										perkResults.map(p => p.perkId)
-									);
+										getCharacter(req, res, next);
 
-									res.send(getResponseMessage(res, `Character ${ req.params.characterId } updated`, 200, character.get()));
-								});
+									});	
+								} else {
+									// Delete and Insert
+									connection.query('INSERT INTO `Character-Perk` (characterId, perkId) VALUES ?', [newPerkParams], (error, results) => {
+										
+										if(error) return next(error);
+
+										connection.query('DELETE FROM `Character-Perk` WHERE (characterId, perkId) IN (?)', [deletePerkParams], (error, results) => {
+
+											if(error) return next(error);
+											
+											getCharacter(req, res, next);
+											
+										});
+									});	
+								}
+
 							}
 						});
 					});

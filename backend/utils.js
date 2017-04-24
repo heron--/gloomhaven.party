@@ -20,6 +20,75 @@ function utils() {
 		return getResponseMessage(res, 'User Not Logged In', 401, null);
 	}
 
+	function getCharacter(req, res, next) {
+		// Cookie not set
+		if(typeof req.gloomhavensession === 'undefined') {
+
+			res.send(getResponseMessage(res, 'User not logged in', 200, null));
+
+		} else {
+
+			// Cookie set but session not started
+			if(typeof req.gloomhavensession.user === 'undefined') {
+
+				res.send(getResponseMessage(res, 'User not logged in', 200, null));
+
+			// Everything's good
+			} else {
+
+				req.getConnection((error, connection) => {
+
+					if(error) return next(error);
+
+					const characterId = cryptr.decrypt(req.params.characterId);
+
+					connection.query('SELECT c.*, uc.userId FROM `Characters` AS c JOIN `User-Character` AS uc WHERE uc.characterId = ? AND c.id = ?', [characterId, characterId], (error, results) => {
+
+						if(error) return next(error);
+
+						const r = results[0];
+
+						connection.query('SELECT * FROM `Character-Perk` AS cp WHERE cp.characterId = ?', [characterId], (error, results) => {
+
+							if(error) return next(error);
+
+							const perks = results;
+
+							if(typeof r !== 'undefined') {
+								const character = new Character(
+									r.id,
+									r.classId,
+									r.name,
+									r.level,
+									r.experienceNotes,
+									r.goldNotes,
+									r.items,
+									r.checks,
+									r.notes,
+									r.retired,
+									perks.map(p => p.perkId)
+								);
+
+
+								if(res.successMessage) {
+									res.send(getResponseMessage(res, res.successMessage, 200, character.get()));
+								} else {
+									res.send(getResponseMessage(res, 'Fetch Character', 200, character.get()));
+								}
+
+							} else {
+
+								res.send(getResponseMessage(res, 'Character not found', 404, null));
+
+							}
+						});
+					});
+
+				});
+			}
+		}
+	}
+
 	function getUserCharacters(req, res, next) {
 		req.getConnection((error, connection) => {
 
@@ -99,7 +168,8 @@ function utils() {
 	return {
 		getResponseMessage,
 		getLoginErrorMessage,
-		getUserCharacters
+		getUserCharacters,
+		getCharacter
 	};
 }
 
