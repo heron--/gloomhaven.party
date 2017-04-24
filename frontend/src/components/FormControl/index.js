@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -93,10 +94,18 @@ const styles = {
 const FormControlPerks = ({
     handleOnChange,
     perks,
-    characterPerks
+    characterPerks,
+    readOnly
 }) => {
+
+    const classes = classNames({
+        'form-control': true,
+        'form-control-container': true,
+        'form-control-disabled': readOnly
+    });
+
     return (
-        <div className="form-control form-control-container">
+        <div className={ classes }>
             <h3>Perks</h3>
             {
                 perks.map(p =>
@@ -105,6 +114,7 @@ const FormControlPerks = ({
                         label={ getLabel(p.description) }
                         labelStyle={ styles.checkbox.labelStyle }
                         checked={ characterPerks.indexOf(p.id) !== -1 }
+                        disabled={ readOnly }
                         onCheck={ (e,v) => {
             
                             let newPerks;
@@ -258,6 +268,9 @@ class FormControlChecks extends Component {
     }
 
     getCheckContainers() {
+        const {
+            readOnly
+        } = this.props;
 
         const children = [];
 
@@ -265,9 +278,9 @@ class FormControlChecks extends Component {
             children.push((
                 <div className="checks-container" key={ i }>
                     <FontIcon className="gloomhaven-icon-general-check" />
-                    <Checkbox checked={ this.state.checks[i] } onCheck={ (e,v) => { this.handleCheck(i, v); }} />
-                    <Checkbox checked={ this.state.checks[i + 1] } onCheck={ (e,v) => { this.handleCheck(i + 1, v); }} />
-                    <Checkbox checked={ this.state.checks[i + 2] }  onCheck={ (e,v) => { this.handleCheck(i + 2, v); }} />
+                    <Checkbox checked={ this.state.checks[i] } disabled={ readOnly } onCheck={ (e,v) => { this.handleCheck(i, v); }} />
+                    <Checkbox checked={ this.state.checks[i + 1] } disabled={ readOnly } onCheck={ (e,v) => { this.handleCheck(i + 1, v); }} />
+                    <Checkbox checked={ this.state.checks[i + 2] } disabled={ readOnly } onCheck={ (e,v) => { this.handleCheck(i + 2, v); }} />
                 </div>
             ));
         }
@@ -294,8 +307,14 @@ const FormControlText = ({
     currentValue,
     handleOnChange,
     errorText,
-    textArea = {}
+    textArea = {},
+    readOnly
 }) => {
+
+    const classes = classNames({
+        'form-control': true,
+        'form-control-disabled': readOnly
+    });
 
 
     const requiredProps = {
@@ -304,7 +323,8 @@ const FormControlText = ({
     };
 
     const props = Object.assign({}, required ? requiredProps : {}, {
-        className: "form-control",
+        className: classes,
+        disabled: readOnly,
         value: currentValue,
         floatingLabelText: labelText,
         floatingLabelStyle: styles.input.floatingLabelStyle,
@@ -336,8 +356,14 @@ const FormControlSelect = ({
     hintText,
     errorText,
     handleOnChange,
-    currentValue
+    currentValue,
+    readOnly
 }) => {
+
+    const classes = classNames({
+        'form-control': true,
+        'form-control-disabled': readOnly
+    });
 
     const requiredProps = {
         errorStyle: styles.input.errorStyle,
@@ -345,7 +371,8 @@ const FormControlSelect = ({
     };
 
     const props = Object.assign({}, required ? requiredProps : { }, {
-        className: "form-control",
+        className: classes,
+        disabled: readOnly,
         hintStyle: styles.classSelect.hintStyle,
         hintText: hintText,
         iconStyle: styles.classSelect.iconStyle,
@@ -375,13 +402,22 @@ const FormControlSlider = ({
     max,
     step,
     currentValue,
-    handleOnChange
+    handleOnChange,
+    readOnly
 }) => {
+
+    const classes = classNames({
+        'form-control': true,
+        'form-control-container': true,
+        'form-control-disabled': readOnly 
+    });
+
     return (
-        <div className="form-control form-control-container">
+        <div className={ classes }>
             <h3 style={{ paddingBottom: '10px' }}>{ labelText }</h3>
             <Slider
                 defaultValue={ defaultValue }
+                disabled={ readOnly }
                 min={ min }
                 max={ max }
                 onChange={ handleOnChange }
