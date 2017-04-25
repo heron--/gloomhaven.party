@@ -81,6 +81,57 @@ function mapDispatchToEditProps(dispatch) {
 
 export const CharacterDetailsEdit = connect(mapStateToEditProps, mapDispatchToEditProps)(_CharacterDetailsEdit);
 
+const _CharacterDetailsCreate = ({
+    characterClasses,
+    currentCharacter,
+    updateCharacter,
+    settings
+}) => {
+
+    const readOnly = [];
+
+    const initialCharacter = {
+        checks: 0,
+        classId: null,
+        experienceNotes: '',
+        goldNotes: '',
+        items: '',
+        level: 1,
+        name: '',
+        notes: '',
+        perks: [],
+        retired: 0
+    };
+
+    return (
+        <CharacterDetails
+            characterClasses={ characterClasses }
+            readOnly={ readOnly }
+            initValues={ initialCharacter }
+            detailType="create"
+            currentCharacter={ currentCharacter }
+            updateCharacter={ updateCharacter }
+            settings={ settings }
+        />
+    );
+}
+
+function mapStateToCreateProps(state) {
+    return {
+        characterClasses: state.character.classes,
+        currentCharacter: state.character.currentCharacter,
+        settings: state.user.settings
+    };
+}
+
+function mapDispatchToCreateProps(dispatch) {
+    return {
+        updateCharacter: (values, detailType, currentCharacter) => dispatch(updateCurrentCharacter(values, detailType, currentCharacter))
+    };
+}
+
+export const CharacterDetailsCreate = connect(mapStateToCreateProps, mapDispatchToCreateProps)(_CharacterDetailsCreate);
+
 class CharacterDetails extends Component {
 
     constructor(props) {
@@ -174,12 +225,12 @@ class CharacterDetails extends Component {
                 type: 'slider',
                 properties: {
                     readOnly: readOnly.indexOf('level') !== -1,
-                    labelText: `Level ${ currentCharacter.level }`,
+                    labelText: `Level ${ checkExists(currentCharacter.level, 'number') }`,
                     defaultValue: 1,
                     min: 1,
                     max: 9,
                     step: 1,
-                    currentValue: currentCharacter.level,
+                    currentValue: checkExists(currentCharacter.level, 'number'),
                     handleOnChange: (e, v) => { this.handleChange('level', v) }  
                 }
             },
@@ -301,8 +352,6 @@ class DetailActions extends Component {
         this.handleTouchTap = this.handleTouchTap.bind(this);
         this.handleRequestClose = this.handleRequestClose.bind(this);
         this.state = {
-            levelSlider: 1,
-            value: null,
             openDialog: false,
             openMenu: false,
             anchorOrigin: {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import { CharacterDetailsEdit } from './details';
+import { CharacterDetailsEdit, CharacterDetailsCreate } from './details';
 import CharacterList from './list';
 
 class Character extends Component {
@@ -10,7 +10,7 @@ class Character extends Component {
             <div className="character">
                 <Route exact path="/character" component={ CharacterList } />
                 <Route path="/character/:characterId/edit" component={ CharacterDetailsEdit } />
-                <Route path="/character/create" component={ CharacterDetailsEdit } />
+                <Route path="/character/create" component={ CharacterDetailsCreate } />
             </div>
         );
     } 

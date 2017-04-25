@@ -79,6 +79,11 @@ function* checkSession() {
 }
 
 function* characterUpdate(action) {
+    
+    if(action.detailType === 'create') {
+        return;
+    }
+
     try {
 
         const {
