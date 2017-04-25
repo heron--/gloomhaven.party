@@ -55,6 +55,16 @@ $form-control-label-font-family: 'Medula One', cursive;
 			pointer-events: initial !important;
     		user-select: initial !important;
 		}
+		* {
+			cursor: text !important;
+			color: #000 !important;
+		}
+		button {
+			display: none !important;
+		}
+		hr {
+			display: none;
+		}
 	}
 }
 
