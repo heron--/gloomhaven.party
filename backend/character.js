@@ -172,4 +172,14 @@ router.post('/:characterId', (req, res, next) => {
 	})
 });
 
+router.put('/', (req, res, next) => {
+	res.successMessage = `Character created`;
+
+	req.getConnection((error, connection) => {
+		connections.query('INSERT INTO `Characters` AS C', [], (error, results) => {
+			if(error) return next(error);	
+		})
+	});
+});
+
 module.exports = router;
