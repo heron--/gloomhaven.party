@@ -176,10 +176,79 @@ router.put('/', (req, res, next) => {
 	res.successMessage = `Character created`;
 
 	req.getConnection((error, connection) => {
-		connections.query('INSERT INTO `Characters` AS C', [], (error, results) => {
-			if(error) return next(error);	
-		})
+		const encryptedEmail = cryptr.encrypt(req.gloomhavensession.user.email);
+
+		// Get current User
+		connection.query('SELECT * FROM `Users` AS u WHERE u.email=?', [encryptedEmail], (error, results) => {
+
+			if(error) return next(error);
+
+			const user = results[0];
+
+			const insertString = 'INSERT INTO `Characters` (classId, name, level, experienceNotes, goldNotes, items, checks, notes) VALUES (?)';
+
+			const {
+				character
+			} = req.body;
+
+			if(typeof character === 'undefined') {
+				res.send(getResponseMessage(res, 'Character data missing', 400, null));	
+				next();
+			}
+
+			if(typeof character.classId === 'undefined') {
+				res.send(getResponseMessage(res, 'Character data missing', 400, null));	
+				next();
+			}
+
+			const insertParams = [
+				cryptr.decrypt(character.classId),
+				checkExists(character.name, ''),
+				checkExists(character.level, 1),
+				checkExists(character.experienceNotes, ''),
+				checkExists(character.goldNotes, ''),
+				checkExists(character.items, ''),
+				checkExists(character.checks, 0),
+				checkExists(character.notes, '')
+			];
+
+			connection.query(insertString, [insertParams], (error, results) => {
+
+				if(error) return next(error);	
+
+				const characterId = results.insertId;
+
+				connection.query('INSERT INTO `User-Character` (characterId, userId) VALUES (?, ?)', [characterId, user.id], (error, results) => {
+					
+					if(error) return next(error);
+
+					if(character.perks.length > 0) {
+
+						const perkParams = character.perks.map(p => [characterId, cryptr.decrypt(p)]);
+
+						connection.query('INSERT INTO `Character-Perk` (characterId, perkId) VALUES ?', [perkParams], (error, results) => {
+
+							if(error) return next(error);
+
+							res.characterId = characterId;
+							getCharacter(req, res, next);
+				
+						}); 
+
+					} else {
+						res.characterId = characterId;
+						getCharacter(req, res, next);
+					}
+
+
+				});	
+			});
+		});
 	});
+
+	function checkExists(value, defaultValue) {
+		return typeof value === 'undefined' ? defaultValue : value;
+	}
 });
 
 module.exports = router;

@@ -40,7 +40,7 @@ function utils() {
 
 					if(error) return next(error);
 
-					const characterId = cryptr.decrypt(req.params.characterId);
+					const characterId = typeof req.params.characterId === 'undefined' ? res.characterId : cryptr.decrypt(req.params.characterId);
 
 					connection.query('SELECT c.*, uc.userId FROM `Characters` AS c JOIN `User-Character` AS uc WHERE uc.characterId = ? AND c.id = ?', [characterId, characterId], (error, results) => {
 
