@@ -234,16 +234,18 @@ class FormControlChecks extends Component {
         this.state.checks.forEach(c => { if(c) currentCount++; });
 
         if(currentCount !== nextProps.currentValue) {
-            const copyArray = this.state.checks.slice();
+            const checks = this.state.checks.slice();
 
-            for(let i = 0; i < copyArray.length; i++) {
+            for(let i = 0; i < checks.length; i++) {
                 if(i + 1 <= nextProps.currentValue) {
-                    copyArray[i] = true;
+                    checks[i] = true;
+                } else {
+                    checks[i] = false;
                 }
             }
 
             this.setState({
-                checks: copyArray
+                checks
             });
         }
     }

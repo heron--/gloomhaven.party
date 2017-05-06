@@ -29,6 +29,14 @@ export function updateCurrentCharacter(values, detailType, currentCharacter) {
     };
 }
 
+export function resetCurrentCharacter(values, detailType) {
+    return {
+        type: 'RESET_CURRENT_CHARACTER',
+        values,
+        detailType
+    }
+}
+
 export function loginRequest(tokenObj, profileObj) {
     return {
         type: 'LOGIN_REQUEST',

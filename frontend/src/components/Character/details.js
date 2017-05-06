@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateCurrentCharacter } from '~/actions';
+import { updateCurrentCharacter, resetCurrentCharacter } from '~/actions';
 import { Card, CardActions, CardText } from 'material-ui/Card';
 import Dialog from 'material-ui/Dialog';
 import Divider from 'material-ui/Divider';
@@ -40,6 +40,7 @@ const _CharacterDetailsEdit = ({
     characters,
     characterClasses,
     updateCharacter,
+    resetCharacter,
     currentCharacter,
     match,
     settings
@@ -59,6 +60,7 @@ const _CharacterDetailsEdit = ({
             detailType="edit"
             currentCharacter={ currentCharacter }
             updateCharacter={ updateCharacter }
+            resetCharacter={ resetCharacter }
             settings={ settings }
         />
     );
@@ -75,7 +77,8 @@ function mapStateToEditProps(state) {
 
 function mapDispatchToEditProps(dispatch) {
     return {
-        updateCharacter: (values, detailType, currentCharacter) => dispatch(updateCurrentCharacter(values, detailType, currentCharacter))
+        updateCharacter: (values, detailType, currentCharacter) => dispatch(updateCurrentCharacter(values, detailType, currentCharacter)),
+        resetCharacter: (values, detailType) => dispatch(resetCurrentCharacter(values, detailType))
     };
 }
 
@@ -85,12 +88,14 @@ const _CharacterDetailsCreate = ({
     characterClasses,
     currentCharacter,
     updateCharacter,
+    resetCharacter,
     settings
 }) => {
 
     const readOnly = [];
 
     const initialCharacter = {
+        id: null,
         checks: 0,
         classId: null,
         experienceNotes: '',
@@ -111,6 +116,7 @@ const _CharacterDetailsCreate = ({
             detailType="create"
             currentCharacter={ currentCharacter }
             updateCharacter={ updateCharacter }
+            resetCharacter={ resetCharacter }
             settings={ settings }
         />
     );
@@ -126,7 +132,8 @@ function mapStateToCreateProps(state) {
 
 function mapDispatchToCreateProps(dispatch) {
     return {
-        updateCharacter: (values, detailType, currentCharacter) => dispatch(updateCurrentCharacter(values, detailType, currentCharacter))
+        updateCharacter: (values, detailType, currentCharacter) => dispatch(updateCurrentCharacter(values, detailType, currentCharacter)),
+        resetCharacter: (values, detailType) => dispatch(resetCurrentCharacter(values, detailType))
     };
 }
 
@@ -143,12 +150,11 @@ class CharacterDetails extends Component {
         const {
             initValues,
             detailType,
-            updateCharacter,
-            currentCharacter
+            resetCharacter
         } = this.props;
 
         if(typeof initValues !== 'undefined') {
-            updateCharacter(initValues, detailType, currentCharacter);
+            resetCharacter(initValues, detailType);
         }
     }
 
@@ -187,7 +193,13 @@ class CharacterDetails extends Component {
 
         const characterClassMenuItems = characterClasses.map(c => {
 
-            const primaryText = c.spoiler && settings.spoilers.indexOf(c.id) === -1 ? (<span style={{ position: "relative", bottom: "5px" }}>???</span>) : c.displayName;
+            let primaryText;
+
+            if(typeof settings.spoilers !== 'undefined') {
+                primaryText = c.spoiler && settings.spoilers.indexOf(c.id) === -1 ? (<span style={{ position: "relative", bottom: "5px" }}>???</span>) : c.displayName;
+            } else {
+                primaryText = c.spoiler ? (<span style={{ position: "relative", bottom: "5px" }}>???</span>) : c.displayName;
+            }
 
             return {
                 value: c.id,
@@ -205,7 +217,7 @@ class CharacterDetails extends Component {
                     required: true,
                     hintText: 'Class',
                     handleOnChange: (e,i,v) => { this.handleChange('classId', v) },
-                    currentValue: checkExists(currentCharacter.classId, 'string'),
+                    currentValue: checkExists(currentCharacter.classId, ''),
                     menuItems: characterClassMenuItems
                 }
             },
@@ -216,7 +228,7 @@ class CharacterDetails extends Component {
                     readOnly: readOnly.indexOf('name') !== -1,
                     required: true,
                     labelText: 'Name',
-                    currentValue: checkExists(currentCharacter.name, 'string'),
+                    currentValue: checkExists(currentCharacter.name, ''),
                     handleOnChange: (e, v) => { this.handleChange('name', v) },
                 }
             },
@@ -225,12 +237,12 @@ class CharacterDetails extends Component {
                 type: 'slider',
                 properties: {
                     readOnly: readOnly.indexOf('level') !== -1,
-                    labelText: `Level ${ checkExists(currentCharacter.level, 'number') }`,
+                    labelText: `Level ${ checkExists(currentCharacter.level, 1) }`,
                     defaultValue: 1,
                     min: 1,
                     max: 9,
                     step: 1,
-                    currentValue: checkExists(currentCharacter.level, 'number'),
+                    currentValue: checkExists(currentCharacter.level, 1),
                     handleOnChange: (e, v) => { this.handleChange('level', v) }  
                 }
             },
@@ -241,7 +253,7 @@ class CharacterDetails extends Component {
                     readOnly: readOnly.indexOf('experienceNotes') !== -1,
                     required: false, 
                     labelText: 'Experience Notes',
-                    currentValue: checkExists(currentCharacter.experienceNotes, 'string'),
+                    currentValue: checkExists(currentCharacter.experienceNotes, ''),
                     handleOnChange: (e, v) => { this.handleChange('experienceNotes', v) },
                 }
             },
@@ -252,7 +264,7 @@ class CharacterDetails extends Component {
                     readOnly: readOnly.indexOf('goldNotes') !== -1,
                     required: false, 
                     labelText: 'Gold Notes',
-                    currentValue: checkExists(currentCharacter.goldNotes, 'string'),
+                    currentValue: checkExists(currentCharacter.goldNotes, ''),
                     handleOnChange: (e, v) => { this.handleChange('goldNotes', v) },
                 }
             },
@@ -263,7 +275,7 @@ class CharacterDetails extends Component {
                     readOnly: readOnly.indexOf('items') !== -1,
                     required: false, 
                     labelText: "Items",
-                    currentValue: checkExists(currentCharacter.items, 'string'),
+                    currentValue: checkExists(currentCharacter.items, ''),
                     handleOnChange: (e, v) => { this.handleChange('items', v); },
                     textArea: {
                         multiLine: true,
@@ -287,7 +299,7 @@ class CharacterDetails extends Component {
                 type: 'checks',
                 properties: {
                     readOnly: readOnly.indexOf('checks') !== -1,
-                    currentValue: checkExists(currentCharacter.checks, 'number'),
+                    currentValue: checkExists(currentCharacter.checks, 0),
                     handleOnChange: v => { this.handleChange('checks', v); }
                 }
             },
@@ -298,7 +310,7 @@ class CharacterDetails extends Component {
                     readOnly: readOnly.indexOf('notes') !== -1,
                     required: false, 
                     labelText: 'Notes',
-                    currentValue: checkExists(currentCharacter.notes, 'string'),
+                    currentValue: checkExists(currentCharacter.notes, ''),
                     handleOnChange: (e, v) => { this.handleChange('notes', v) },
                     textArea: {
                         multiLine: true,
@@ -330,15 +342,8 @@ class CharacterDetails extends Component {
             </Card>
         );
 
-        function checkExists(value, type) {
-            switch(type) {
-                case 'string':
-                    return typeof value === 'undefined' ? '' : value;
-                case 'number':
-                    return typeof value === 'undefined' ? 1 : value;
-                default:
-                    return value;
-            }
+        function checkExists(value, defaultValue) {
+            return typeof value === 'undefined' ? defaultValue : value;
         }
     } 
 }

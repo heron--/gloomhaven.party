@@ -28,6 +28,7 @@ const user = (state = {}, action) => {
 const currentCharacter = (state = {}, action) => {
     switch(action.type) {
         case 'UPDATE_CURRENT_CHARACTER':
+        case 'RESET_CURRENT_CHARACTER':
             return Object.assign({}, state, action.values);
 
         default:
@@ -72,6 +73,11 @@ const character = (state = {}, action) => {
                         return uc;
                     }
                 }),
+                currentCharacter: currentCharacter(state.currentCharacter, action)
+            });
+
+        case 'RESET_CURRENT_CHARACTER':
+            return Object.assign({}, state, {
                 currentCharacter: currentCharacter(state.currentCharacter, action)
             });
 
