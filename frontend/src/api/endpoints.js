@@ -3,7 +3,8 @@ export const devEndpoints = {
     logout: '/api/auth/logout',
     getClasses: '/api/character/classes',
     checkSession: '/api/user/check-session',
-    updateCharacter: '/api/character/'
+    updateCharacter: '/api/character/',
+    createCharacter: '/api/character/' 
 };
 
 const stageEndpoints = {
@@ -11,7 +12,8 @@ const stageEndpoints = {
     logout: 'http://stage.gloomhaven.party/api/auth/logout',
     getClasses: 'http://stage.gloomhaven.party/api/character/classes',
     checkSession: 'http://stage.gloomhaven.party/api/user/check-session',
-    updateCharacter: 'http://stage.gloomhaven.party/api/character/'
+    updateCharacter: 'http://stage.gloomhaven.party/api/character/',
+    createCharacter: 'http://stage.gloomhaven.party/api/character/' 
 };
 
 const prodEndpoints = {
@@ -19,7 +21,8 @@ const prodEndpoints = {
     logout: 'http://gloomhaven.party/api/auth/logout',
     getClasses: 'http://gloomhaven.party/api/character/classes',
     checkSession: 'http://gloomhaven.party/api/user/check-session',
-    updateCharacter: 'http://gloomhaven.party/api/character/'
+    updateCharacter: 'http://gloomhaven.party/api/character/',
+    createCharacter: 'http://gloomhaven.party/api/character/' 
 };
 
 const exportEndpoints = window.location.hostname.indexOf('stage.gloomhaven') === -1 ? prodEndpoints : stageEndpoints;

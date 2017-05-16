@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateCurrentCharacter, resetCurrentCharacter } from '~/actions';
+import { updateCurrentCharacter, resetCurrentCharacter, createCharacterRequest } from '~/actions';
 import { Card, CardActions, CardText } from 'material-ui/Card';
 import Dialog from 'material-ui/Dialog';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
 import Toggle from 'material-ui/Toggle';
 import FormControl from '~/components/FormControl';
@@ -61,6 +62,7 @@ const _CharacterDetailsEdit = ({
             currentCharacter={ currentCharacter }
             updateCharacter={ updateCharacter }
             resetCharacter={ resetCharacter }
+            createCharacter={ () => {} }
             settings={ settings }
         />
     );
@@ -88,6 +90,7 @@ const _CharacterDetailsCreate = ({
     characterClasses,
     currentCharacter,
     updateCharacter,
+    createCharacter,
     resetCharacter,
     settings
 }) => {
@@ -116,6 +119,7 @@ const _CharacterDetailsCreate = ({
             detailType="create"
             currentCharacter={ currentCharacter }
             updateCharacter={ updateCharacter }
+            createCharacter={ createCharacter }
             resetCharacter={ resetCharacter }
             settings={ settings }
         />
@@ -133,6 +137,7 @@ function mapStateToCreateProps(state) {
 function mapDispatchToCreateProps(dispatch) {
     return {
         updateCharacter: (values, detailType, currentCharacter) => dispatch(updateCurrentCharacter(values, detailType, currentCharacter)),
+        createCharacter: currentCharacter => dispatch(createCharacterRequest(currentCharacter)),
         resetCharacter: (values, detailType) => dispatch(resetCurrentCharacter(values, detailType))
     };
 }
@@ -173,21 +178,12 @@ class CharacterDetails extends Component {
         const {
             characterClasses,
             readOnly,
+            createCharacter,
             currentCharacter,
-            settings
+            settings,
+            detailType
         } = this.props;
 
-        const actions = [
-            <FlatButton
-                label="Cancel"
-                onTouchTap={this.handleClose}
-            />,
-            <FlatButton
-                label="Delete"
-                keyboardFocused={true}
-                onTouchTap={this.handleClose}
-            />,
-        ];
 
         const currentCharacterClass = characterClasses.filter(c => c.id === currentCharacter.classId)[0];
 
@@ -328,17 +324,11 @@ class CharacterDetails extends Component {
                     {
                         formControls.map(f => <FormControl key={ f.name } { ...f } />)
                     }
-                    <Toggle
-                        label="Retired"
-                        labelPosition="right"
-                        labelStyle={styles.toggle.labelStyle}
-                        trackStyle={styles.toggle.trackStyle}
-                    />
                 </CardText>
 
                 <Divider />
                 
-                <DetailActions actions={ actions }/>
+                <DetailActions detailType={ detailType } createCharacter={ createCharacter } currentCharacter={ currentCharacter } />
             </Card>
         );
 
@@ -348,7 +338,37 @@ class CharacterDetails extends Component {
     } 
 }
 
-class DetailActions extends Component {
+const DetailActions = ({
+    detailType,
+    createCharacter,
+    currentCharacter
+}) => {
+    switch(detailType) {
+        case 'edit':
+            return <EditActions />;
+        case 'create':
+            return <CreateActions createCharacter={ createCharacter } currentCharacter={ currentCharacter } />;
+        default:
+            return null;
+    } 
+};
+
+const CreateActions = ({
+    createCharacter,
+    currentCharacter
+}) => {
+    return (
+        <CardText>
+            <RaisedButton label="Finalize Creation" onTouchTap={ handleOnTouchTap } />
+        </CardText>
+    );
+
+    function handleOnTouchTap() {
+        createCharacter(currentCharacter);
+    }
+};
+
+class EditActions extends Component {
 
     constructor(props) {
         super(props);
@@ -418,12 +438,28 @@ class DetailActions extends Component {
 
     render() {
 
-        const {
-            actions
-        } = this.props;
+        const actions = [
+            <FlatButton
+                label="Cancel"
+                onTouchTap={this.handleClose}
+            />,
+            <FlatButton
+                label="Delete"
+                keyboardFocused={true}
+                onTouchTap={this.handleClose}
+            />,
+        ];
 
         return (
             <div>
+                <CardText>
+                    <Toggle
+                        label="Retired"
+                        labelPosition="right"
+                        labelStyle={styles.toggle.labelStyle}
+                        trackStyle={styles.toggle.trackStyle}
+                    /> 
+                </CardText>
                 <CardActions style={styles.card.cardActionsStyle}>
                     <div>
                         <IconButton

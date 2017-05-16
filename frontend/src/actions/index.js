@@ -37,6 +37,13 @@ export function resetCurrentCharacter(values, detailType) {
     }
 }
 
+export function createCharacterRequest(currentCharacter) {
+    return {
+        type: 'CREATE_CHARACTER_REQUEST',
+        currentCharacter
+    }
+}
+
 export function loginRequest(tokenObj, profileObj) {
     return {
         type: 'LOGIN_REQUEST',

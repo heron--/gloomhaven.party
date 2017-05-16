@@ -112,6 +112,30 @@ function* characterUpdate(action) {
     }
 }
 
+function* characterCreate(action) {
+    try {
+
+        const {
+            currentCharacter
+        } = action;
+
+        const character = yield call(API.createCharacter, currentCharacter);
+
+        yield put({
+            type: 'CREATE_CHARACTER_REQUEST_SUCCESS',
+            character
+        });
+
+    } catch(e) {
+
+        yield put({
+            type: 'CREATE_CHARACTER_REQUEST_FAILURE',
+            message: e.message
+        });
+
+    }
+}
+
 function* getAllCharacterClasses() {
     try {
 
@@ -144,6 +168,10 @@ function* watchUpdateCharacter() {
     yield takeLatest('UPDATE_CURRENT_CHARACTER', characterUpdate);
 }
 
+function* watchCreateCharacter() {
+    yield takeLatest('CREATE_CHARACTER_REQUEST', characterCreate);
+}
+
 function* mainSaga() {
 
     yield [
@@ -151,7 +179,8 @@ function* mainSaga() {
         fork(getAllCharacterClasses),
         fork(watchLoginRequest),
         fork(watchLogoutRequest),
-        fork(watchUpdateCharacter)
+        fork(watchUpdateCharacter),
+        fork(watchCreateCharacter)
     ];
 }
 

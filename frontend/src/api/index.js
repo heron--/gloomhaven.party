@@ -92,7 +92,7 @@ const API = {
     },
     updateCharacter: character => {
 
-        const updateEndpoint = __DEV__ ? devEndpoints.updateCharacter + character.id : endpoints.checkSession + character.id;
+        const updateEndpoint = __DEV__ ? devEndpoints.updateCharacter + character.id : endpoints.updateCharacter + character.id;
 
         const updateConfig = {
             headers: {
@@ -115,7 +115,31 @@ const API = {
             return {};
         })
 
-    } 
+    },
+    createCharacter: character => {
+        const createEndpoint = __DEV__ ? devEndpoints.createCharacter : endpoints.createCharacter;
+
+        const createConfig = {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: 'PUT',
+            body: JSON.stringify({character}),
+            credentials: 'include'
+        };
+
+        return fetch(createEndpoint, createConfig)
+        .then(res => res.json())
+        .then(res => {
+            
+            if(typeof res.data !== 'undefined') {
+                return res.data;
+            }
+
+            return {};
+        })
+    }
 };
 
 export { API as default };
