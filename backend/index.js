@@ -31,6 +31,6 @@ app.use('/auth', authRouter);
 app.use('/user', userRouter);
 app.use('/character', characterRouter);
 
-const server = app.listen(3000, 'localhost', () => {
-	console.log('API Server started on port 3000');
+const server = app.listen(config.get('port'), 'localhost', () => {
+	console.log(`API Server started on port ${ config.get('port') }`);
 });

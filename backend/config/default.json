@@ -17,5 +17,6 @@
 	},
 	"encryptionConfig": {
 		"secret": "Coming up with secrets is hard!"
-	}
+	},
+	"port": 3000
 }
