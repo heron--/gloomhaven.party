@@ -5,7 +5,7 @@ module.exports = {
    */
   apps : [
     {
-      name      : 'Gloomhaven API',
+      name      : 'gloomhaven-api',
       script    : 'index.js',
       env: {
         NODE_ENV: 'production'
@@ -15,7 +15,7 @@ module.exports = {
       }
     },
     {
-      name      : 'Stage Gloomhaven API',
+      name      : 'stage-gloomhaven-api',
       script    : 'index.js',
       env: {
         NODE_ENV: 'stage'
