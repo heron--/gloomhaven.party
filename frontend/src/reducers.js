@@ -92,6 +92,11 @@ const character = (state = {}, action) => {
                 serverResponse: 'UPDATE_SUCCESS'
             });
 
+        case 'FETCH_CHARACTER_LIST_SUCCESS':
+            return Object.assign({}, state, {
+                userCharacters: [...action.characters]
+            });
+
         default:
             return state;
     }

@@ -45,6 +45,30 @@ const API = {
         return fetch(logoutEndpoint, logoutConfig) 
         .then(res => res.json());
     },
+    getCharacterList: userEmail => {
+        const characterListEndpoint = __DEV__ ? devEndpoints.fetchCharacters : endpoints.fetchCharacters;
+
+        const characterListConfig = {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify(userEmail),
+            credentials: 'include'
+        };
+
+        return fetch(characterListEndpoint, characterListConfig)
+        .then(res => res.json())
+        .then(res => {
+            if(typeof res.data !== 'undefined') {
+                return res.data;
+            }
+
+            return [];
+        })
+
+    },
     getCharacterClasses: () => {
         const getClassesEndpoint = __DEV__ ? devEndpoints.getClasses : endpoints.getClasses;
 

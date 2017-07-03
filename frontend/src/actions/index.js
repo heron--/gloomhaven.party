@@ -44,6 +44,13 @@ export function createCharacterRequest(currentCharacter) {
     }
 }
 
+export function fetchCharacterList(userEmail) {
+    return {
+        type: 'FETCH_CHARACTER_LIST',
+        userEmail
+    } 
+}
+
 export function loginRequest(tokenObj, profileObj) {
     return {
         type: 'LOGIN_REQUEST',

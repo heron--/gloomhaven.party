@@ -52,6 +52,25 @@ function* logoutRequest(action) {
     }
 }
 
+function* characterListRequest(action) {
+    try {
+
+        const data = yield call(API.getCharacterList, { userEmail: action.userEmail });
+
+        const characters = typeof data.userCharacters !== 'undefined' ? data.userCharacters : [];
+
+        yield put({
+            type: 'FETCH_CHARACTER_LIST_SUCCESS',
+            characters
+        });
+
+    } catch(e) {
+        yield put({
+            type: 'FETCH_CHARACTER_LIST_ERROR'
+        });
+    }
+}
+
 function* checkSession() {
     try {
 
@@ -172,6 +191,10 @@ function* watchCreateCharacter() {
     yield takeLatest('CREATE_CHARACTER_REQUEST', characterCreate);
 }
 
+function* watchCharacterRequest() {
+    yield takeLatest('FETCH_CHARACTER_LIST', characterListRequest) ;
+}
+
 function* mainSaga() {
 
     yield [
@@ -180,7 +203,8 @@ function* mainSaga() {
         fork(watchLoginRequest),
         fork(watchLogoutRequest),
         fork(watchUpdateCharacter),
-        fork(watchCreateCharacter)
+        fork(watchCreateCharacter),
+        fork(watchCharacterRequest)
     ];
 }
 

@@ -11,6 +11,7 @@ const cryptr = new Cryptr(encryptionConfig.secret);
 const {
 	getResponseMessage,
 	getLoginErrorMessage,
+	getUserCharacters,
 	getCharacter
 } = new utils();
 
@@ -57,6 +58,31 @@ router.get('/:characterId', (req, res, next) => {
 	getCharacter(req, res, next);
 });
 
+router.post('/list', (req, res, next) => {
+	// req.getConnection((error, connection) => {
+
+	// 	const encryptedEmail = cryptr.encrypt(req.body.userEmail);
+
+	// 	connection.query('SELECT u.id FROM `Users` AS u WHERE u.email = ?', [encryptedEmail], (error, results) => {
+	// 		if(error) return next(error);
+
+	// 		const userId = results[0].id;
+
+	// 		connection.query('SELECT c.* FROM `Characters` as c INNER JOIN `User-Character` AS uc ON uc.userId = ? AND uc.characterId = c.id', [userId], (error, results) => {
+	// 			if(results.length === 0) {
+	// 				res.send(getResponseMessage(res, 'No characters found', 404, null))
+	// 			} else {
+	// 				res.send(getResponseMessage(res, '', 200, results.map(r => {
+	// 					return new Character()	
+	// 				})));
+	// 			}
+	// 		});
+	// 	});
+	// });
+
+	getUserCharacters(req, res);
+});
+
 router.post('/:characterId', (req, res, next) => {
 
 	res.successMessage = `Character ${ req.params.characterId } updated`;
@@ -70,7 +96,8 @@ router.post('/:characterId', (req, res, next) => {
 			if(error) return next(error);
 
 			const user = results[0];
-
+			
+			console.log(req.params)
 			const decryptedCharacterId = cryptr.decrypt(req.params.characterId);
 
 			// Get current Character
@@ -81,7 +108,6 @@ router.post('/:characterId', (req, res, next) => {
 				if(results.length === 0) {
 
 					res.send(getResponseMessage(res, 'Character not found', 404, null));
-					next();
 
 				} else {
 
