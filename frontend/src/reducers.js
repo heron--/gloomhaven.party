@@ -78,7 +78,18 @@ const character = (state = {}, action) => {
 
         case 'RESET_CURRENT_CHARACTER':
             return Object.assign({}, state, {
+                serverResponse: '',
                 currentCharacter: currentCharacter(state.currentCharacter, action)
+            });
+
+        case 'CREATE_CHARACTER_REQUEST_SUCCESS':
+            return Object.assign({}, state, {
+                serverResponse: 'CREATE_SUCCESS'
+            });
+
+        case 'UPDATE_CHARACTER_REQUEST_SUCCESS':
+            return Object.assign({}, state, {
+                serverResponse: 'UPDATE_SUCCESS'
             });
 
         default:

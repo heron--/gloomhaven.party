@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { updateCurrentCharacter, resetCurrentCharacter, createCharacterRequest } from '~/actions';
 import { Card, CardActions, CardText } from 'material-ui/Card';
 import Dialog from 'material-ui/Dialog';
@@ -43,6 +44,7 @@ const _CharacterDetailsEdit = ({
     updateCharacter,
     resetCharacter,
     currentCharacter,
+    serverResponse,
     match,
     settings
 }) => {
@@ -54,7 +56,7 @@ const _CharacterDetailsEdit = ({
     ];
 
     return (
-        <CharacterDetails
+        <CharacterDetailsWithRouter
             characterClasses={ characterClasses }
             readOnly={ readOnly }
             initValues={ character }
@@ -63,6 +65,7 @@ const _CharacterDetailsEdit = ({
             updateCharacter={ updateCharacter }
             resetCharacter={ resetCharacter }
             createCharacter={ () => {} }
+            serverResponse={ serverResponse }
             settings={ settings }
         />
     );
@@ -73,6 +76,7 @@ function mapStateToEditProps(state) {
         characters: state.character.userCharacters,
         characterClasses: state.character.classes,
         currentCharacter: state.character.currentCharacter,
+        serverResponse: state.character.serverResponse,
         settings: state.user.settings
     };
 }
@@ -92,6 +96,7 @@ const _CharacterDetailsCreate = ({
     updateCharacter,
     createCharacter,
     resetCharacter,
+    serverResponse,
     settings
 }) => {
 
@@ -112,7 +117,7 @@ const _CharacterDetailsCreate = ({
     };
 
     return (
-        <CharacterDetails
+        <CharacterDetailsWithRouter
             characterClasses={ characterClasses }
             readOnly={ readOnly }
             initValues={ initialCharacter }
@@ -121,6 +126,7 @@ const _CharacterDetailsCreate = ({
             updateCharacter={ updateCharacter }
             createCharacter={ createCharacter }
             resetCharacter={ resetCharacter }
+            serverResponse={ serverResponse }
             settings={ settings }
         />
     );
@@ -130,6 +136,7 @@ function mapStateToCreateProps(state) {
     return {
         characterClasses: state.character.classes,
         currentCharacter: state.character.currentCharacter,
+        serverResponse: state.character.serverResponse,
         settings: state.user.settings
     };
 }
@@ -143,6 +150,8 @@ function mapDispatchToCreateProps(dispatch) {
 }
 
 export const CharacterDetailsCreate = connect(mapStateToCreateProps, mapDispatchToCreateProps)(_CharacterDetailsCreate);
+
+
 
 class CharacterDetails extends Component {
 
@@ -160,6 +169,17 @@ class CharacterDetails extends Component {
 
         if(typeof initValues !== 'undefined') {
             resetCharacter(initValues, detailType);
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        const {
+            history
+        } = this.props;
+
+        if(nextProps.serverResponse === 'CREATE_SUCCESS') {
+            history.push('/character', {});
         }
     }
 
@@ -503,3 +523,6 @@ class EditActions extends Component {
         );
     }    
 }
+
+const CharacterDetailsWithRouter = withRouter(CharacterDetails);
+

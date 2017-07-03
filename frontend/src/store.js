@@ -80,7 +80,8 @@ const initialState = {
     character: {
         classes: [],
         userCharacters: [],
-        currentCharacter: {}
+        currentCharacter: {},
+        serverResponse: ''
     }
 };
 
