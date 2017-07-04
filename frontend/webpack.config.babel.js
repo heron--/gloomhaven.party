@@ -162,7 +162,7 @@ if(__DEV__) {
 
 if(__PROD__) {
 
-    config.output.publicPath = '';
+    config.output.publicPath = '/';
 
     config.plugins.push(
         new CleanWebpackPlugin(['dist'], {
